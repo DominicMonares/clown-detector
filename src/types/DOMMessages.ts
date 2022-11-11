@@ -1,10 +1,5 @@
-// import { EntryLevel } from "./Settings";
+import { Settings } from "./Settings";
 
-// export type DOMMessage = {
-//   entryLevel: EntryLevel;
-//   blacklist: string[]
-// }
-
-export type DOMMessageResponse = {
-  tbd: any;
+export interface ReactMessageRes extends Settings {
+  sucess?: string;
 }

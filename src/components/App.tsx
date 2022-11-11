@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { sendJobMessage } from '../chrome/background';
+import { sendGetStoreMsg } from '../chrome/background';
 import { EntryLevel } from '../types';
 import './App.css';
 
@@ -9,7 +9,8 @@ function App() {
   const [blacklist, setBlacklist] = useState<string[]>([]);
 
   useEffect(() => {
-    sendJobMessage(entryLevel, blacklist);
+    const settings = sendGetStoreMsg();
+    console.log('SETTINGS REACT ', settings);
   }, []);
 
   return (
