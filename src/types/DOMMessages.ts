@@ -1,7 +1,10 @@
+import { EntryLevel } from "./Settings";
+
 export type DOMMessage = {
-  type: 'GET_DOM';
+  entryLevel: EntryLevel;
+  blacklist: string[]
 }
 
 export type DOMMessageResponse = {
-  entryLevel: Boolean;
+  tbd: any;
 }

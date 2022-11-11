@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { DOMMessage, DOMMessageResponse } from '../types';
+
+import { checkJob } from '../chrome/background';
+import { EntryLevel } from '../types';
 import './App.css';
 
 function App() {
-  const [entryLevel, setEntryLevel] = useState<Boolean>(false);
+  const [entryLevel, setEntryLevel] = useState<EntryLevel>(4);
+  const [blacklist, setBlacklist] = useState<string[]>([]);
 
   useEffect(() => {
-    chrome.tabs && chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-      chrome.tabs.sendMessage(
-        tabs[0]['id'] || 0,
-        { type: 'GET_DOM' } as DOMMessage,
-        (response: DOMMessageResponse) => {
-          setEntryLevel(response.entryLevel);
-        }
-      );
-    });
+    checkJob(entryLevel, blacklist);
   }, []);
 
   return (

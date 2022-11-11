@@ -15,11 +15,10 @@ const messagesFromReactAppListener = (
 
   const topCard = topCards[0]['children'][1]['innerHTML'];
   const isEntryLevel = topCard.includes('Entry level');
-  console.log('ATTTTYYTRAF ', isEntryLevel)
 
   // Prepare the response object with information about the site
   const response: DOMMessageResponse = {
-    entryLevel: isEntryLevel
+    tbd: isEntryLevel // response tbd
   };
 
   sendResponse(response);
