@@ -23,7 +23,8 @@
         "http://*/*",
         "https://*/*"
       ],
-      "js": ["./static/js/content.js"]
+      "js": ["./static/js/content.js"],
+      "run_at": "document_end"
     }
   ]
 }
