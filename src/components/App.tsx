@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
-import EntryLevel from './EntryLevel/EntryLevel';
-import { ReactMessageRes, EntryLevelSetting } from '../types';
+import EntryLevel from './EntryLevel';
+import Blacklist from './Blacklist';
+import { ReactMessageRes, EntryLevelSetting, BlacklistSetting } from '../types';
 import './App.css';
 
 function App() {
   const [entryLevel, setEntryLevel] = useState<EntryLevelSetting>(4);
-  const [blacklist, setBlacklist] = useState<string[]>([]);
+  const [blacklist, setBlacklist] = useState<BlacklistSetting>(new Set<string>());
 
   useEffect(() => {
     chrome.tabs && chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
@@ -25,6 +26,19 @@ function App() {
     setEntryLevel(newEntryLevel);
   }
 
+  const updateBlacklist = (toAdd: string, toRemove: string) => {
+    const blacklistCopy = new Set(blacklist);
+
+    if (toRemove) {
+      blacklistCopy.delete(toRemove);
+      return setBlacklist(blacklistCopy);
+    }
+
+    blacklistCopy.add(toAdd);
+
+    setBlacklist(blacklistCopy);
+  }
+
   // create onClick that updates settings by:
     // sending message to post new values to storage
     // rerun page scan
@@ -34,9 +48,10 @@ function App() {
       <header >
         CLOWNS!
       </header>
-      <EntryLevel updateEntryLevel={updateEntryLevel} defaultSlider={entryLevel} />
       {entryLevel}
-      {blacklist.map(k => k)}
+      <EntryLevel updateEntryLevel={updateEntryLevel} defaultSlider={entryLevel} />
+      <Blacklist updateBlacklist={updateBlacklist} blacklist={blacklist} />
+
     </div>
   );
 }

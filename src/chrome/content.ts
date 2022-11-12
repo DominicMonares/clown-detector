@@ -49,7 +49,7 @@ window.onload = () => {
   chrome.storage.sync.get(['entryLevel', 'blacklist'], (res) => {
     if (!Object.keys(res).length) {
       const defaultEntryLevel: EntryLevelSetting = 5;
-      const defaultSettings = { entryLevel: defaultEntryLevel, blacklist: [] };
+      const defaultSettings = { entryLevel: defaultEntryLevel, blacklist: new Set<string>() };
       chrome.storage.sync.set(defaultSettings, () => {
         console.log('Default values set!');
         scanJob(defaultSettings);

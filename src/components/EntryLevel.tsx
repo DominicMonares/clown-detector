@@ -1,7 +1,7 @@
 import React from 'react';
 import { Slider } from '@mui/material';
 
-import { EntryLevelProps, EntryLevelSetting } from '../../types';
+import { EntryLevelProps, EntryLevelSetting } from '../types';
 import marks from './marks.json';
 
 const EntryLevel = ({ updateEntryLevel, defaultSlider }: EntryLevelProps) => {
