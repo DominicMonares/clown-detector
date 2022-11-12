@@ -1,5 +1,6 @@
 import { Settings } from "./Settings";
 
-export interface ReactMessageRes extends Settings {
-  sucess?: string;
+export interface ReactMessageRes {
+  status: string,
+  response: Settings
 }

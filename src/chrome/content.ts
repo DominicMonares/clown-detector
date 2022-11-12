@@ -10,32 +10,38 @@ const messagesFromReactAppListener = (
 
   if (!Object.keys(msg).length) {
     return chrome.storage.sync.get(['entryLevel', 'blacklist'], (res) => {
-      const storedSettings = { entryLevel: res.entryLevel, blacklist: res.blacklist };
-      sendResponse(storedSettings);
+
+      const storedSettings: Settings = {
+        entryLevel: res.entryLevel,
+        blacklist: res.blacklist
+      };
+
+      const response: ReactMessageRes = {
+        status: 'Successfully fetched settings!',
+        response: storedSettings
+      };
+
+      sendResponse(response);
     });
   }
 
+
+  return true;
+}
+
+const scanJob = (msg: Settings) => {
   const topCardClassName = "jobs-unified-top-card__job-insight";
   const topCards = document.getElementsByClassName(topCardClassName);
   const topCard = topCards[0]['children'][1]['innerHTML'];
   const isEntryLevel = topCard.includes('Entry level');
   // implement blacklist logic here
 
-  if (isEntryLevel) {
-    scanJob(msg);
-  } else {
-    sendResponse('Job is not entry level')
-  }
+  // if (isEntryLevel) {
+  //   scanJob(msg);
+  // }
 
-  const response: ReactMessageRes = {
-    success: isEntryLevel // response tbd
-  };
-
-  sendResponse(response);
-}
-
-const scanJob = (msg: Settings) => {
   console.log('MESSAGE ', msg)
+  console.log('CARD ', isEntryLevel);
   return ''
 }
 
