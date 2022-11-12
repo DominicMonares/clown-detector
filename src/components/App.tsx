@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-import { ReactMessageRes, EntryLevel } from '../types';
+import EntryLevel from './EntryLevel/EntryLevel';
+import { ReactMessageRes, EntryLevelSetting } from '../types';
 import './App.css';
 
 function App() {
-  const [entryLevel, setEntryLevel] = useState<EntryLevel>(4);
+  const [entryLevel, setEntryLevel] = useState<EntryLevelSetting>(4);
   const [blacklist, setBlacklist] = useState<string[]>([]);
 
   useEffect(() => {
@@ -20,6 +21,10 @@ function App() {
     });
   }, []);
 
+  const updateEntryLevel = (newEntryLevel: EntryLevelSetting) => {
+    setEntryLevel(newEntryLevel);
+  }
+
   // create onClick that updates settings by:
     // sending message to post new values to storage
     // rerun page scan
@@ -29,6 +34,7 @@ function App() {
       <header >
         CLOWNS!
       </header>
+      <EntryLevel updateEntryLevel={updateEntryLevel} defaultSlider={entryLevel} />
       {entryLevel}
       {blacklist.map(k => k)}
     </div>

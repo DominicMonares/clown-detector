@@ -1,4 +1,4 @@
-import { ReactMessageRes, EntryLevel, Settings } from '../types';
+import { ReactMessageRes, EntryLevelSetting, Settings } from '../types';
 
 // Function called when a new message is received
 const messagesFromReactAppListener = (
@@ -25,22 +25,18 @@ const messagesFromReactAppListener = (
     });
   }
 
-
   return true;
 }
 
-const scanJob = (msg: Settings) => {
+const scanJob = (settings: Settings) => {
   const topCardClassName = "jobs-unified-top-card__job-insight";
   const topCards = document.getElementsByClassName(topCardClassName);
   const topCard = topCards[0]['children'][1]['innerHTML'];
   const isEntryLevel = topCard.includes('Entry level');
   // implement blacklist logic here
 
-  // if (isEntryLevel) {
-  //   scanJob(msg);
-  // }
 
-  console.log('MESSAGE ', msg)
+  console.log('MESSAGE ', settings)
   console.log('CARD ', isEntryLevel);
   return ''
 }
@@ -48,10 +44,11 @@ const scanJob = (msg: Settings) => {
 // Fired when a message is sent from either an extension process or a content script
 chrome.runtime.onMessage.addListener(messagesFromReactAppListener);
 
+// Run page scan once page is loaded
 window.onload = () => {
   chrome.storage.sync.get(['entryLevel', 'blacklist'], (res) => {
     if (!Object.keys(res).length) {
-      const defaultEntryLevel: EntryLevel = 4;
+      const defaultEntryLevel: EntryLevelSetting = 5;
       const defaultSettings = { entryLevel: defaultEntryLevel, blacklist: [] };
       chrome.storage.sync.set(defaultSettings, () => {
         console.log('Default values set!');
