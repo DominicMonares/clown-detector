@@ -6,7 +6,7 @@ import marks from './marks.json';
 
 const EntryLevel = ({ updateEntryLevel, defaultSlider }: EntryLevelProps) => {
 
-  const updateSlider = (e: Event) => {
+  const triggerUpdateEL = (e: Event) => {
     const target = e.target as HTMLInputElement;
     const value = Number(target.value) as EntryLevelSetting;
     updateEntryLevel(value);
@@ -18,7 +18,7 @@ const EntryLevel = ({ updateEntryLevel, defaultSlider }: EntryLevelProps) => {
       value={defaultSlider}
       max={7}
       marks={marks}
-      onChange={updateSlider}
+      onChange={triggerUpdateEL}
     />
   );
 }
