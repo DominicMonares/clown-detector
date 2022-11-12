@@ -9,7 +9,7 @@ const messagesFromReactAppListener = (
   console.log('[content.js]. Message received', msg);
 
   if (!Object.keys(msg).length) {
-    return chrome.storage.sync.get(['entryLevel', 'blacklist'], (res) => {
+    return chrome.storage.sync.get(['entryLevel', 'blacklist'], res => {
 
       const storedSettings: Settings = {
         entryLevel: res.entryLevel,
@@ -25,7 +25,7 @@ const messagesFromReactAppListener = (
     });
   }
 
-  return true;
+  chrome.storage.sync.set(msg, () => {});
 }
 
 const scanJob = (settings: Settings) => {
@@ -46,7 +46,7 @@ chrome.runtime.onMessage.addListener(messagesFromReactAppListener);
 
 // Run page scan once page is loaded
 window.onload = () => {
-  chrome.storage.sync.get(['entryLevel', 'blacklist'], (res) => {
+  chrome.storage.sync.get(['entryLevel', 'blacklist'], res => {
     if (!Object.keys(res).length) {
       const defaultEntryLevel: EntryLevelSetting = 5;
       const defaultSettings = { entryLevel: defaultEntryLevel, blacklist: new Set<string>() };
