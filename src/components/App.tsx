@@ -6,7 +6,7 @@ import { ReactMessageRes, EntryLevelSetting, BlacklistSetting } from '../types';
 import './App.css';
 
 function App() {
-  const [entryLevel, setEntryLevel] = useState<EntryLevelSetting>(4);
+  const [entryLevel, setEntryLevel] = useState<EntryLevelSetting>(5);
   const [blacklist, setBlacklist] = useState<BlacklistSetting>(new Set<string>());
 
   useEffect(() => {
@@ -15,7 +15,6 @@ function App() {
         tabs[0]['id'] || 0,
         {},
         (res: ReactMessageRes) => {
-          console.log('TRESRSE', res.response.entryLevel, res.response.blacklist)
           setEntryLevel(res.response.entryLevel);
           setBlacklist(res.response.blacklist);
         }

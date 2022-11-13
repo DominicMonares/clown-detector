@@ -9,8 +9,7 @@ const messagesFromReactAppListener = (
   console.log('[content.js]. Message received', msg);
 
   if (!Object.keys(msg).length) {
-    return chrome.storage.sync.get(['entryLevel', 'blacklist'], res => {
-
+    chrome.storage.sync.get(['entryLevel', 'blacklist'], res => {
       const storedSettings: Settings = {
         entryLevel: res.entryLevel,
         blacklist: res.blacklist
@@ -23,22 +22,12 @@ const messagesFromReactAppListener = (
 
       sendResponse(response);
     });
+
+    return true;
   }
 
   chrome.storage.sync.set(msg, () => {});
-}
-
-const scanJob = (settings: Settings) => {
-  const topCardClassName = "jobs-unified-top-card__job-insight";
-  const topCards = document.getElementsByClassName(topCardClassName);
-  const topCard = topCards[0]['children'][1]['innerHTML'];
-  const isEntryLevel = topCard.includes('Entry level');
-  // implement blacklist logic here
-
-
-  console.log('MESSAGE ', settings)
-  console.log('CARD ', isEntryLevel);
-  return ''
+  return true;
 }
 
 // Fired when a message is sent from either an extension process or a content script
@@ -52,11 +41,23 @@ window.onload = () => {
       const defaultSettings = { entryLevel: defaultEntryLevel, blacklist: new Set<string>() };
       chrome.storage.sync.set(defaultSettings, () => {
         console.log('Default values set!');
-        scanJob(defaultSettings);
+        scanJob(defaultSettings)
+        setTimeout(() => scanJob(defaultSettings), 1000); // BANDAID FIX
       });
     } else {
       const storedSettings = { entryLevel: res.entryLevel, blacklist: res.blacklist };
-      scanJob(storedSettings);
+      setTimeout(() => scanJob(storedSettings), 1000); // BANDAID FIX
     }
   });
+
+}
+
+const scanJob = (settings: Settings) => {
+  const topCardClassName = "jobs-unified-top-card__job-insight";
+  const topCards = document.getElementsByClassName(topCardClassName);
+  const topCard = topCards[0]['children'][1]['innerHTML'];
+  const isEntryLevel = topCard.includes('Entry level');
+  // implement blacklist logic here
+
+  console.log('IS ENTRY LEVEL ', isEntryLevel);
 }
