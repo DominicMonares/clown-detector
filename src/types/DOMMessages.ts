@@ -7,8 +7,7 @@ export interface ReactMessageReq {
 }
 
 export interface ResponseBody {
-  settings?: Settings,
-  tabUpdated?: string
+  settings?: Settings
 }
 
 export interface ReactMessageRes {
