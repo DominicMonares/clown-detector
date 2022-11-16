@@ -4,7 +4,8 @@ export type BlacklistSetting = Set<string> | Set<never>;
 
 export interface Settings {
   entryLevel: EntryLevelSetting,
-  blacklist: BlacklistSetting
+  blacklist: BlacklistSetting,
+  urlUpdated?: boolean
 }
 
 export interface EntryLevelProps {

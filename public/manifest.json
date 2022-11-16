@@ -14,9 +14,13 @@
     "128": "logo.png"
   },
   "permissions": [
+    "tabs",
     "activeTab",
     "storage"
   ],
+  "background": {
+    "service_worker": "./static/js/background.js"
+  },
   "content_scripts": [
     {
       "matches": [
