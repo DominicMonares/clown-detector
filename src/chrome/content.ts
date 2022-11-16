@@ -1,8 +1,13 @@
-import { ReactMessageRes, EntryLevelSetting, Settings } from '../types';
+import {
+  ReactMessageReq,
+  ReactMessageRes,
+  EntryLevelSetting,
+  Settings
+} from '../types';
 
 // Function called when a new message is received
 const messagesFromReactAppListener = (
-  msg: Settings,
+  msg: ReactMessageReq,
   sender: chrome.runtime.MessageSender,
   sendResponse: (response: ReactMessageRes) => void
 ) => {
@@ -17,7 +22,9 @@ const messagesFromReactAppListener = (
 
       const response: ReactMessageRes = {
         status: 'Successfully fetched settings!',
-        response: storedSettings
+        body: {
+          settings: storedSettings
+        }
       };
 
       sendResponse(response);
@@ -52,7 +59,7 @@ window.onload = () => {
 
 }
 
-const scanJob = (settings: Settings) => {
+const scanJob = (settings: ReactMessageReq) => {
   const topCardClassName = "jobs-unified-top-card__job-insight";
   const topCards = document.getElementsByClassName(topCardClassName);
   const topCard = topCards[0]['children'][1]['innerHTML'];

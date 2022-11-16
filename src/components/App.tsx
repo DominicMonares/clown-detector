@@ -15,8 +15,11 @@ function App() {
         tabs[0]['id'] || 0,
         {},
         (res: ReactMessageRes) => {
-          setEntryLevel(res.response.entryLevel);
-          setBlacklist(res.response.blacklist);
+          if (res.body.settings) {
+            const settings = res.body.settings;
+            setEntryLevel(settings.entryLevel);
+            setBlacklist(settings.blacklist);
+          }
         }
       );
     });
