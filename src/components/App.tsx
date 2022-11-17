@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import EntryLevel from './EntryLevel';
-import Blacklist from './Blacklist';
-import { ReactMessageRes, EntryLevelSetting, BlacklistSetting } from '../types';
+import Clownlist from './Clownlist';
+import { ReactMessageRes, EntryLevelSetting, ClownlistSetting } from '../types';
 import './App.css';
 
 function App() {
   const [entryLevel, setEntryLevel] = useState<EntryLevelSetting>(5);
-  const [blacklist, setBlacklist] = useState<BlacklistSetting>({});
+  const [clownlist, setClownlist] = useState<ClownlistSetting>({});
 
   useEffect(() => {
     chrome.tabs && chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
@@ -18,7 +18,7 @@ function App() {
           if (res.body.settings) {
             const settings = res.body.settings;
             setEntryLevel(settings.entryLevel);
-            setBlacklist(settings.blacklist);
+            setClownlist(settings.clownlist);
           }
         }
       );
@@ -29,23 +29,23 @@ function App() {
     setEntryLevel(newEntryLevel);
   }
 
-  const updateBlacklist = (toAdd: string, toRemove: string) => {
-    const blacklistCopy = { ...blacklist };
+  const updateClownlist = (toAdd: string, toRemove: string) => {
+    const clownlistCopy = { ...clownlist };
 
     if (toRemove) {
-      delete blacklistCopy[toRemove];
-      return setBlacklist(blacklistCopy);
+      delete clownlistCopy[toRemove];
+      return setClownlist(clownlistCopy);
     }
 
-    blacklistCopy[toAdd] = true;
-    setBlacklist(blacklistCopy);
+    clownlistCopy[toAdd] = true;
+    setClownlist(clownlistCopy);
   }
 
   const applySettings = () => {
     chrome.tabs && chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
       chrome.tabs.sendMessage(
         tabs[0]['id'] || 0,
-        { settings: { entryLevel, blacklist } },
+        { settings: { entryLevel, clownlist } },
         (res: ReactMessageRes) => {}
       );
     });
@@ -57,7 +57,7 @@ function App() {
   return (
     <div className="app">
       <EntryLevel updateEntryLevel={updateEntryLevel} defaultSlider={entryLevel} />
-      <Blacklist updateBlacklist={updateBlacklist} blacklist={blacklist} />
+      <Clownlist updateClownlist={updateClownlist} clownlist={clownlist} />
       <button onClick={applySettings}>Apply settings and reload</button>
     </div>
   );

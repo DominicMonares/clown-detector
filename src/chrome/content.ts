@@ -16,10 +16,10 @@ const messagesFromReactAppListener = (
   console.log('[content.js]. Message received', msg);
 
   if (!Object.keys(msg).length) {
-    chrome.storage.sync.get(['entryLevel', 'blacklist'], res => {
+    chrome.storage.sync.get(['entryLevel', 'clownlist'], res => {
       const storedSettings: Settings = {
         entryLevel: res.entryLevel,
-        blacklist: res.blacklist
+        clownlist: res.clownlist
       };
 
       const response: ReactMessageRes = {
@@ -56,16 +56,16 @@ chrome.runtime.onMessage.addListener(messagesFromReactAppListener);
 
 // Run page scan once page is loaded
 window.onload = () => {
-  chrome.storage.sync.get(['entryLevel', 'blacklist'], res => {
+  chrome.storage.sync.get(['entryLevel', 'clownlist'], res => {
     if (!Object.keys(res).length) {
       const defaultEntryLevel: EntryLevelSetting = 5;
-      settings = { entryLevel: defaultEntryLevel, blacklist: {} };
+      settings = { entryLevel: defaultEntryLevel, clownlist: {} };
       chrome.storage.sync.set(settings, () => {
         console.log('Default values set!');
         waitForTopCard(scanJob)
       });
     } else {
-      settings = { entryLevel: res.entryLevel, blacklist: res.blacklist };
+      settings = { entryLevel: res.entryLevel, clownlist: res.clownlist };
       waitForTopCard(scanJob);
     }
   });
@@ -74,7 +74,7 @@ window.onload = () => {
 
 const scanJob = (topCard: string) => {
   const isEntryLevel = topCard.includes('Entry level');
-  // implement blacklist logic here
+  // implement clownlist logic here
 
   console.log('IS ENTRY LEVEL ', isEntryLevel);
 }

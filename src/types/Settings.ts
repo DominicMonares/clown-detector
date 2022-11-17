@@ -1,12 +1,12 @@
 export type EntryLevelSetting = 0 | 1 | 2 | 3 | 4 | 5;
 
-export interface BlacklistSetting {
+export interface ClownlistSetting {
   [key: string]: boolean
 }
 
 export interface Settings {
   entryLevel: EntryLevelSetting,
-  blacklist: BlacklistSetting,
+  clownlist: ClownlistSetting,
 }
 
 export interface EntryLevelProps {
@@ -14,7 +14,7 @@ export interface EntryLevelProps {
   defaultSlider: EntryLevelSetting
 }
 
-export interface BlacklistProps {
-  updateBlacklist: (toAdd: string, toRemove: string) => void,
-  blacklist: BlacklistSetting;
+export interface ClownlistProps {
+  updateClownlist: (toAdd: string, toRemove: string) => void,
+  clownlist: ClownlistSetting;
 }
