@@ -51,11 +51,16 @@ const messagesFromReactAppListener = (
   return true;
 }
 
-// Fired when a message is sent from either an extension process or a content script
+// Fired when a message is sent from background
 chrome.runtime.onMessage.addListener(messagesFromReactAppListener);
 
-// Run page scan once page is loaded
+// Disable icon if not on LinkedIn job board
+chrome.tabs && chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+  chrome.runtime.sendMessage({ url: tabs[0]['url'], id: tabs[0]['id'] });
+});
+
 window.onload = () => {
+  // Get settings and run scan
   chrome.storage.sync.get(['entryLevel', 'clownlist'], res => {
     if (!Object.keys(res).length) {
       const defaultEntryLevel: EntryLevelSetting = 5;
