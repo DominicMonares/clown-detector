@@ -56,9 +56,15 @@ function App() {
 
   return (
     <div className="app">
-      <EntryLevel updateEntryLevel={updateEntryLevel} defaultSlider={entryLevel} />
-      <Clownlist updateClownlist={updateClownlist} clownlist={clownlist} />
-      <button onClick={applySettings}>Apply settings and reload</button>
+      <div>
+        <EntryLevel updateEntryLevel={updateEntryLevel} defaultSlider={entryLevel} />
+        <Clownlist updateClownlist={updateClownlist} clownlist={clownlist} />
+      </div>
+      <div className='reload'>
+        <button className='cd-button' onClick={applySettings}>
+          <b>Apply settings and reload</b>
+        </button>
+      </div>
     </div>
   );
 }

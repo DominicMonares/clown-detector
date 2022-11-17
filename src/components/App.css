@@ -1,6 +1,10 @@
 /* General */
 
 .app {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   text-align: center;
 }
 
@@ -8,7 +12,7 @@
 /* Entry Level */
 
 .entry-level {
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .MuiSlider-thumb {
@@ -20,7 +24,7 @@
 /* Clownlist */
 
 .clownlist {
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .clownlist-input {
@@ -43,4 +47,8 @@
   border: 2px solid #d9230c;
   border-radius: 5px;
   padding: 4px;
+}
+
+.reload {
+  margin-bottom: 15px;
 }
