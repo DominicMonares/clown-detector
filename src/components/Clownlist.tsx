@@ -21,12 +21,12 @@ const Clownlist = ({ updateClownlist, clownlist }: ClownlistProps) => {
 
   return (
     <div className='clownlist'>
-      <b>Clownlisted Keywords</b>
+      <b className='title'>Clownlisted Keywords</b>
       <div className='clownlist-input'>
         <input
           className='clownlist-textfield'
           type='text'
-          placeholder='Add to clownlist'
+          placeholder='NFT, unpaid, etc.'
           onChange={(e) => setNewKeyword(e.target.value)}
           value={newKeyword}
         />

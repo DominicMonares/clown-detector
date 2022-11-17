@@ -1,12 +1,14 @@
+#root {
+  min-height: 300px;
+}
+
 body {
   width: 600px;
-  height: 100%;
   min-height: 300px;
   margin: 0;
   font-family: 'Libre Franklin', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  border: solid;
 }
 
 code {
