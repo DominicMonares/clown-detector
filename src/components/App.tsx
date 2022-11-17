@@ -56,9 +56,6 @@ function App() {
 
   return (
     <div className="app">
-      <header >
-        CLOWNS!
-      </header>
       <EntryLevel updateEntryLevel={updateEntryLevel} defaultSlider={entryLevel} />
       <Blacklist updateBlacklist={updateBlacklist} blacklist={blacklist} />
       <button onClick={applySettings}>Apply settings and reload</button>
