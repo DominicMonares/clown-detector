@@ -28,6 +28,7 @@
 }
 
 .clownlist-textfield {
+  font-size: 14px;
   padding: 4px;
   margin-right: 10px;
   width: 20%;
@@ -36,6 +37,7 @@
 }
 
 .clownlist-button {
+  font-size: 14px;
   color: #f3b2a7;
   background-color: #d9230c;
   border: 2px solid #d9230c;
