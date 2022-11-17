@@ -30,7 +30,7 @@ const Clownlist = ({ updateClownlist, clownlist }: ClownlistProps) => {
           onChange={(e) => setNewKeyword(e.target.value)}
           value={newKeyword}
         />
-        <button className='clownlist-button' onClick={addToClownlist}>
+        <button className='cd-button' onClick={addToClownlist}>
           <b>Add</b>
         </button>
       </div>
