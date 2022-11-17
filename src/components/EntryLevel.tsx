@@ -14,42 +14,46 @@ const EntryLevel = ({ updateEntryLevel, defaultSlider }: EntryLevelProps) => {
   }
 
   return (
-    <Slider
-      size="small"
-      value={defaultSlider}
-      max={5}
-      marks={marks}
-      onChange={triggerUpdateEL}
-
-      sx={{
-        width: 500,
-        height: 8,
-        borderRadius: 5,
-        '& .MuiSlider-thumb': {
-          width: 25,
-          height: 25,
-          backgroundColor: 'transparent',
-          boxShadow: '0 0 0 0',
-        },
-        '& .Mui-active': {
-          boxShadow: '0 0 0 0'
-        },
-        '& .MuiSlider-mark': {
+    <div className='entry-level'>
+      <div>
+        Entry level threshold
+      </div>
+      <Slider
+        size="small"
+        value={defaultSlider}
+        max={5}
+        marks={marks}
+        onChange={triggerUpdateEL}
+        sx={{
+          width: 500,
           height: 8,
-          backgroundColor: '#ffffff'
-        },
-        '& .MuiSlider-markActive': {
-          height: 8,
-          backgroundColor: '#ffffff'
-        },
-        '& .MuiSlider-rail': {
-          backgroundColor: '#d9230c'
-        },
-        '& .MuiSlider-track': {
-          backgroundColor: '#d9230c'
-        },
-      }}
-    />
+          borderRadius: 5,
+          '& .MuiSlider-thumb': {
+            width: 25,
+            height: 25,
+            backgroundColor: 'transparent',
+            boxShadow: '0 0 0 0',
+          },
+          '& .Mui-active': {
+            boxShadow: '0 0 0 0'
+          },
+          '& .MuiSlider-mark': {
+            height: 8,
+            backgroundColor: '#ffffff'
+          },
+          '& .MuiSlider-markActive': {
+            height: 8,
+            backgroundColor: '#ffffff'
+          },
+          '& .MuiSlider-rail': {
+            backgroundColor: '#d9230c'
+          },
+          '& .MuiSlider-track': {
+            backgroundColor: '#d9230c'
+          },
+        }}
+      />
+    </div>
   );
 }
 

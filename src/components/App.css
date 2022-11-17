@@ -1,8 +1,20 @@
+/* General */
+
 .app {
   text-align: center;
+}
+
+
+/* Entry Level */
+
+.entry-level {
+  margin-top: 10px;
 }
 
 .MuiSlider-thumb {
   background-size: 25px 25px;
   background-image: url(../assets/clown.png)
 }
+
+
+/* Blacklist */
