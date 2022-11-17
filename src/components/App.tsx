@@ -19,7 +19,6 @@ function App() {
             const settings = res.body.settings;
             setEntryLevel(settings.entryLevel);
             setBlacklist(settings.blacklist);
-            console.log('OI ', settings.blacklist)
           }
         }
       );
