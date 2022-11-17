@@ -35,14 +35,18 @@ const Clownlist = ({ updateClownlist, clownlist }: ClownlistProps) => {
         </button>
       </div>
       <div className='keywords'>
-        {Object.keys(clownlist).map(b => {
-          return (
-            <span className='keyword-container' key={b}>
-              <span className='keyword'>{b}</span>
-              <span className='x' onClick={removeFromClownlist}>X</span>
-            </span>
-          );
-        })}
+        {clownlist ? (
+          Object.keys(clownlist).map(b => {
+            return (
+              <span className='keyword-container' key={b}>
+                <span className='keyword'>{b}</span>
+                <span className='x' onClick={removeFromClownlist}>X</span>
+              </span>
+            );
+          })
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
