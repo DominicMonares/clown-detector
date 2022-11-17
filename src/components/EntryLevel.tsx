@@ -15,9 +15,7 @@ const EntryLevel = ({ updateEntryLevel, defaultSlider }: EntryLevelProps) => {
 
   return (
     <div className='entry-level'>
-      <div>
-        Entry level threshold
-      </div>
+      <b>Entry level threshold</b>
       <Slider
         size="small"
         value={defaultSlider}
@@ -27,6 +25,7 @@ const EntryLevel = ({ updateEntryLevel, defaultSlider }: EntryLevelProps) => {
         sx={{
           width: 500,
           height: 8,
+          marginTop: '5px',
           borderRadius: 5,
           '& .MuiSlider-thumb': {
             width: 25,
