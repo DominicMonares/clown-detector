@@ -54,16 +54,11 @@ function App() {
     window.close();
   }
 
-  // create onClick that updates settings by:
-    // sending message to post new values to storage
-    // rerun page scan
-
   return (
     <div className="app">
       <header >
         CLOWNS!
       </header>
-      {entryLevel}
       <EntryLevel updateEntryLevel={updateEntryLevel} defaultSlider={entryLevel} />
       <Blacklist updateBlacklist={updateBlacklist} blacklist={blacklist} />
       <button onClick={applySettings}>Apply settings and reload</button>
