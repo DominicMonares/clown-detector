@@ -25,7 +25,7 @@ const EntryLevel = ({ updateEntryLevel, defaultSlider }: EntryLevelProps) => {
         sx={{
           width: 500,
           height: 8,
-          marginTop: '5px',
+          marginTop: '6px',
           borderRadius: 5,
           '& .MuiSlider-thumb': {
             width: 25,
