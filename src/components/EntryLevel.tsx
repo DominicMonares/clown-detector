@@ -38,11 +38,11 @@ const EntryLevel = ({ updateEntryLevel, defaultSlider }: EntryLevelProps) => {
             boxShadow: '0 0 0 0'
           },
           '& .MuiSlider-mark': {
-            height: 8,
+            height: 9,
             backgroundColor: '#ffffff'
           },
           '& .MuiSlider-markActive': {
-            height: 8,
+            height: 9,
             backgroundColor: '#ffffff'
           },
           '& .MuiSlider-rail': {
