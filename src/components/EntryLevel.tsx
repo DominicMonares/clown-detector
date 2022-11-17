@@ -17,14 +17,14 @@ const EntryLevel = ({ updateEntryLevel, defaultSlider }: EntryLevelProps) => {
     <Slider
       size="small"
       value={defaultSlider}
-      max={7}
+      max={5}
       marks={marks}
       onChange={triggerUpdateEL}
 
       sx={{
         width: 500,
         height: 8,
-        borderRadius: 0,
+        borderRadius: 5,
         '& .MuiSlider-thumb': {
           width: 25,
           height: 25,
@@ -40,7 +40,7 @@ const EntryLevel = ({ updateEntryLevel, defaultSlider }: EntryLevelProps) => {
         },
         '& .MuiSlider-markActive': {
           height: 8,
-          backgroundColor: '#d9230c'
+          backgroundColor: '#ffffff'
         },
         '& .MuiSlider-rail': {
           backgroundColor: '#d9230c'

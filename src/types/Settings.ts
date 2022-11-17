@@ -1,4 +1,4 @@
-export type EntryLevelSetting = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
+export type EntryLevelSetting = 0 | 1 | 2 | 3 | 4 | 5;
 
 export interface BlacklistSetting {
   [key: string]: boolean
