@@ -5,6 +5,8 @@ import {
   Settings
 } from '../types';
 
+let settings: Settings;
+
 // Function called when a new message is received
 const messagesFromReactAppListener = (
   msg: ReactMessageReq,
@@ -31,6 +33,18 @@ const messagesFromReactAppListener = (
     });
 
     return true;
+  } else if (msg.urlUpdated) {
+    waitForTopCard(scanJob);
+
+    const response: ReactMessageRes = {
+      status: 'Successfully fetched settings!',
+      body: {}
+    };
+
+    sendResponse(response);
+    return true;
+  } else if (msg.entryLevel) {
+
   }
 
   chrome.storage.sync.set(msg, () => {});
@@ -45,26 +59,36 @@ window.onload = () => {
   chrome.storage.sync.get(['entryLevel', 'blacklist'], res => {
     if (!Object.keys(res).length) {
       const defaultEntryLevel: EntryLevelSetting = 5;
-      const defaultSettings = { entryLevel: defaultEntryLevel, blacklist: new Set<string>() };
-      chrome.storage.sync.set(defaultSettings, () => {
+      settings = { entryLevel: defaultEntryLevel, blacklist: new Set<string>() };
+      chrome.storage.sync.set(settings, () => {
         console.log('Default values set!');
-        scanJob(defaultSettings)
-        setTimeout(() => scanJob(defaultSettings), 1000); // BANDAID FIX
+        waitForTopCard(scanJob)
       });
     } else {
-      const storedSettings = { entryLevel: res.entryLevel, blacklist: res.blacklist };
-      setTimeout(() => scanJob(storedSettings), 1000); // BANDAID FIX
+      settings = { entryLevel: res.entryLevel, blacklist: res.blacklist };
+      waitForTopCard(scanJob);
     }
   });
 
 }
 
-const scanJob = (settings: ReactMessageReq) => {
-  const topCardClassName = "jobs-unified-top-card__job-insight";
-  const topCards = document.getElementsByClassName(topCardClassName);
-  const topCard = topCards[0]['children'][1]['innerHTML'];
+const scanJob = (topCard: string) => {
   const isEntryLevel = topCard.includes('Entry level');
   // implement blacklist logic here
 
   console.log('IS ENTRY LEVEL ', isEntryLevel);
+}
+
+const waitForTopCard = (callback: (topCard: string) => void) => {
+  window.setTimeout(function(){
+    const topCardClassName = "jobs-unified-top-card__job-insight";
+    const topCards = document.getElementsByClassName(topCardClassName);
+
+    if (topCards.length){
+      const topCard = topCards[0]['children'][1]['innerHTML'];
+      callback(topCard);
+    } else {
+      waitForTopCard(callback);
+    }
+  }, 500)
 }
