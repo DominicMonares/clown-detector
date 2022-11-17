@@ -1,6 +1,7 @@
 body {
   width: 600px;
-  height: 300px;
+  height: 100%;
+  min-height: 300px;
   margin: 0;
   font-family: 'Libre Franklin', sans-serif;
   -webkit-font-smoothing: antialiased;
