@@ -45,7 +45,7 @@ function App() {
     chrome.tabs && chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
       chrome.tabs.sendMessage(
         tabs[0]['id'] || 0,
-        { entryLevel, blacklist },
+        { settings: { entryLevel, blacklist } },
         (res: ReactMessageRes) => {}
       );
     });

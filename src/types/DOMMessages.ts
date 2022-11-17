@@ -1,8 +1,7 @@
-import { EntryLevelSetting, BlacklistSetting, Settings } from "./Settings";
+import { Settings } from "./Settings";
 
 export interface ReactMessageReq {
-  entryLevel?: EntryLevelSetting,
-  blacklist?: BlacklistSetting,
+  settings?: Settings
   urlUpdated?: boolean
 }
 

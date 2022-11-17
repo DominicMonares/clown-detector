@@ -43,11 +43,11 @@ const messagesFromReactAppListener = (
 
     sendResponse(response);
     return true;
-  } else if (msg.entryLevel) {
-
+  } else if (msg.settings) {
+    settings = msg.settings;
+    chrome.storage.sync.set(msg.settings, () => {});
   }
 
-  chrome.storage.sync.set(msg, () => {});
   return true;
 }
 
