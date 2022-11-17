@@ -13,7 +13,7 @@
 
 .MuiSlider-thumb {
   background-size: 25px 25px;
-  background-image: url(../assets/clown.png)
+  background-image: url(../assets/clown.png);
 }
 
 
@@ -21,4 +21,24 @@
 
 .blacklist {
   margin-top: 10px;
+}
+
+.blacklist-input {
+  margin-top: 10px;
+}
+
+.blacklist-textfield {
+  padding: 4px;
+  margin-right: 10px;
+  width: 20%;
+  border: 2px solid #d9230c;
+  border-radius: 5px;
+}
+
+.blacklist-button {
+  color: #f3b2a7;
+  background-color: #d9230c;
+  border: 2px solid #d9230c;
+  border-radius: 5px;
+  padding: 4px;
 }

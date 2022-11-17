@@ -19,16 +19,18 @@ const Blacklist = ({ updateBlacklist, blacklist }: BlacklistProps) => {
   }
 
   return (
-    <div>
-      <div>
+    <div className='blacklist'>
+      <b>Blacklisted Keywords</b>
+      <div className='blacklist-input'>
         <input
+          className='blacklist-textfield'
           type='text'
           placeholder='Add to blacklist'
           onChange={(e) => setNewKeyword(e.target.value)}
           value={newKeyword}
         />
-        <button onClick={addToBlacklist}>
-          Add to blacklist
+        <button className='blacklist-button' onClick={addToBlacklist}>
+          <b>Add</b>
         </button>
       </div>
       <div>
