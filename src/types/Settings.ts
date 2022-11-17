@@ -1,11 +1,12 @@
 export type EntryLevelSetting = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
-export type BlacklistSetting = Set<string> | Set<never>;
+export interface BlacklistSetting {
+  [key: string]: boolean
+}
 
 export interface Settings {
   entryLevel: EntryLevelSetting,
   blacklist: BlacklistSetting,
-  urlUpdated?: boolean
 }
 
 export interface EntryLevelProps {

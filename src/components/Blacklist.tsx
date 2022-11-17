@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from 'react';
+import React, { useState, MouseEvent, useEffect } from 'react';
 
 import { BlacklistProps } from '../types';
 
@@ -7,6 +7,7 @@ const Blacklist = ({ updateBlacklist, blacklist }: BlacklistProps) => {
 
   const addToBlacklist = () => {
     updateBlacklist(newKeyword, '');
+    setNewKeyword('');
   }
 
   const removeFromBlacklist = (e: MouseEvent<HTMLInputElement>) => {
@@ -31,7 +32,7 @@ const Blacklist = ({ updateBlacklist, blacklist }: BlacklistProps) => {
         </button>
       </div>
       <div>
-        {Array.from(blacklist).map(b => {
+        {Object.keys(blacklist).map(b => {
           return (
             <div key={b}>
               <span>{b}</span>

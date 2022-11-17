@@ -59,7 +59,7 @@ window.onload = () => {
   chrome.storage.sync.get(['entryLevel', 'blacklist'], res => {
     if (!Object.keys(res).length) {
       const defaultEntryLevel: EntryLevelSetting = 5;
-      settings = { entryLevel: defaultEntryLevel, blacklist: new Set<string>() };
+      settings = { entryLevel: defaultEntryLevel, blacklist: {} };
       chrome.storage.sync.set(settings, () => {
         console.log('Default values set!');
         waitForTopCard(scanJob)

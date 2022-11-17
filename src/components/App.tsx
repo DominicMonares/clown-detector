@@ -7,7 +7,7 @@ import './App.css';
 
 function App() {
   const [entryLevel, setEntryLevel] = useState<EntryLevelSetting>(5);
-  const [blacklist, setBlacklist] = useState<BlacklistSetting>(new Set<string>());
+  const [blacklist, setBlacklist] = useState<BlacklistSetting>({});
 
   useEffect(() => {
     chrome.tabs && chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
@@ -19,6 +19,7 @@ function App() {
             const settings = res.body.settings;
             setEntryLevel(settings.entryLevel);
             setBlacklist(settings.blacklist);
+            console.log('OI ', settings.blacklist)
           }
         }
       );
@@ -30,14 +31,14 @@ function App() {
   }
 
   const updateBlacklist = (toAdd: string, toRemove: string) => {
-    const blacklistCopy = new Set(blacklist);
+    const blacklistCopy = { ...blacklist };
 
     if (toRemove) {
-      blacklistCopy.delete(toRemove);
+      delete blacklistCopy[toRemove];
       return setBlacklist(blacklistCopy);
     }
 
-    blacklistCopy.add(toAdd);
+    blacklistCopy[toAdd] = true;
     setBlacklist(blacklistCopy);
   }
 
