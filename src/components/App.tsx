@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import EntryLevel from './EntryLevel';
 import Clownlist from './Clownlist';
+import { applySettings } from '../chrome/background';
 import { ReactMessageRes, EntryLevelSetting, ClownlistSetting } from '../types';
 import './App.css';
+
 
 function App() {
   const [entryLevel, setEntryLevel] = useState<EntryLevelSetting>(5);
@@ -41,19 +43,6 @@ function App() {
     setClownlist(clownlistCopy);
   }
 
-  const applySettings = () => {
-    chrome.tabs && chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-      chrome.tabs.sendMessage(
-        tabs[0]['id'] || 0,
-        { settings: { entryLevel, clownlist } },
-        (res: ReactMessageRes) => {}
-      );
-    });
-
-    chrome.tabs.reload();
-    window.close();
-  }
-
   return (
     <div className="app">
       <div>
@@ -61,7 +50,7 @@ function App() {
         <Clownlist updateClownlist={updateClownlist} clownlist={clownlist} />
       </div>
       <div className='reload'>
-        <button className='cd-button' onClick={applySettings}>
+        <button className='cd-button' onClick={() => applySettings({entryLevel, clownlist})}>
           <b>Apply settings and reload</b>
         </button>
       </div>
