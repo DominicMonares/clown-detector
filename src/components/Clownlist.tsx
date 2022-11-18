@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from 'react';
+import { useState, MouseEvent, KeyboardEvent } from 'react';
 
 import { ClownlistProps } from '../types';
 
@@ -9,6 +9,10 @@ const Clownlist = ({ updateClownlist, clownlist }: ClownlistProps) => {
   const addToClownlist = () => {
     updateClownlist(newKeyword, '');
     setNewKeyword('');
+  }
+
+  const handleEnter = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') addToClownlist();
   }
 
   const removeFromClownlist = (e: MouseEvent<HTMLInputElement>) => {
@@ -28,6 +32,7 @@ const Clownlist = ({ updateClownlist, clownlist }: ClownlistProps) => {
           type='text'
           placeholder='NFT, unpaid, etc.'
           onChange={(e) => setNewKeyword(e.target.value)}
+          onKeyUp={handleEnter}
           value={newKeyword}
         />
         <button className='cd-button' onClick={addToClownlist}>
