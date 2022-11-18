@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import {
   ReactMessageRes,
   ReactMessageListener,
@@ -6,7 +7,7 @@ import {
   ScanJob
 } from '../types';
 
-import { waitForTopCard } from './helpers';
+import { createFlag, waitForTopCard } from './helpers';
 import suffixes from './suffixes.json';
 
 
@@ -55,23 +56,22 @@ const reactMessageListener: ReactMessageListener = (msg, sender, sendResponse) =
 
 chrome.runtime.onMessage.addListener(reactMessageListener);
 
+// Scan job and flag keywords
 const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
   // Check if job is listed explicitly as entry-level
   const isEntryLevel = topCard.includes('Entry level');
   if (!isEntryLevel) return;
 
+  // Combine clownlist with entry level variations
   const clownlistKeywords = Object.keys(clownlist);
   const entryLevelKeywords = entryLevel ? suffixes.map(s => (entryLevel + 2) + s) : [];
   const allKeywords = clownlistKeywords.concat(entryLevelKeywords);
-  const job = document.getElementById('job-details')?.outerHTML;
+
+  // Get job html as a string and look for keywords
+  const job = $('#job-details')[0].outerHTML.toLowerCase();
   const flaggedKeywords = allKeywords.filter(k => job?.includes(k) ? true : false);
-  console.log('YOOOOOOO ', flaggedKeywords)
+  createFlag(flaggedKeywords);
 
-
-  // job-details ID
-
-  console.log('JOB ', job)
-  console.log('IS ENTRY LEVEL ', isEntryLevel);
 }
 
 // Get settings and run scan on page load
