@@ -6,29 +6,24 @@
   "manifest_version": 3,
   "action": {
     "default_popup": "index.html",
-    "default_icon": "./active_icon-32.png"
+    "default_icon": "active_icon-32.png"
   },
   "icons": {
-    "16": "./active_icon-128.png",
-    "48": "./active_icon-128.png",
-    "128": "./active_icon-128.png"
+    "16": "active_icon-32.png",
+    "32": "active_icon-32.png",
+    "128": "active_icon-128.png"
   },
   "permissions": [
     "tabs",
-    "storage",
-    "declarativeContent",
-    "action"
+    "storage"
   ],
   "background": {
     "service_worker": "./static/js/background.js"
   },
   "content_scripts": [
     {
-      "matches": [
-        "https://www.linkedin.com/jobs/search/*"
-      ],
-      "js": ["./static/js/content.js"],
-      "run_at": "document_end"
+      "matches": ["<all_urls>"],
+      "js": ["./static/js/content.js"]
     }
   ]
 }

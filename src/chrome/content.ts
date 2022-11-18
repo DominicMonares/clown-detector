@@ -30,9 +30,8 @@ const messagesFromReactAppListener = (
       };
 
       sendResponse(response);
+      return true;
     });
-
-    return true;
   } else if (msg.urlUpdated) {
     waitForTopCard(scanJob);
 
@@ -45,7 +44,7 @@ const messagesFromReactAppListener = (
     return true;
   } else if (msg.settings) {
     settings = msg.settings;
-    chrome.storage.sync.set(msg.settings, () => {});
+    chrome.storage.sync.set(msg.settings, () => { });
   }
 
   return true;
@@ -53,11 +52,6 @@ const messagesFromReactAppListener = (
 
 // Fired when a message is sent from background
 chrome.runtime.onMessage.addListener(messagesFromReactAppListener);
-
-// Disable icon if not on LinkedIn job board
-chrome.tabs && chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-  chrome.runtime.sendMessage({ url: tabs[0]['url'], id: tabs[0]['id'] });
-});
 
 window.onload = () => {
   // Get settings and run scan
@@ -67,14 +61,13 @@ window.onload = () => {
       settings = { entryLevel: defaultEntryLevel, clownlist: {} };
       chrome.storage.sync.set(settings, () => {
         console.log('Default values set!');
-        waitForTopCard(scanJob)
+        waitForTopCard(scanJob);
       });
     } else {
       settings = { entryLevel: res.entryLevel, clownlist: res.clownlist };
       waitForTopCard(scanJob);
     }
   });
-
 }
 
 const scanJob = (topCard: string) => {
@@ -85,15 +78,15 @@ const scanJob = (topCard: string) => {
 }
 
 const waitForTopCard = (callback: (topCard: string) => void) => {
-  window.setTimeout(function(){
+  window.setTimeout(function () {
     const topCardClassName = "jobs-unified-top-card__job-insight";
     const topCards = document.getElementsByClassName(topCardClassName);
 
-    if (topCards.length){
+    if (topCards.length) {
       const topCard = topCards[0]['children'][1]['innerHTML'];
       callback(topCard);
     } else {
       waitForTopCard(callback);
     }
-  }, 500)
+  }, 500);
 }
