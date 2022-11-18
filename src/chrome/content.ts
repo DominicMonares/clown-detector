@@ -62,9 +62,10 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
 
   const clownlistKeywords = Object.keys(clownlist);
   const entryLevelKeywords = entryLevel ? suffixes.map(s => (entryLevel + 2) + s) : [];
-  const newClownlist = clownlistKeywords.concat(entryLevelKeywords);
+  const allKeywords = clownlistKeywords.concat(entryLevelKeywords);
   const job = document.getElementById('job-details')?.outerHTML;
-  console.log('YOOOOOOO ', newClownlist)
+  const flaggedKeywords = allKeywords.filter(k => job?.includes(k) ? true : false);
+  console.log('YOOOOOOO ', flaggedKeywords)
 
 
   // job-details ID
