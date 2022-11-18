@@ -18,7 +18,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
       chrome.tabs.sendMessage(tabId, { urlUpdated: true });
     } else {
       chrome.action.disable();
-      chrome.action.setIcon({ path: '/disabled_icon-32.png' });
+      chrome.action.setIcon({ path: '/inactive_icon-32.png' });
     }
   }
 });
