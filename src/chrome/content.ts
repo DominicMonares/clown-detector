@@ -2,10 +2,12 @@ import {
   ReactMessageRes,
   ReactMessageListener,
   EntryLevelSetting,
-  Settings
+  Settings,
+  ScanJob
 } from '../types';
 
 import { waitForTopCard } from './helpers';
+import suffixes from './suffixes.json';
 
 
 let settings: Settings;
@@ -33,7 +35,7 @@ const reactMessageListener: ReactMessageListener = (msg, sender, sendResponse) =
 
   // Handle updated url
   } else if (msg.urlUpdated) {
-    waitForTopCard(scanJob);
+    waitForTopCard(scanJob, settings);
     const response: ReactMessageRes = {
       status: 'Successfully fetched settings!',
       body: {}
@@ -53,10 +55,21 @@ const reactMessageListener: ReactMessageListener = (msg, sender, sendResponse) =
 
 chrome.runtime.onMessage.addListener(reactMessageListener);
 
-const scanJob = (topCard: string) => {
+const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
+  // Check if job is listed explicitly as entry-level
   const isEntryLevel = topCard.includes('Entry level');
-  // implement clownlist logic here
+  if (!isEntryLevel) return;
 
+  const clownlistKeywords = Object.keys(clownlist);
+  const entryLevelKeywords = entryLevel ? suffixes.map(s => (entryLevel + 2) + s) : [];
+  const newClownlist = clownlistKeywords.concat(entryLevelKeywords);
+  const job = document.getElementById('job-details')?.outerHTML;
+  console.log('YOOOOOOO ', newClownlist)
+
+
+  // job-details ID
+
+  console.log('JOB ', job)
   console.log('IS ENTRY LEVEL ', isEntryLevel);
 }
 
@@ -68,11 +81,11 @@ window.onload = () => {
       settings = { entryLevel: defaultEntryLevel, clownlist: {} };
       chrome.storage.sync.set(settings, () => {
         console.log('Default values set!');
-        waitForTopCard(scanJob);
+        waitForTopCard(scanJob, settings);
       });
     } else {
       settings = { entryLevel: res.entryLevel, clownlist: res.clownlist };
-      waitForTopCard(scanJob);
+      waitForTopCard(scanJob, settings);
     }
   });
 }
