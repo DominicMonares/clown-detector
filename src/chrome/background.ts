@@ -1,7 +1,7 @@
 chrome.runtime.onInstalled.addListener(() => {
   // Disabled by default
   chrome.action.disable();
-  chrome.action.setIcon({ path: '/disabled_icon-32.png' });
+  chrome.action.setIcon({ path: '/inactive_icon-32.png' });
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
