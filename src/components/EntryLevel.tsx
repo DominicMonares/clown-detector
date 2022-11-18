@@ -15,7 +15,7 @@ const EntryLevel = ({ updateEntryLevel, defaultSlider }: EntryLevelProps) => {
 
   return (
     <div className='entry-level'>
-      <b className='title'>Entry level threshold</b>
+      <b className='title'>Entry-Level Threshold</b>
       <Slider
         size="small"
         value={defaultSlider}
