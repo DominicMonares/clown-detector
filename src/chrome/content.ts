@@ -5,6 +5,8 @@ import {
   Settings
 } from '../types';
 
+import { waitForTopCard } from './helpers';
+
 
 let settings: Settings;
 
@@ -26,6 +28,7 @@ const reactMessageListener: ReactMessageListener = (msg, sender, sendResponse) =
       };
 
       sendResponse(response);
+      return true;
     });
 
   // Handle updated url
@@ -37,6 +40,8 @@ const reactMessageListener: ReactMessageListener = (msg, sender, sendResponse) =
     };
 
     sendResponse(response);
+    return true;
+
   // Handle settings update
   } else if (msg.settings) {
     settings = msg.settings;
@@ -48,27 +53,11 @@ const reactMessageListener: ReactMessageListener = (msg, sender, sendResponse) =
 
 chrome.runtime.onMessage.addListener(reactMessageListener);
 
-// Run page scan for criteria defined then update page
 const scanJob = (topCard: string) => {
   const isEntryLevel = topCard.includes('Entry level');
   // implement clownlist logic here
 
   console.log('IS ENTRY LEVEL ', isEntryLevel);
-}
-
-// Wait for entry-level element to load
-const waitForTopCard = (callback: (topCard: string) => void) => {
-  window.setTimeout(function () {
-    const topCardClassName = "jobs-unified-top-card__job-insight";
-    const topCards = document.getElementsByClassName(topCardClassName);
-
-    if (topCards.length) {
-      const topCard = topCards[0]['children'][1]['innerHTML'];
-      callback(topCard);
-    } else {
-      waitForTopCard(callback);
-    }
-  }, 500);
 }
 
 // Get settings and run scan on page load
