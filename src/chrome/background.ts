@@ -1,6 +1,6 @@
 import { ReactMessageRes, Settings } from '../types';
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+chrome.tabs && chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
   if (changeInfo.url) {
     chrome.tabs.sendMessage(tabId, { urlUpdated: true });
   }
