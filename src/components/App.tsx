@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
 import EntryLevel from './EntryLevel';
 import Clownlist from './Clownlist';
+import Offsite from './Offsite';
 import { applySettings } from '../chrome/background';
 import { ReactMessageRes, EntryLevelSetting, ClownlistSetting } from '../types';
 import './App.css';
 
+const searchUrl = "linkedin.com/jobs/search/";
+const viewUrl = "linkedin.com/jobs/view/";
 
 const App = () => {
+  const [offsite, setOffsite] = useState<boolean>(false);
   const [entryLevel, setEntryLevel] = useState<EntryLevelSetting>(5);
   const [clownlist, setClownlist] = useState<ClownlistSetting>({});
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
@@ -14,17 +18,25 @@ const App = () => {
   useEffect(() => {
     // Fetch initial settings from chrome storage and update state
     chrome.tabs && chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-      chrome.tabs.sendMessage(
-        tabs[0]['id'] || 0,
-        {},
-        (res: ReactMessageRes) => {
-          if (res.body.settings) {
-            const settings = res.body.settings;
-            setEntryLevel(settings.entryLevel);
-            setClownlist(settings.clownlist);
+      const tab = tabs[0];
+
+      // Render settings if on LinkedIn job page
+      if (tab.url?.includes(searchUrl) || tab.url?.includes(viewUrl)) {
+        chrome.tabs.sendMessage(
+          tab.id || 0,
+          {},
+          (res: ReactMessageRes) => {
+            if (res.body.settings) {
+              const settings = res.body.settings;
+              setEntryLevel(settings.entryLevel);
+              setClownlist(settings.clownlist);
+            }
           }
-        }
-      );
+        );
+      } else {
+        // Render offsite page if not on LinkedIn job page
+        return setOffsite(true);
+      }
     });
   }, []);
 
@@ -47,25 +59,31 @@ const App = () => {
   }
 
   const updateSettings = () => {
-    applySettings({entryLevel, clownlist});
+    applySettings({ entryLevel, clownlist });
     setButtonDisabled(true);
   }
 
   return (
     <div className="app">
-      <div>
-        <EntryLevel updateEntryLevel={updateEntryLevel} defaultSlider={entryLevel} />
-        <Clownlist updateClownlist={updateClownlist} clownlist={clownlist} />
-      </div>
-      <div className='reload'>
-        <button
-          className='cd-button'
-          onClick={updateSettings}
-          disabled={buttonDisabled}
-        >
-          <b>Apply settings and reload</b>
-        </button>
-      </div>
+      {offsite ? (
+        <Offsite />
+      ) : (
+        <>
+          <div>
+            <EntryLevel updateEntryLevel={updateEntryLevel} defaultSlider={entryLevel} />
+            <Clownlist updateClownlist={updateClownlist} clownlist={clownlist} />
+          </div>
+          <div className='reload'>
+            <button
+              className='cd-button'
+              onClick={updateSettings}
+              disabled={buttonDisabled}
+            >
+              <b>Apply settings and reload</b>
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }
