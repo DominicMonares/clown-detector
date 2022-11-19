@@ -13,6 +13,29 @@
   font-size: 16px;
 }
 
+.cd-button {
+  font-size: 15px;
+  color: #f3b2a7;
+  background-color: #d9230c;
+  border: 2px solid #d9230c;
+  border-radius: 5px;
+  padding: 7px;
+}
+
+.cd-button:hover {
+  cursor: pointer;
+}
+
+.cd-button:active {
+  color: #d9230c;
+  background-color: #f3b2a7;
+  border: 2px solid #f3b2a7;
+}
+
+/* .cd-button:disabled {
+  cursor: initial;
+} */
+
 
 /* Entry Level */
 
@@ -47,15 +70,6 @@
   /* width: 20%; */
   border: 2px solid #d9230c;
   border-radius: 5px;
-}
-
-.cd-button {
-  font-size: 15px;
-  color: #f3b2a7;
-  background-color: #d9230c;
-  border: 2px solid #d9230c;
-  border-radius: 5px;
-  padding: 7px;
 }
 
 .reload {
