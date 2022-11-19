@@ -1,6 +1,6 @@
 {
   "name": "clown-detector",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
@@ -33,6 +33,16 @@
     "extends": [
       "react-app",
       "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version"
     ]
   }
 }
