@@ -6,7 +6,7 @@ type _Range<T extends number, R extends unknown[]> = R['length'] extends T ? (
   _Range<T, [R['length'], ...R]>
 );
 
-export type EntryLevelSetting = Ran<5>;
+export type EntryLevelSetting = Ran<6>;
 
 export type EntryLevel = Ran<16>;
 
