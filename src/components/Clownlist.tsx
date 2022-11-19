@@ -27,7 +27,7 @@ const Clownlist = ({ updateClownlist, clownlist }: ClownlistProps) => {
     setButtonDisabled(true);
   }
 
-  const removeFromClownlist = (e: MouseEvent<HTMLInputElement>) => {
+  const removeFromClownlist = (e: MouseEvent<HTMLButtonElement>) => {
     const target = e.target as HTMLInputElement;
     if (target['parentNode'] !== null) {
       const keyword = target['parentNode']['children'][0]['innerHTML'];
@@ -61,7 +61,12 @@ const Clownlist = ({ updateClownlist, clownlist }: ClownlistProps) => {
             return (
               <span className='keyword-container' key={b}>
                 <span className='keyword'>{b}</span>
-                <span className='x' onClick={removeFromClownlist}>X</span>
+                <button
+                  className='x'
+                  onClick={removeFromClownlist}
+                >
+                  X
+                </button>
               </span>
             );
           })
