@@ -5,16 +5,15 @@ import suffixes from './suffixes.json';
 
 const topCardClassName = "jobs-unified-top-card__job-insight";
 
-// Wait for entry-level element to load
-export const waitForTopCard: WaitForTopCard = (callback, settings) => {
+// Wait for entry level element to load
+export const waitForTopCard: WaitForTopCard = (scanJob, settings) => {
   window.setTimeout(function () {
     const topCards = $(`.${topCardClassName}`);
-
     if (topCards.length) {
       const topCard = topCards[0]['children'][1]['innerHTML'];
-      callback(topCard, settings);
+      scanJob(topCard, settings);
     } else {
-      waitForTopCard(callback, settings);
+      waitForTopCard(scanJob, settings);
     }
   }, 500);
 }
@@ -31,7 +30,8 @@ export const createELKeywords: CreateELKeywords = (years, keywords) => {
   return years === 15 ? keywords : createELKeywords(nextYear, keywords);
 }
 
-export const createFlag = (keywords: string[]) => {
+// Send in the clowns!
+export const renderFlags = (keywords: string[]) => {
   const joinedKeywords = (keywords.map((k, i) => {
     return i === keywords.length - 1 ? k : k + ' · ';
   })).join('');

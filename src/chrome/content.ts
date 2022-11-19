@@ -10,7 +10,7 @@ import {
 } from '../types';
 import {
   createELKeywords,
-  createFlag,
+  renderFlags,
   replaceApostrophes,
   waitForTopCard
 } from './helpers';
@@ -79,7 +79,7 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
 
   // Escape keywords then render
   const escapedKeywords = flaggedKeywords.map(k => escape(k));
-  createFlag(escapedKeywords);
+  renderFlags(escapedKeywords);
 }
 
 // Get settings and run job scan once page is loaded
