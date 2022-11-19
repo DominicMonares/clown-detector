@@ -1,4 +1,14 @@
-export type EntryLevelSetting = 0 | 1 | 2 | 3 | 4 | 5;
+type Ran<T extends number> = number extends T ? (number) : _Range<T, []>;
+
+type _Range<T extends number, R extends unknown[]> = R['length'] extends T ? (
+  R[number]
+) : (
+  _Range<T, [R['length'], ...R]>
+);
+
+export type EntryLevelSetting = Ran<5>;
+
+export type EntryLevel = Ran<16>;
 
 export interface ClownlistSetting {
   [key: string]: boolean
