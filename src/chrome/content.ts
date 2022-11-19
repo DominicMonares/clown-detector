@@ -4,11 +4,11 @@ import {
   ReactMessageListener,
   EntryLevelSetting,
   Settings,
-  ScanJob
+  ScanJob,
+  EntryLevel
 } from '../types';
 
-import { createFlag, waitForTopCard } from './helpers';
-import suffixes from './suffixes.json';
+import { createELKeywords, createFlag, waitForTopCard } from './helpers';
 
 
 let settings: Settings;
@@ -63,8 +63,9 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
   if (!isEntryLevel) return;
 
   // Combine clownlist with entry level variations
+  const years = entryLevel + 2 as EntryLevel;
   const clownlistKeywords = Object.keys(clownlist);
-  const entryLevelKeywords = entryLevel ? suffixes.map(s => (entryLevel + 2) + s) : [];
+  const entryLevelKeywords = entryLevel ? createELKeywords(years, []) : [];
   const allKeywords = clownlistKeywords.concat(entryLevelKeywords);
 
   // Get job html as a string and look for keywords
