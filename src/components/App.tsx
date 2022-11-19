@@ -39,7 +39,8 @@ function App() {
 
     if (toRemove) {
       delete clownlistCopy[toRemove];
-      return setClownlist(clownlistCopy);
+      setClownlist(clownlistCopy);
+      return setButtonDisabled(false);
     }
 
     clownlistCopy[toAdd] = true;
