@@ -101,6 +101,9 @@
 .x {
   font-size: 11px;
   font-weight: bold;
+  color: #d9230c;
+  background-color: transparent;
+  border: none;
 }
 
 .x:hover {
