@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { Years, WaitForTopCard } from "../types";
+import { Years, WaitForTopCard, CreateELKeywords } from "../types";
 import suffixes from './suffixes.json';
 
 
@@ -19,27 +19,12 @@ export const waitForTopCard: WaitForTopCard = (callback, settings) => {
   }, 500);
 }
 
-export const createELKeywords = (entryLevel: Years, keywords: string[]) => {
-  const years = entryLevel;
-  // let count = entryLevel;
-  // const keywords = suffixes.reduce(
-  //   (previousValue, currentValue) => {
-  //     return previousValue.push(currentValue);
-  //   },
-  //   [] as string[]
-  // );
-
-
-
-  // while (count < 15) {
-  //   const newKeywords = suffixes.map(s => (count + 2) + s);
-  //   keywords.push(newKeywords);
-  //   count++;
-  // }
-
+export const createELKeywords: CreateELKeywords = (years, keywords) => {
   if (years === 15) return keywords;
 
-  return keywords.flat();
+  suffixes.forEach(s => keywords.push(years + s));
+  const nextYear = years + 1 as Years;
+  return createELKeywords(nextYear, keywords);
 }
 
 export const createFlag = (keywords: string[]) => {
