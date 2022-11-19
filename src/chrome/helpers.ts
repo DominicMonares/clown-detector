@@ -20,11 +20,13 @@ export const waitForTopCard: WaitForTopCard = (callback, settings) => {
 }
 
 export const createELKeywords: CreateELKeywords = (years, keywords) => {
-  if (years === 15) return keywords;
-
   suffixes.forEach(s => keywords.push(years + s));
   const nextYear = years + 1 as Years;
-  return createELKeywords(nextYear, keywords);
+  if (years === 15) {
+    return keywords;
+  } else {
+    return createELKeywords(nextYear, keywords);
+  }
 }
 
 export const createFlag = (keywords: string[]) => {
