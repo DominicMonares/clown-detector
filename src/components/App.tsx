@@ -10,8 +10,10 @@ import './App.css';
 function App() {
   const [entryLevel, setEntryLevel] = useState<EntryLevelSetting>(5);
   const [clownlist, setClownlist] = useState<ClownlistSetting>({});
+  const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
 
   useEffect(() => {
+    // Fetch initial settings from chrome storage and update state
     chrome.tabs && chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
       chrome.tabs.sendMessage(
         tabs[0]['id'] || 0,
@@ -29,6 +31,7 @@ function App() {
 
   const updateEntryLevel = (newEntryLevel: EntryLevelSetting) => {
     setEntryLevel(newEntryLevel);
+    setButtonDisabled(false);
   }
 
   const updateClownlist = (toAdd: string, toRemove: string) => {
@@ -41,6 +44,12 @@ function App() {
 
     clownlistCopy[toAdd] = true;
     setClownlist(clownlistCopy);
+    setButtonDisabled(false);
+  }
+
+  const updateSettings = () => {
+    applySettings({entryLevel, clownlist});
+    setButtonDisabled(true);
   }
 
   return (
@@ -50,7 +59,11 @@ function App() {
         <Clownlist updateClownlist={updateClownlist} clownlist={clownlist} />
       </div>
       <div className='reload'>
-        <button className='cd-button' onClick={() => applySettings({entryLevel, clownlist})}>
+        <button
+          className='cd-button'
+          onClick={updateSettings}
+          disabled={buttonDisabled}
+        >
           <b>Apply settings and reload</b>
         </button>
       </div>
