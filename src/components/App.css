@@ -26,15 +26,12 @@
   cursor: pointer;
 }
 
-.cd-button:active {
+.cd-button:disabled, .cd-button:active  {
   color: #d9230c;
   background-color: #f3b2a7;
   border: 2px solid #f3b2a7;
-}
-
-/* .cd-button:disabled {
   cursor: initial;
-} */
+}
 
 
 /* Entry Level */
