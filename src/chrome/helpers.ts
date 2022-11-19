@@ -1,5 +1,6 @@
 import $ from 'jquery';
-import { WaitForTopCard } from "../types";
+import { EntryLevel, EntryLevelSetting, WaitForTopCard } from "../types";
+import suffixes from './suffixes.json';
 
 
 const topCardClassName = "jobs-unified-top-card__job-insight";
@@ -16,6 +17,29 @@ export const waitForTopCard: WaitForTopCard = (callback, settings) => {
       waitForTopCard(callback, settings);
     }
   }, 500);
+}
+
+export const createELKeywords = (entryLevel: EntryLevel, keywords: string[]) => {
+  const years = entryLevel;
+  // let count = entryLevel;
+  // const keywords = suffixes.reduce(
+  //   (previousValue, currentValue) => {
+  //     return previousValue.push(currentValue);
+  //   },
+  //   [] as string[]
+  // );
+
+
+
+  // while (count < 15) {
+  //   const newKeywords = suffixes.map(s => (count + 2) + s);
+  //   keywords.push(newKeywords);
+  //   count++;
+  // }
+
+  if (years === 15) return keywords;
+
+  return keywords.flat();
 }
 
 export const createFlag = (keywords: string[]) => {
