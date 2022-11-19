@@ -1,4 +1,4 @@
-import { Settings, Years } from "./Settings"
+import { Settings, Years } from "./Settings";
 
 export type ScanJob = (
   topCard: string,
@@ -10,4 +10,7 @@ export type WaitForTopCard = (
   settings: Settings
 ) => void
 
-export type CreateELKeywords = (entryLevel: Years, keywords: string[]) => string[];
+export type CreateELKeywords = (
+  entryLevel: Years,
+  keywords: string[]
+) => string[];

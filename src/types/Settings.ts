@@ -1,14 +1,15 @@
-type Ran<T extends number> = number extends T ? (number) : _Range<T, []>;
+type RangeSetup<T extends number, R extends unknown[]> =
+  R['length'] extends T ? (
+    R[number]
+  ) : (
+    RangeSetup<T, [R['length'], ...R]>
+  );
 
-type _Range<T extends number, R extends unknown[]> = R['length'] extends T ? (
-  R[number]
-) : (
-  _Range<T, [R['length'], ...R]>
-);
+type Range<T extends number> = number extends T ? (number) : RangeSetup<T, []>;
 
-export type EntryLevelSetting = Ran<6>;
+export type EntryLevelSetting = Range<6>;
 
-export type Years = Ran<16>;
+export type Years = Range<16>;
 
 export interface ClownlistSetting {
   [key: string]: boolean
@@ -16,7 +17,7 @@ export interface ClownlistSetting {
 
 export interface Settings {
   entryLevel: EntryLevelSetting,
-  clownlist: ClownlistSetting,
+  clownlist: ClownlistSetting
 }
 
 export interface EntryLevelProps {

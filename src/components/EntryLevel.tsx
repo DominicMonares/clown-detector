@@ -1,12 +1,10 @@
 import React from 'react';
 import { Slider } from '@mui/material';
-
 import { EntryLevelProps, EntryLevelSetting } from '../types';
 import marks from './marks.json';
 
 
 const EntryLevel = ({ updateEntryLevel, defaultSlider }: EntryLevelProps) => {
-
   const triggerUpdateEL = (e: Event) => {
     const target = e.target as HTMLInputElement;
     const value = Number(target.value) as EntryLevelSetting;
@@ -45,7 +43,7 @@ const EntryLevel = ({ updateEntryLevel, defaultSlider }: EntryLevelProps) => {
           },
           '& .MuiSlider-track': {
             backgroundColor: '#d9230c'
-          },
+          }
         }}
       />
     </div>

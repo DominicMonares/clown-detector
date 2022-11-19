@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 import EntryLevel from './EntryLevel';
 import Clownlist from './Clownlist';
 import { applySettings } from '../chrome/background';
@@ -7,7 +6,7 @@ import { ReactMessageRes, EntryLevelSetting, ClownlistSetting } from '../types';
 import './App.css';
 
 
-function App() {
+const App = () => {
   const [entryLevel, setEntryLevel] = useState<EntryLevelSetting>(5);
   const [clownlist, setClownlist] = useState<ClownlistSetting>({});
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
@@ -36,7 +35,6 @@ function App() {
 
   const updateClownlist = (toAdd: string, toRemove: string) => {
     const clownlistCopy = { ...clownlist };
-
     if (toRemove) {
       delete clownlistCopy[toRemove];
       setClownlist(clownlistCopy);
