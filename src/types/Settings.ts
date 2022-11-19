@@ -8,7 +8,7 @@ type _Range<T extends number, R extends unknown[]> = R['length'] extends T ? (
 
 export type EntryLevelSetting = Ran<6>;
 
-export type EntryLevel = Ran<16>;
+export type Years = Ran<16>;
 
 export interface ClownlistSetting {
   [key: string]: boolean

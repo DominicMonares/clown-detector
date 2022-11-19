@@ -5,7 +5,7 @@ import {
   EntryLevelSetting,
   Settings,
   ScanJob,
-  EntryLevel
+  Years
 } from '../types';
 
 import { createELKeywords, createFlag, waitForTopCard } from './helpers';
@@ -63,7 +63,7 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
   if (!isEntryLevel) return;
 
   // Combine clownlist with entry level variations
-  const years = entryLevel + 2 as EntryLevel;
+  const years = entryLevel + 2 as Years;
   const clownlistKeywords = Object.keys(clownlist);
   const entryLevelKeywords = entryLevel ? createELKeywords(years, []) : [];
   const allKeywords = clownlistKeywords.concat(entryLevelKeywords);

@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { EntryLevel, EntryLevelSetting, WaitForTopCard } from "../types";
+import { Years, WaitForTopCard } from "../types";
 import suffixes from './suffixes.json';
 
 
@@ -19,7 +19,7 @@ export const waitForTopCard: WaitForTopCard = (callback, settings) => {
   }, 500);
 }
 
-export const createELKeywords = (entryLevel: EntryLevel, keywords: string[]) => {
+export const createELKeywords = (entryLevel: Years, keywords: string[]) => {
   const years = entryLevel;
   // let count = entryLevel;
   // const keywords = suffixes.reduce(
