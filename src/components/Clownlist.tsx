@@ -14,8 +14,8 @@ const Clownlist = ({ updateClownlist, clownlist }: ClownlistProps) => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
-    input ? setButtonDisabled(false) : setButtonDisabled(true);
     setNewKeyword(input);
+    input ? setButtonDisabled(false) : setButtonDisabled(true);
   }
 
   const handleEnter = (e: KeyboardEvent) => {
