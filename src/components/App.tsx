@@ -6,11 +6,11 @@ import { applySettings } from '../chrome/background';
 import { ReactMessageRes, EntryLevelSetting, ClownlistSetting } from '../types';
 import './App.css';
 
-const searchUrl = "linkedin.com/jobs/search/";
-const viewUrl = "linkedin.com/jobs/view/";
+const searchUrl = 'linkedin.com/jobs/search/';
+const viewUrl = 'linkedin.com/jobs/view/';
 
 const App = () => {
-  const [offsite, setOffsite] = useState<boolean>(false);
+  const [offsite, setOffsite] = useState<boolean>(true); // Temp
   const [entryLevel, setEntryLevel] = useState<EntryLevelSetting>(5);
   const [clownlist, setClownlist] = useState<ClownlistSetting>({});
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
@@ -64,7 +64,7 @@ const App = () => {
   }
 
   return (
-    <div className="app">
+    <div className={offsite ? "app-offsite" : "app"}>
       {offsite ? (
         <Offsite />
       ) : (
@@ -73,9 +73,9 @@ const App = () => {
             <EntryLevel updateEntryLevel={updateEntryLevel} defaultSlider={entryLevel} />
             <Clownlist updateClownlist={updateClownlist} clownlist={clownlist} />
           </div>
-          <div className='reload'>
+          <div className="reload">
             <button
-              className='cd-button'
+              className="cd-button"
               onClick={updateSettings}
               disabled={buttonDisabled}
             >
@@ -84,6 +84,14 @@ const App = () => {
           </div>
         </>
       )}
+      <a
+        className="report"
+        href="https://github.com/DominicMonares/clown-detector/issues"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Report a bug
+      </a>
     </div>
   );
 }
