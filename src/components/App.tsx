@@ -10,7 +10,7 @@ const searchUrl = 'linkedin.com/jobs/search/';
 const viewUrl = 'linkedin.com/jobs/view/';
 
 const App = () => {
-  const [offsite, setOffsite] = useState<boolean>(true); // Temp
+  const [offsite, setOffsite] = useState<boolean>(false);
   const [entryLevel, setEntryLevel] = useState<EntryLevelSetting>(5);
   const [clownlist, setClownlist] = useState<ClownlistSetting>({});
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
