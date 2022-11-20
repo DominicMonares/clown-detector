@@ -24,8 +24,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://www.linkedin.com/jobs/search/*",
-        "https://www.linkedin.com/jobs/view/*"
+        "https://www.linkedin.com/jobs/*"
       ],
       "js": ["./static/js/content.js"],
       "run_at": "document_end"

@@ -6,8 +6,7 @@ import { applySettings } from '../chrome/background';
 import { ReactMessageRes, EntryLevelSetting, ClownlistSetting } from '../types';
 import './App.css';
 
-const searchUrl = 'linkedin.com/jobs/search/';
-const viewUrl = 'linkedin.com/jobs/view/';
+const jobUrl = 'linkedin.com/jobs/';
 
 const App = () => {
   const [offsite, setOffsite] = useState<boolean>(false);
@@ -21,12 +20,12 @@ const App = () => {
       const tab = tabs[0];
 
       // Render settings if on LinkedIn job page
-      if (tab.url?.includes(searchUrl) || tab.url?.includes(viewUrl)) {
+      if (tab.url?.includes(jobUrl)) {
         chrome.tabs.sendMessage(
           tab.id || 0,
           {},
           (res: ReactMessageRes) => {
-            if (res.body.settings) {
+            if (res?.body.settings) {
               const settings = res.body.settings;
               setEntryLevel(settings.entryLevel);
               setClownlist(settings.clownlist);
