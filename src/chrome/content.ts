@@ -38,7 +38,7 @@ const reactMessageListener: ReactMessageListener = (msg, sender, sendResponse) =
     });
   } else if (msg.urlUpdated) {
     // Run job scan when updated url is sent from background
-    waitForTopCard(scanJob, settings);
+    waitForTopCard(scanJob, settings, 0);
     const response: ReactMessageRes = {
       status: 'Successfully fetched settings!',
       body: {}
@@ -89,10 +89,10 @@ window.onload = () => {
       // Create default settings if user settings don't exist
       const defaultEntryLevel: EntryLevelSetting = 5;
       settings = { entryLevel: defaultEntryLevel, clownlist: {} };
-      chrome.storage.sync.set(settings, () => waitForTopCard(scanJob, settings));
+      chrome.storage.sync.set(settings, () => waitForTopCard(scanJob, settings, 0));
     } else {
       settings = { entryLevel: res.entryLevel, clownlist: res.clownlist };
-      waitForTopCard(scanJob, settings);
+      waitForTopCard(scanJob, settings, 0);
     }
   });
 }

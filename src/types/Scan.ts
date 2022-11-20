@@ -7,7 +7,8 @@ export type ScanJob = (
 
 export type WaitForTopCard = (
   callback: ScanJob,
-  settings: Settings
+  settings: Settings,
+  count: number
 ) => void
 
 export type CreateELKeywords = (

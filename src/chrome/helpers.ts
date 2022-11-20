@@ -6,14 +6,15 @@ import suffixes from './suffixes.json';
 const topCardClassName = "jobs-unified-top-card__job-insight";
 
 // Wait for entry level element to load
-export const waitForTopCard: WaitForTopCard = (scanJob, settings) => {
+export const waitForTopCard: WaitForTopCard = (scanJob, settings, count) => {
+  if (count === 5) return; // Exit if not found after 2500 ms
   window.setTimeout(function () {
     const topCards = $(`.${topCardClassName}`);
     if (topCards.length) {
       const topCard = topCards[0]['children'][1]['innerHTML'];
-      scanJob(topCard, settings);
+      return scanJob(topCard, settings);
     } else {
-      waitForTopCard(scanJob, settings);
+      return waitForTopCard(scanJob, settings, count + 1);
     }
   }, 500);
 }
