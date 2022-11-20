@@ -9,7 +9,7 @@
     "default_icon": "active_icon-32.png"
   },
   "icons": {
-    "16": "active_icon-32.png",
+    "16": "active_icon-16.png",
     "32": "active_icon-32.png",
     "128": "active_icon-128.png"
   },
