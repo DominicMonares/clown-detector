@@ -1,13 +1,16 @@
 /* General */
 
-.app {
+.app, .app-offsite {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   text-align: center;
   height: 100%;
   min-height: 300px;
-  border: 2px black solid;
+}
+
+.app-offsite {
+  background-color: #f3b2a7;
 }
 
 .title {
@@ -32,6 +35,23 @@
   background-color: #f3b2a7;
   color: #d9230c;
   cursor: initial;
+}
+
+.report {
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.report:link {
+  color: #d9230c;
+}
+
+.report:visited {
+  color: #d9230c;
+}
+
+.report:active {
+  color: #ffffff;
 }
 
 
