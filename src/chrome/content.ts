@@ -60,13 +60,14 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
   const clownlistKeywords = replaceApostrophes(clownlistKeys);
   const entryLevelKeywords = years && isEntryLevel ? createELKeywords(years, []) : [];
   const allKeywords = entryLevelKeywords.concat(clownlistKeywords);
-  if (!allKeywords.length) return;
 
   // Get job html as a string and search for keywords
   const job = $('#job-details')[0]['outerHTML'].toLowerCase();
   const flaggedKeywords = allKeywords.filter(k => {
     return job?.includes(k.toLowerCase()) ? true : false;
   });
+
+  if (!flaggedKeywords.length) return;
 
   // Escape keywords then render
   const escapedKeywords = flaggedKeywords.map(k => escape(k));
