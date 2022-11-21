@@ -13,7 +13,7 @@ import {
   renderFlags,
   replaceApostrophes,
   waitForTopCard
-} from './helpers';
+} from './utils';
 
 
 let settings: Settings;

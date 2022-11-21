@@ -40,7 +40,7 @@ export const renderFlags = (keywords: string[]) => {
 
   const topCard = $(`.${topCardClassName}`).first();
   const newHTML = $(`
-    <span style="display:flex; align-items:center; margin-left:12px;">
+    <span style="display:flex; align-items:center; margin-left:10px;">
       <span style="margin-right:10px; font-size: 17px">&#129313;</span>
       <span>${joinedKeywords}</span>
     </span>
