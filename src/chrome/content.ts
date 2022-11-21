@@ -72,15 +72,12 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
   renderFlags(escapedKeywords);
 }
 
-// Run job scan whenever the job list or details change
-const startObservers = () => {
-  const config = { attributes: true, subtree: true };
-  const cardObserver = new MutationObserver(() => waitForTopCard(scanJob, settings, 0));
-  const compareObserver = new MutationObserver(() => waitForTopCard(scanJob, settings, 0));
-  const listNode = $('.jobs-search-results-list')[0];
-  const compareNode = $('.jobs-search__job-details--container')[0];
-  cardObserver.observe(listNode, config);
-  compareObserver.observe(compareNode, config);
+// Run job scan whenever the job list or details rerender
+const startObserver = () => {
+  const config = { attributes: true, childList: true, subtree: true };
+  const targetNode = $('.scaffold-layout__list-detail-inner')[0];
+  const observer = new MutationObserver(() => waitForTopCard(scanJob, settings, 0));
+  observer.observe(targetNode, config);
 }
 
 // Get settings and start observers once page is loaded
@@ -91,10 +88,10 @@ window.onload = () => {
       const defaultEntryLevel: EntryLevelSetting = 5;
       settings = { entryLevel: defaultEntryLevel, clownlist: {} };
       chrome.storage.sync.set(settings, () => {});
-      startObservers();
+      startObserver();
     } else {
       settings = { entryLevel: res.entryLevel, clownlist: res.clownlist };
-      startObservers();
+      startObserver();
     }
   });
 }
