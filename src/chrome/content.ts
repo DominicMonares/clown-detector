@@ -36,20 +36,10 @@ const reactMessageListener: ReactMessageListener = (msg, sender, sendResponse) =
       sendResponse(response);
       return true;
     });
-  } else if (msg.urlUpdated) {
-    // Run job scan when updated url is sent from background
-    waitForTopCard(scanJob, settings, 0);
-    const response: ReactMessageRes = {
-      status: 'Successfully fetched settings!',
-      body: {}
-    };
-
-    sendResponse(response);
-    return true;
   } else if (msg.settings) {
     // Store settings sent from app
     settings = msg.settings;
-    chrome.storage.sync.set(msg.settings, () => {});
+    chrome.storage.sync.set(msg.settings, () => { });
   }
 
   return true;
@@ -85,14 +75,29 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
 // Get settings and run job scan once page is loaded
 window.onload = () => {
   chrome.storage.sync.get(['entryLevel', 'clownlist'], res => {
+    const targetNode = $('.scaffold-layout__detail')[0];
+    const config = { attributes: true, childList: true, subtree: true };
+
     if (!Object.keys(res).length) {
       // Create default settings if user settings don't exist
       const defaultEntryLevel: EntryLevelSetting = 5;
       settings = { entryLevel: defaultEntryLevel, clownlist: {} };
-      chrome.storage.sync.set(settings, () => waitForTopCard(scanJob, settings, 0));
+      chrome.storage.sync.set(settings, () => {
+
+        const observer = new MutationObserver(mutations => {
+          waitForTopCard(scanJob, settings, 0);
+        });
+        observer.observe(targetNode, config);
+      });
     } else {
       settings = { entryLevel: res.entryLevel, clownlist: res.clownlist };
-      waitForTopCard(scanJob, settings, 0);
+      // waitForTopCard(scanJob, settings, 0);
+
+      const observer = new MutationObserver(mutations => {
+        waitForTopCard(scanJob, settings, 0);
+      });
+      observer.observe(targetNode, config);
     }
   });
 }
+
