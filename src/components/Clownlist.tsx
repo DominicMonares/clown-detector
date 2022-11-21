@@ -2,7 +2,8 @@ import {
   useState,
   ChangeEvent,
   KeyboardEvent,
-  MouseEvent
+  MouseEvent,
+  useEffect
 } from 'react';
 import { ClownlistProps } from '../types';
 
@@ -11,9 +12,15 @@ const Clownlist = ({ updateClownlist, clownlist }: ClownlistProps) => {
   const clownlistKeys = Object.keys(clownlist);
   const [newKeyword, setNewKeyword] = useState<string>('');
   const [addDisabled, setAddDisabled] = useState<boolean>(true);
-  const [clearDisabled, setClearDisabled] = useState<boolean>(
-    clownlistKeys.length ? false : true
-  );
+  const [clearDisabled, setClearDisabled] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (clownlistKeys.length) {
+      setClearDisabled(false);
+    } else {
+      setClearDisabled(true);
+    }
+  }, [clearDisabled, clownlistKeys])
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
@@ -26,9 +33,10 @@ const Clownlist = ({ updateClownlist, clownlist }: ClownlistProps) => {
   }
 
   const addToClownlist = () => {
-    updateClownlist(newKeyword, '');
+    updateClownlist(newKeyword, []);
     setNewKeyword('');
     setAddDisabled(true);
+    setClearDisabled(false);
   }
 
   const removeFromClownlist = (e: MouseEvent<HTMLButtonElement>) => {
@@ -37,6 +45,11 @@ const Clownlist = ({ updateClownlist, clownlist }: ClownlistProps) => {
       const keyword = target['parentNode']['children'][0]['innerHTML'];
       updateClownlist('', [keyword]);
     }
+  }
+
+  const clearClownlist = () => {
+    updateClownlist('', clownlistKeys);
+    setClearDisabled(true);
   }
 
   return (
@@ -58,15 +71,13 @@ const Clownlist = ({ updateClownlist, clownlist }: ClownlistProps) => {
         >
           <b>Add</b>
         </button>
-        {clownlistKeys.length ? (
-          <button
-            className='cd-button'
-          >
-            Clear
-          </button>
-        ) : (
-          <></>
-        )}
+        <button
+          className='cd-button'
+          onClick={clearClownlist}
+          disabled={clearDisabled}
+        >
+          <b>Clear</b>
+        </button>
       </div>
       <div className='keywords'>
         {clownlist ? (
