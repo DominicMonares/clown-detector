@@ -62,7 +62,7 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
   const allKeywords = entryLevelKeywords.concat(clownlistKeywords);
 
   // Get job html as a string and search for keywords
-  const job = $('#job-details')[0].outerHTML.toLowerCase();
+  const job = $('#job-details')[0]['outerHTML'].toLowerCase();
   const flaggedKeywords = allKeywords.filter(k => {
     return job?.includes(k.toLowerCase()) ? true : false;
   });
@@ -72,32 +72,29 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
   renderFlags(escapedKeywords);
 }
 
-// Get settings and run job scan once page is loaded
+// Run job scan whenever the job list or details change
+const startObservers = () => {
+  const config = { attributes: true, subtree: true };
+  const cardObserver = new MutationObserver(() => waitForTopCard(scanJob, settings, 0));
+  const compareObserver = new MutationObserver(() => waitForTopCard(scanJob, settings, 0));
+  const listNode = $('.jobs-search-results-list')[0];
+  const compareNode = $('.jobs-search__job-details--container')[0];
+  cardObserver.observe(listNode, config);
+  compareObserver.observe(compareNode, config);
+}
+
+// Get settings and start observers once page is loaded
 window.onload = () => {
   chrome.storage.sync.get(['entryLevel', 'clownlist'], res => {
-    const targetNode = $('.scaffold-layout__detail')[0];
-    const config = { attributes: true, childList: true, subtree: true };
-
     if (!Object.keys(res).length) {
       // Create default settings if user settings don't exist
       const defaultEntryLevel: EntryLevelSetting = 5;
       settings = { entryLevel: defaultEntryLevel, clownlist: {} };
-      chrome.storage.sync.set(settings, () => {
-
-        const observer = new MutationObserver(mutations => {
-          waitForTopCard(scanJob, settings, 0);
-        });
-        observer.observe(targetNode, config);
-      });
+      chrome.storage.sync.set(settings, () => {});
+      startObservers();
     } else {
       settings = { entryLevel: res.entryLevel, clownlist: res.clownlist };
-      // waitForTopCard(scanJob, settings, 0);
-
-      const observer = new MutationObserver(mutations => {
-        waitForTopCard(scanJob, settings, 0);
-      });
-      observer.observe(targetNode, config);
+      startObservers();
     }
   });
 }
-
