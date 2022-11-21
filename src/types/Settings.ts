@@ -26,6 +26,6 @@ export interface EntryLevelProps {
 }
 
 export interface ClownlistProps {
-  updateClownlist: (toAdd: string, toRemove: string) => void,
+  updateClownlist: (toAdd: string, toRemove: string[]) => void,
   clownlist: ClownlistSetting;
 }
