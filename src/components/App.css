@@ -18,6 +18,8 @@
 }
 
 .cd-button {
+  margin-left: 5px;
+  margin-right: 5px;
   padding: 7px;
   border: 2px solid #d9230c;
   border-radius: 5px;
@@ -82,7 +84,7 @@
 }
 
 .clownlist-textfield {
-  margin-right: 10px;
+  margin-right: 5px;
   padding: 7px;
   border: 2px solid #d9230c;
   border-radius: 5px;
