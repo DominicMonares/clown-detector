@@ -24,7 +24,6 @@
     "noImplicitThis": true
   },
   "include": [
-    "src",
-    "tests/setupTests.ts"
+    "src"
   ]
 }
