@@ -6,6 +6,7 @@
     "start": "react-scripts start",
     "build": "INLINE_RUNTIME_CHUNK=false craco build",
     "test": "react-scripts test",
+    "test:coverage": "npm test -- --coverage --watchAll=false",
     "eject": "react-scripts eject"
   },
   "dependencies": {
