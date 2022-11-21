@@ -53,13 +53,14 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
 
   // Check if job is explicitly listed as entry level
   const isEntryLevel = topCard.includes('Entry level');
-  if (!isEntryLevel && !clownlistKeys) return;
+  if ((!entryLevel || !isEntryLevel) && !clownlistKeys) return;
 
   // Combine clownlist with entry level variations
-  const years = entryLevel + 2 as Years; // Add 2 to account for marks
+  const years = entryLevel ? entryLevel + 2 as Years : 0; // Add 2 to account for marks
   const clownlistKeywords = replaceApostrophes(clownlistKeys);
-  const entryLevelKeywords = entryLevel && isEntryLevel ? createELKeywords(years, []) : [];
+  const entryLevelKeywords = years && isEntryLevel ? createELKeywords(years, []) : [];
   const allKeywords = entryLevelKeywords.concat(clownlistKeywords);
+  if (!allKeywords.length) return;
 
   // Get job html as a string and search for keywords
   const job = $('#job-details')[0]['outerHTML'].toLowerCase();
