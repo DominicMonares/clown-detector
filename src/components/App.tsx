@@ -44,10 +44,10 @@ const App = () => {
     setButtonDisabled(false);
   }
 
-  const updateClownlist = (toAdd: string, toRemove: string) => {
+  const updateClownlist = (toAdd: string, toRemove: string[]) => {
     const clownlistCopy = { ...clownlist };
-    if (toRemove) {
-      delete clownlistCopy[toRemove];
+    if (toRemove.length) {
+      toRemove.forEach(k => delete clownlistCopy[k]);
       setClownlist(clownlistCopy);
       return setButtonDisabled(false);
     }

@@ -8,30 +8,34 @@ import { ClownlistProps } from '../types';
 
 
 const Clownlist = ({ updateClownlist, clownlist }: ClownlistProps) => {
+  const clownlistKeys = Object.keys(clownlist);
   const [newKeyword, setNewKeyword] = useState<string>('');
-  const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
+  const [addDisabled, setAddDisabled] = useState<boolean>(true);
+  const [clearDisabled, setClearDisabled] = useState<boolean>(
+    clownlistKeys.length ? false : true
+  );
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
     setNewKeyword(input);
-    input ? setButtonDisabled(false) : setButtonDisabled(true);
+    input ? setAddDisabled(false) : setAddDisabled(true);
   }
 
   const handleEnter = (e: KeyboardEvent) => {
-    if (e.key === 'Enter' && !buttonDisabled) addToClownlist();
+    if (e.key === 'Enter' && !addDisabled) addToClownlist();
   }
 
   const addToClownlist = () => {
     updateClownlist(newKeyword, '');
     setNewKeyword('');
-    setButtonDisabled(true);
+    setAddDisabled(true);
   }
 
   const removeFromClownlist = (e: MouseEvent<HTMLButtonElement>) => {
     const target = e.target as HTMLInputElement;
     if (target['parentNode'] !== null) {
       const keyword = target['parentNode']['children'][0]['innerHTML'];
-      updateClownlist('', keyword);
+      updateClownlist('', [keyword]);
     }
   }
 
@@ -50,14 +54,23 @@ const Clownlist = ({ updateClownlist, clownlist }: ClownlistProps) => {
         <button
           className='cd-button'
           onClick={addToClownlist}
-          disabled={buttonDisabled}
+          disabled={addDisabled}
         >
           <b>Add</b>
         </button>
+        {clownlistKeys.length ? (
+          <button
+            className='cd-button'
+          >
+            Clear
+          </button>
+        ) : (
+          <></>
+        )}
       </div>
       <div className='keywords'>
         {clownlist ? (
-          Object.keys(clownlist).map(b => {
+          clownlistKeys.map(b => {
             return (
               <span className='keyword-container' key={b}>
                 <span className='keyword'>{b}</span>
