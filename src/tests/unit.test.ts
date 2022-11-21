@@ -1,5 +1,6 @@
 import { replaceApostrophes, createELKeywords } from "../chrome/utils";
 
+
 describe('Chrome Utils', () => {
   describe('replaceApostrophes', () => {
     it('should replace single quotes with apostrophes', () => {
