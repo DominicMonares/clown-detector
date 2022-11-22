@@ -40,6 +40,12 @@ const reactMessageListener: ReactMessageListener = (msg, sender, sendResponse) =
     // Store settings sent from app
     settings = msg.settings;
     chrome.storage.sync.set(msg.settings, () => { });
+    const response: ReactMessageRes = {
+      status: 'Successfully stored settings!',
+      body: {}
+    };
+
+    sendResponse(response);
   }
 
   return true;
