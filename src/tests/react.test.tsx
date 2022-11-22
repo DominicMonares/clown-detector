@@ -25,8 +25,8 @@ describe('App Component', () => {
 
 describe('Entry Level Component', () => {
   it('should render initial layout', () => {
-    const callback = jest.fn();
-    render(<EntryLevel updateEntryLevel={callback} defaultSlider={5} />);
+    const spy = jest.fn();
+    render(<EntryLevel updateEntryLevel={spy} defaultSlider={5} />);
 
     const title = screen.getByText(/Entry Level Threshold/i);
     expect(title).toBeInTheDocument();
@@ -38,20 +38,20 @@ describe('Entry Level Component', () => {
 
   it('should trigger experience threshrold callback when slider clicked', async () => {
     const user = userEvent.setup();
-    const callback = jest.fn();
-    render(<EntryLevel updateEntryLevel={callback} defaultSlider={5} />);
+    const spy = jest.fn();
+    render(<EntryLevel updateEntryLevel={spy} defaultSlider={5} />);
 
     const threshold = screen.getByText(/3 years/i);
     await user.click(threshold);
-    expect(callback).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalled();
   });
 });
 
 describe('Clownlist Component', () => {
   it('should render initial layout', () => {
-    const callback = jest.fn();
+    const spy = jest.fn();
     const clownlist = { silly: true, job: true };
-    render(<Clownlist updateClownlist={callback} clownlist={clownlist} />);
+    render(<Clownlist updateClownlist={spy} clownlist={clownlist} />);
 
     const title = screen.getByText(/Clownlisted Keywords/i);
     expect(title).toBeInTheDocument();
@@ -69,36 +69,36 @@ describe('Clownlist Component', () => {
 
   it('should trigger add callback when user input submitted', async () => {
     const user = userEvent.setup();
-    const callback = jest.fn();
+    const spy = jest.fn();
     const clownlist = {};
-    render(<Clownlist updateClownlist={callback} clownlist={clownlist} />);
+    render(<Clownlist updateClownlist={spy} clownlist={clownlist} />);
 
     const input = screen.getByPlaceholderText(/NFT, unpaid, etc./i);
     await user.type(input, 'haberdasher');
     await user.keyboard('{Enter}');
-    expect(callback).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalled();
   });
 
   it('should trigger removal callback when keyword close button clicked', async () => {
     const user = userEvent.setup();
-    const callback = jest.fn();
+    const spy = jest.fn();
     const clownlist = { haberdasher: true };
-    render(<Clownlist updateClownlist={callback} clownlist={clownlist} />);
+    render(<Clownlist updateClownlist={spy} clownlist={clownlist} />);
 
     const close = screen.getByText(/x/i);
     await user.click(close);
-    expect(callback).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalled();
   });
 
   it('should trigger clear callback when clear button clicked', async () => {
     const user = userEvent.setup();
-    const callback = jest.fn();
+    const spy = jest.fn();
     const clownlist = { haberdasher: true };
-    render(<Clownlist updateClownlist={callback} clownlist={clownlist} />);
+    render(<Clownlist updateClownlist={spy} clownlist={clownlist} />);
 
     const clear = screen.getByText(/Clear/i);
     await user.click(clear);
-    expect(callback).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalled();
   });
 });
 
