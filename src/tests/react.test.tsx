@@ -11,6 +11,7 @@ Object.assign(global, require('jest-chrome'));
 describe('App Component', () => {
   it('should render initial layout', () => {
     render(<App />);
+
     const entryLevel = screen.getByText(/Entry Level Threshold/i);
     expect(entryLevel).toBeInTheDocument();
     const clownlist = screen.getByText(/Clownlisted Keywords/i);
@@ -24,14 +25,25 @@ describe('App Component', () => {
 
 describe('Entry Level Component', () => {
   it('should render initial layout', () => {
-    const spy = jest.fn();
-    render(<EntryLevel updateEntryLevel={spy} defaultSlider={5} />);
+    const mock = jest.fn();
+    render(<EntryLevel updateEntryLevel={mock} defaultSlider={5} />);
+
     const title = screen.getByText(/Entry Level Threshold/i);
     expect(title).toBeInTheDocument();
     const disabled = screen.getByText(/Disabled/i);
     expect(disabled).toBeInTheDocument();
     const sevenYears = screen.getByText(/7 years/i);
     expect(sevenYears).toBeInTheDocument();
+  });
+
+  it('should trigger experience threshrold callback when slider clicked', async () => {
+    const user = userEvent.setup();
+    const mock = jest.fn();
+    render(<EntryLevel updateEntryLevel={mock} defaultSlider={5} />);
+
+    const threshold = screen.getByText(/3 years/i);
+    await user.click(threshold);
+    expect(mock).toHaveBeenCalled();
   });
 });
 
@@ -60,6 +72,7 @@ describe('Clownlist Component', () => {
     const mock = jest.fn();
     const clownlist = {};
     render(<Clownlist updateClownlist={mock} clownlist={clownlist} />);
+
     const input = screen.getByPlaceholderText(/NFT, unpaid, etc./i);
     await user.type(input, 'haberdasher');
     await user.keyboard('{Enter}');
@@ -71,6 +84,7 @@ describe('Clownlist Component', () => {
     const mock = jest.fn();
     const clownlist = { haberdasher: true };
     render(<Clownlist updateClownlist={mock} clownlist={clownlist} />);
+
     const close = screen.getByText(/x/i);
     await user.click(close);
     expect(mock).toHaveBeenCalled();
@@ -81,6 +95,7 @@ describe('Clownlist Component', () => {
     const mock = jest.fn();
     const clownlist = { haberdasher: true };
     render(<Clownlist updateClownlist={mock} clownlist={clownlist} />);
+
     const clear = screen.getByText(/Clear/i);
     await user.click(clear);
     expect(mock).toHaveBeenCalled();
@@ -89,6 +104,7 @@ describe('Clownlist Component', () => {
 
 describe('Offsite Component', () => {
   render(<Offsite />);
+
   const clown = screen.getAllByAltText(/sad clown/i)[0];
   expect(clown).toBeVisible();
   const p1 = screen.getByText(/Uh-oh! Looks like you aren't on a LinkedIn job post./i);
