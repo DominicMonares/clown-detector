@@ -55,7 +55,7 @@ describe('Clownlist Component', () => {
     expect(keyword2).toBeInTheDocument();
   });
 
-  it('should trigger update when user input submitted', async () => {
+  it('should trigger add callback when user input submitted', async () => {
     const user = userEvent.setup();
     const mock = jest.fn();
     const clownlist = {};
@@ -63,6 +63,26 @@ describe('Clownlist Component', () => {
     const input = screen.getByPlaceholderText(/NFT, unpaid, etc./i);
     await user.type(input, 'haberdasher');
     await user.keyboard('{Enter}');
+    expect(mock).toHaveBeenCalled();
+  });
+
+  it('should trigger removal callback when keyword close button clicked', async () => {
+    const user = userEvent.setup();
+    const mock = jest.fn();
+    const clownlist = { haberdasher: true };
+    render(<Clownlist updateClownlist={mock} clownlist={clownlist} />);
+    const close = screen.getByText(/x/i);
+    await user.click(close);
+    expect(mock).toHaveBeenCalled();
+  });
+
+  it('should trigger clear callback when clear button clicked', async () => {
+    const user = userEvent.setup();
+    const mock = jest.fn();
+    const clownlist = { haberdasher: true };
+    render(<Clownlist updateClownlist={mock} clownlist={clownlist} />);
+    const clear = screen.getByText(/Clear/i);
+    await user.click(clear);
     expect(mock).toHaveBeenCalled();
   });
 });
