@@ -26,7 +26,7 @@ describe('App Component', () => {
 describe('Entry Level Component', () => {
   it('should render initial layout', () => {
     const spy = jest.fn();
-    render(<EntryLevel updateEntryLevel={spy} defaultSlider={5} />);
+    render(<EntryLevel updateEntryLevel={spy} entryLevel={5} />);
 
     const title = screen.getByText(/Entry Level Threshold/i);
     expect(title).toBeInTheDocument();
@@ -39,7 +39,7 @@ describe('Entry Level Component', () => {
   it('should trigger experience threshrold callback when slider clicked', async () => {
     const user = userEvent.setup();
     const spy = jest.fn();
-    render(<EntryLevel updateEntryLevel={spy} defaultSlider={5} />);
+    render(<EntryLevel updateEntryLevel={spy} entryLevel={5} />);
 
     const threshold = screen.getByText(/3 years/i);
     await user.click(threshold);
