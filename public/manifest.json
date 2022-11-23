@@ -1,7 +1,7 @@
 {
   "short_name": "Clown Detector",
   "name": "Clown Detector",
-  "description": "Weed out silly job listings.",
+  "description": "Spot silly LinkedIn jobs at a glance.",
   "version": "1.0",
   "manifest_version": 3,
   "action": {
