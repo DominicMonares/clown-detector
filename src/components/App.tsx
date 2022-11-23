@@ -6,6 +6,7 @@ import { applySettings } from '../chrome/background';
 import { ReactMessageRes, EntryLevelSetting, ClownlistSetting } from '../types';
 import './App.css';
 
+
 const jobUrl = 'linkedin.com/jobs/';
 
 const App = () => {
@@ -69,7 +70,7 @@ const App = () => {
       ) : (
         <>
           <div>
-            <EntryLevel updateEntryLevel={updateEntryLevel} defaultSlider={entryLevel} />
+            <EntryLevel updateEntryLevel={updateEntryLevel} entryLevel={entryLevel} />
             <Clownlist updateClownlist={updateClownlist} clownlist={clownlist} />
           </div>
           <div className="reload">

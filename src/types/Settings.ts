@@ -22,7 +22,7 @@ export interface Settings {
 
 export interface EntryLevelProps {
   updateEntryLevel: (newEntryLevel: EntryLevelSetting) => void,
-  defaultSlider: EntryLevelSetting
+  entryLevel: EntryLevelSetting
 }
 
 export interface ClownlistProps {

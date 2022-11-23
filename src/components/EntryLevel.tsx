@@ -4,7 +4,7 @@ import { EntryLevelProps, EntryLevelSetting } from '../types';
 import marks from './marks.json';
 
 
-const EntryLevel = ({ updateEntryLevel, defaultSlider }: EntryLevelProps) => {
+const EntryLevel = ({ updateEntryLevel, entryLevel }: EntryLevelProps) => {
   const triggerUpdateEL = (e: Event) => {
     const target = e.target as HTMLInputElement;
     const value = Number(target.value) as EntryLevelSetting;
@@ -16,7 +16,7 @@ const EntryLevel = ({ updateEntryLevel, defaultSlider }: EntryLevelProps) => {
       <b className='title'>Entry Level Threshold</b>
       <Slider
         size="small"
-        value={defaultSlider}
+        value={entryLevel}
         max={5}
         marks={marks}
         onChange={triggerUpdateEL}
