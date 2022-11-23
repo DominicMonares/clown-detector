@@ -1,15 +1,17 @@
 # Clown Detector
 A Google Chrome extension that helps you spot silly LinkedIn jobs at a glance.
 
+![](https://github.com/DominicMonares/clown-detector/blob/main/demo/top_card.png)
+
 ## Features
 Any LinkedIn job that meets the user's criteria will be flagged with a clown emoji.
 
-DEMO IMAGE HERE
+![](https://github.com/DominicMonares/clown-detector/blob/main/demo/browse.gif)
 
 ### Entry Level
 Flag jobs that are explicitly listed as "entry level", yet require mid to senior levels of experience.
 
-DEMO GIF HERE
+![](https://github.com/DominicMonares/clown-detector/blob/main/demo/entry_level_setting.gif)
 
 Jobs not explicitly listed as "entry level" will not be flagged for years of experience required.
 
@@ -18,14 +20,9 @@ By default, the entry level threshold is set to flag jobs requiring 7+ years of 
 ### Clownlist
 Flag jobs that contain specific keywords.
 
-DEMO GIF HERE
+![](https://github.com/DominicMonares/clown-detector/blob/main/demo/clownlist_setting.gif)
 
 This will work for all jobs, regardless of experience level.
-
-### Settings
-Adjust settings from the extension popup.
-
-DEMO GIF HERE
 
 ## Installation
 ```
