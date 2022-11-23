@@ -5,8 +5,9 @@ import App from '../components/App';
 import EntryLevel from '../components/EntryLevel';
 import Clownlist from '../components/Clownlist';
 import Offsite from '../components/Offsite';
-Object.assign(global, require('jest-chrome'));
 
+
+Object.assign(global, require('jest-chrome'));
 
 describe('App Component', () => {
   it('should render initial layout', () => {

@@ -17,4 +17,4 @@ export type ReactMessageListener = (
   msg: ReactMessageReq,
   sender: chrome.runtime.MessageSender,
   sendResponse: (response: ReactMessageRes) => void
-) => boolean
+) => boolean;

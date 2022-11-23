@@ -15,12 +15,8 @@ const Clownlist = ({ updateClownlist, clownlist }: ClownlistProps) => {
   const [clearDisabled, setClearDisabled] = useState<boolean>(true);
 
   useEffect(() => {
-    if (clownlistKeys.length) {
-      setClearDisabled(false);
-    } else {
-      setClearDisabled(true);
-    }
-  }, [clearDisabled, clownlistKeys])
+    clownlistKeys.length ? setClearDisabled(false) : setClearDisabled(true);
+  }, [clearDisabled, clownlistKeys]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;

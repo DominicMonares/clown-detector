@@ -3,13 +3,13 @@ import { Settings, Years } from "./Settings";
 export type ScanJob = (
   topCard: string,
   settings: Settings
-) => void
+) => void;
 
 export type WaitForTopCard = (
   callback: ScanJob,
   settings: Settings,
   count: number
-) => void
+) => void;
 
 export type CreateELKeywords = (
   entryLevel: Years,
