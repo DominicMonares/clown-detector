@@ -17,28 +17,31 @@ const App = () => {
 
   useEffect(() => {
     // Fetch initial settings from chrome storage and update state
-    chrome.tabs && chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-      const tab = tabs[0];
+    chrome.runtime.onConnect.addListener(() => {
+      chrome.tabs && chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+        const tab = tabs[0];
 
-      // Render settings if on LinkedIn job page
-      if (tab.url?.includes(jobUrl)) {
-        chrome.tabs.sendMessage(
-          tab.id || 0,
-          {},
-          (res: ReactMessageRes) => {
-            if (res?.body.settings) {
-              const settings = res.body.settings;
-              setEntryLevel(settings.entryLevel);
-              setClownlist(settings.clownlist);
+        // Render settings if on LinkedIn job page
+        if (tab.url?.includes(jobUrl)) {
+          chrome.tabs.sendMessage(
+            tab.id || 0,
+            {},
+            (res: ReactMessageRes) => {
+              if (res?.body.settings) {
+                const settings = res.body.settings;
+                setEntryLevel(settings.entryLevel);
+                setClownlist(settings.clownlist);
+              }
             }
-          }
-        );
-      } else {
-        // Render offsite page if not on LinkedIn job page
-        return setOffsite(true);
-      }
-    });
+          );
+        } else {
+          // Render offsite page if not on LinkedIn job page
+          return setOffsite(true);
+        }
+      });
+    })
   }, []);
+
 
   const updateEntryLevel = (newEntryLevel: EntryLevelSetting) => {
     setEntryLevel(newEntryLevel);
