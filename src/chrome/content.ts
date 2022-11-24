@@ -90,8 +90,7 @@ const startObserver = () => {
   }
 }
 
-// Get settings and start observers once page is loaded
-window.onload = () => {
+const initialize = () => {
   chrome.storage.sync.get(['entryLevel', 'clownlist'], res => {
     if (!Object.keys(res).length) {
       // Create default settings if user settings don't exist
@@ -105,3 +104,6 @@ window.onload = () => {
     }
   });
 }
+
+// Get settings and start observers once page is loaded
+window.onload = () => initialize;
