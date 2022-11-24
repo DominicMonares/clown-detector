@@ -16,29 +16,40 @@ const App = () => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
 
   useEffect(() => {
-    // Fetch initial settings from chrome storage and update state
-    chrome.tabs && chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-      const tab = tabs[0];
+    const getSettings = () => {
+      // Fetch initial settings from chrome storage and update state
+      chrome.tabs && chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+        const tab = tabs[0];
 
-      // Render settings if on LinkedIn job page
-      if (tab.url?.includes(jobUrl)) {
-        chrome.tabs.sendMessage(
-          tab.id || 0,
-          {},
-          (res: ReactMessageRes) => {
-            if (res?.body.settings) {
-              const settings = res.body.settings;
-              setEntryLevel(settings.entryLevel);
-              setClownlist(settings.clownlist);
+        // Render settings if on LinkedIn job page
+        if (tab.url?.includes(jobUrl)) {
+          chrome.tabs.sendMessage(
+            tab.id || 0,
+            {},
+            (res: ReactMessageRes) => {
+              if (chrome.runtime.lastError) {
+                console.log('Attempting to reach content script...');
+                return setTimeout(getSettings, 1000);
+              }
+
+              if (res?.body.settings) {
+                const settings = res.body.settings;
+                setEntryLevel(settings.entryLevel);
+                setClownlist(settings.clownlist);
+                return;
+              }
             }
-          }
-        );
-      } else {
-        // Render offsite page if not on LinkedIn job page
-        return setOffsite(true);
-      }
-    });
+          );
+        } else {
+          // Render offsite page if not on LinkedIn job page
+          return setOffsite(true);
+        }
+      });
+    }
+
+    getSettings();
   }, []);
+
 
   const updateEntryLevel = (newEntryLevel: EntryLevelSetting) => {
     setEntryLevel(newEntryLevel);
