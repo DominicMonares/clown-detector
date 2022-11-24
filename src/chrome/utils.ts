@@ -40,6 +40,7 @@ export const createELKeywords: CreateELKeywords = (years, keywords) => {
 // Send in the clowns!
 export const renderFlags = (keywords: string[]) => {
   const joinedKeywords = (keywords.map((k, i) => {
+    if (k.startsWith(' ') || k.startsWith('-')) k = k.slice(1);
     return i === keywords.length - 1 ? k : k + ' · ';
   })).join('');
 
