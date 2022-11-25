@@ -1,8 +1,8 @@
 import { Settings } from '../types';
 
 
-// Inject content script on install
-const installScript = () => {
+// Re-inject content script after every page update
+const injectContent = () => {
   chrome.tabs.query({}, tabs => {
     const manifest = chrome.runtime.getManifest();
     const contentScript = manifest.content_scripts ? manifest.content_scripts[0] : null;
@@ -21,7 +21,7 @@ const installScript = () => {
   });
 }
 
-chrome.tabs && chrome.tabs.onUpdated.addListener(installScript);
+chrome.tabs && chrome.tabs.onUpdated.addListener(injectContent);
 
 // Tell content script to save new settings to storage
 export const applySettings = ({ entryLevel, clownlist }: Settings) => {
