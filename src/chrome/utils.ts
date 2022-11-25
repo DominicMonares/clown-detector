@@ -34,6 +34,7 @@ export const replaceApostrophes = (keywords: string[]) => {
 export const createELKeywords: CreateELKeywords = (years, keywords) => {
   suffixes.forEach(s => keywords.push(`${years}${s}`));
   const nextYear = years + 1 as Years;
+  // Cap off at 9 years to avoid false positives with double digits
   return years === 9 ? keywords : createELKeywords(nextYear, keywords);
 }
 
