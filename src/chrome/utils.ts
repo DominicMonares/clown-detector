@@ -44,7 +44,7 @@ export const checkPrefixes: CheckPrefixes = (job, keyword) => {
     const prefix = job.slice(index - 4, index); // Allow room for 2 spaces, 1 dash, and number
     const firstDigit = Number(job[index - 1]);
     // If range of years found, return entire range
-    if (prefix.indexOf('-') !== -1) {
+    if (prefix.indexOf('-') >= 0) {
       for (let i = prefix.indexOf('-') - 1; i > 0; i--) {
         if (Number(prefix[i])) return `${prefix.slice(i)}${keyword}`;
       }
@@ -65,17 +65,11 @@ export const checkPrefixes: CheckPrefixes = (job, keyword) => {
 
 export const highlight = (keywords: string[]) => {
   keywords.forEach(k => {
-    console.log('BRUH ', $('#job-details'))
-    const preFilter = new RegExp(k, 'g');
-    const highlight = `<mark>${k}</mark>`;
-    $('#job-details').first().first().each((i, e) => {
-      // let text = $(e).text();
-      // text = text.replace(k, highlight);
-      // console.log('WUT ', e)
-      // $(e).text(text);
-
-      $(e).html($(e).html().replace(k, highlight));
-    });
+    const keyword = k.replace('+', '\\+');
+    const regex = new RegExp(keyword, 'ig');
+    const job = $('#job-details').first()[0];
+    const innerHTML = job.innerHTML;
+    job.innerHTML = innerHTML.replace(regex, `<mark>${k}</mark>`)
   });
 }
 
