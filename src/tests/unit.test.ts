@@ -39,10 +39,43 @@ describe('Chrome Utils', () => {
       const output = createELKeywords(5, []);
       const result = combos.every(c => output.includes(c) ? true : false);
       expect(result).toBe(false);
-    })
+    });
   });
 
   describe('checkPrefixes', () => {
+    it('should return keyword if found in job', () => {
+      const job = '<li>Requires 7 years of experience</li>;'
+      const keyword = '7 years';
+      const output = checkPrefixes(job, keyword);
+      expect(output).toBe('7 years');
+    });
 
+    it('should return undefined if job does not contain keyword', () => {
+      const job = '<li>Requires 2 years of experience</li>';
+      const keyword = '7 years';
+      const output = checkPrefixes(job, keyword);
+      expect(output).toBeUndefined();
+    });
+
+    it('should return a range if it exists', () => {
+      const job = '<li>4-5 years of experience required</li>';
+      const keyword = '5 years';
+      const output = checkPrefixes(job, keyword);
+      expect(output).toBe('4-5 years');
+    });
+
+    it('should return undefined if single double digit found in job', () => {
+      const job = 'For more than 35 years, we have...';
+      const keyword = '5 years';
+      const output = checkPrefixes(job, keyword);
+      expect(output).toBeUndefined();
+    });
+
+    it('should return keyword if entry level found after double digit', () => {
+      const job = 'For more than 35 years, we have required 5 years of experience for entry level jobs';
+      const keyword = '5 years';
+      const output = checkPrefixes(job, keyword);
+      expect(output).toBe('5 years');
+    });
   })
 });
