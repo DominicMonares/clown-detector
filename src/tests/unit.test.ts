@@ -1,4 +1,8 @@
-import { replaceApostrophes, createELKeywords } from "../chrome/utils";
+import {
+  checkPrefixes,
+  createELKeywords,
+  replaceApostrophes
+} from "../chrome/utils";
 
 
 describe('Chrome Utils', () => {
@@ -17,24 +21,28 @@ describe('Chrome Utils', () => {
 
   describe('createELKeywords', () => {
     it('should return an array of year/suffix combinations within range', () => {
-      const combos = [' 5 years', ' 6+ yrs', ' 7 +yrs', '-9 +years', '-11+ years', '-13 yrs', ' 15+years'];
+      const combos = ['5 years', '6+ yrs', '7 +yrs', '9 +years'];
       const output = createELKeywords(5, []);
       const result = combos.every(c => output.includes(c) ? true : false);
       expect(result).toBe(true);
     });
 
-    it ('should only render up to 15 years', () => {
-      const combos = [' 5 years', ' 6+ yrs', '-7 +yrs', ' 9 +years', '-11+ years', '-13 yrs', ' 16+years'];
+    it ('should only render up to 9 years', () => {
+      const combos = ['5 years', '6+ yrs', '7 +yrs', '9 +years', '11+ years'];
       const output = createELKeywords(5, []);
       const result = combos.every(c => output.includes(c) ? true : false);
       expect(result).toBe(false);
     });
 
     it('should not render years below threshold', () => {
-      const combos = [' 3 years', '-6+ yrs', '-7 +yrs', '-9 +years', ' 11+ years', ' 13 yrs', '-15+years'];
+      const combos = ['3 years', '6+ yrs', '7 +yrs', '9 +years'];
       const output = createELKeywords(5, []);
       const result = combos.every(c => output.includes(c) ? true : false);
       expect(result).toBe(false);
     })
   });
+
+  describe('checkPrefixes', () => {
+
+  })
 });

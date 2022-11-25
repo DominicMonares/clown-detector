@@ -40,24 +40,20 @@ export const createELKeywords: CreateELKeywords = (years, keywords) => {
 
 export const checkPrefixes: CheckPrefixes = (job, keyword) => {
   const index = job.indexOf(keyword);
-  console.log('OY ', keyword);
   if (index) {
     const prefix = job.slice(index - 4, index); // Allow room for 2 spaces, 1 dash, and number
     const firstDigit = Number(job[index - 1]);
     // If range of years found, return entire range
     if (prefix.indexOf('-') !== -1) {
-      console.log('PRICK ', prefix.indexOf('-'));
       for (let i = prefix.indexOf('-') - 1; i > 0; i--) {
         if (Number(prefix[i])) return `${prefix.slice(i)}${keyword}`;
       }
     } else if (firstDigit) {
-      console.log('SWEAR ON ME NAN ', firstDigit);
       // If double digit, might be years since company was founded
       // Assume this and check rest of document
       // Better the user receive a false negative than skip over a potential opportunity
       return checkPrefixes(job.slice(index + 1), keyword);
     } else if (job.includes(keyword)) {
-      console.log('ILL BASH YER FOOKIN SKULL IN ', keyword)
       return keyword;
     } else {
       return;
