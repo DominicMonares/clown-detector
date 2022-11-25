@@ -10,9 +10,9 @@ const installScript = () => {
     const contentJsFile = contentJs ? contentJs[0] : null;
     if (contentJsFile) {
       for (let tab of tabs) {
-        if (tab.url?.includes('linkedin.com/jobs')) {
+        if (tab.url?.includes('linkedin.com/jobs') && tab.status === 'complete') {
           chrome.scripting.executeScript({
-            target: {tabId: tab.id as number, allFrames: true},
+            target: { tabId: tab.id as number, allFrames: true },
             files: [contentJsFile]
           });
         };
@@ -21,7 +21,7 @@ const installScript = () => {
   });
 }
 
-chrome.runtime.onInstalled.addListener(installScript);
+chrome.tabs && chrome.tabs.onUpdated.addListener(installScript);
 
 // Tell content script to save new settings to storage
 export const applySettings = ({ entryLevel, clownlist }: Settings) => {
