@@ -34,7 +34,7 @@ export const replaceApostrophes = (keywords: string[]) => {
 export const createELKeywords: CreateELKeywords = (years, keywords) => {
   suffixes.forEach(s => keywords.push(`${years}${s}`));
   const nextYear = years + 1 as Years;
-  return years === 15 ? keywords : createELKeywords(nextYear, keywords);
+  return years === 9 ? keywords : createELKeywords(nextYear, keywords);
 }
 
 export const checkPrefixes: CheckPrefixes = (job, keyword) => {
