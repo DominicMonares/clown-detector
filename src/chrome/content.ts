@@ -11,6 +11,7 @@ import {
 import {
   checkPrefixes,
   createELKeywords,
+  highlight,
   renderFlags,
   replaceApostrophes,
   waitForTopCard
@@ -66,7 +67,6 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
   const years = entryLevel ? entryLevel + 2 as Years : 0; // Add 2 to account for marks
   const clownlistKeywords = replaceApostrophes(clownlistKeys);
   const entryLevelKeywords = years && isEntryLevel ? createELKeywords(years, []) : [];
-  // const allKeywords = entryLevelKeywords.concat(clownlistKeywords);
 
   // Get job html as a string and search for keywords
   const job = $('#job-details')[0]['outerHTML'].toLowerCase();
@@ -81,6 +81,8 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
 
   // Escape keywords then render
   const escapedKeywords = flaggedKeywords.map(k => escape(k));
+
+  highlight(flaggedKeywords);
   renderFlags(escapedKeywords);
 }
 

@@ -63,6 +63,22 @@ export const checkPrefixes: CheckPrefixes = (job, keyword) => {
   }
 }
 
+export const highlight = (keywords: string[]) => {
+  keywords.forEach(k => {
+    console.log('BRUH ', $('#job-details'))
+    const preFilter = new RegExp(k, 'g');
+    const highlight = `<mark>${k}</mark>`;
+    $('#job-details').first().first().each((i, e) => {
+      // let text = $(e).text();
+      // text = text.replace(k, highlight);
+      // console.log('WUT ', e)
+      // $(e).text(text);
+
+      $(e).html($(e).html().replace(k, highlight));
+    });
+  });
+}
+
 // Send in the clowns!
 export const renderFlags = (keywords: string[]) => {
   const joinedKeywords = (keywords.map((k, i) => {
