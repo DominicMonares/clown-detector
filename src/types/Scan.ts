@@ -15,3 +15,8 @@ export type CreateELKeywords = (
   entryLevel: Years,
   keywords: string[]
 ) => string[];
+
+export type CheckPrefixes = (
+  job: string,
+  keyword: string
+) => string | undefined

@@ -9,6 +9,7 @@ import {
   Years
 } from '../types';
 import {
+  checkPrefixes,
   createELKeywords,
   renderFlags,
   replaceApostrophes,
@@ -65,12 +66,15 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
   const years = entryLevel ? entryLevel + 2 as Years : 0; // Add 2 to account for marks
   const clownlistKeywords = replaceApostrophes(clownlistKeys);
   const entryLevelKeywords = years && isEntryLevel ? createELKeywords(years, []) : [];
-  const allKeywords = entryLevelKeywords.concat(clownlistKeywords);
+  // const allKeywords = entryLevelKeywords.concat(clownlistKeywords);
 
   // Get job html as a string and search for keywords
   const job = $('#job-details')[0]['outerHTML'].toLowerCase();
-  const flaggedKeywords = allKeywords.filter(k => {
-    return job?.includes(k.toLowerCase()) ? true : false;
+  const flaggedKeywords: string[] = [];
+  clownlistKeywords.forEach(k => job?.includes(k.toLowerCase()) ? flaggedKeywords.push(k) : null);
+  entryLevelKeywords.forEach(k => {
+    const validated = checkPrefixes(job, k);
+    if (validated) flaggedKeywords.push(validated);
   });
 
   if (!flaggedKeywords.length) return;
