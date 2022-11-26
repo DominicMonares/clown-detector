@@ -11,7 +11,6 @@ import {
 import {
   checkPrefixes,
   createELKeywords,
-  highlight,
   renderFlags,
   replaceApostrophes,
   waitForTopCard
@@ -81,9 +80,7 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
 
   // Escape keywords then render
   const escapedKeywords = flaggedKeywords.map(k => escape(k));
-
-  highlight(flaggedKeywords);
-  renderFlags(escapedKeywords);
+  renderFlags(flaggedKeywords, escapedKeywords);
 }
 
 // Run job scan whenever the job list or details rerender
