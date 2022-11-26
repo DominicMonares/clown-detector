@@ -64,13 +64,22 @@ export const checkPrefixes: CheckPrefixes = (job, keyword) => {
 }
 
 export const highlight = (keywords: string[]) => {
+  const job = $('#job-details')[0];
+  const jobSpan = $('#job-details span');
+  const newJob = jobSpan[1];
+  let jobHTML = newJob ? newJob.innerHTML : job.innerHTML;
   keywords.forEach(k => {
     const keyword = k.replace('+', '\\+');
     const regex = new RegExp(keyword, 'ig');
-    const job = $('#job-details').first()[0];
-    const innerHTML = job.innerHTML;
-    job.innerHTML = innerHTML.replace(regex, `<mark>${k}</mark>`)
+    jobHTML = jobHTML.replace(regex, `<mark>${k}</mark>`);
   });
+
+  if (newJob) {
+    $('#job-details span')[0].remove();
+  }
+
+  $('#job-details span').hide(); // Hide to preserve events
+  $('#job-details').prepend(`<span>${jobHTML}</span>`);
 }
 
 // Send in the clowns!
