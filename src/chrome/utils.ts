@@ -63,11 +63,15 @@ export const checkPrefixes: CheckPrefixes = (job, keyword) => {
   }
 }
 
+// ISSUES:
+// doesn't update description unless keywords other than EL provided
+// clown flags don't update properly on first update when above works
 export const highlight = (keywords: string[]) => {
-  const job = $('#job-details')[0];
+  // const job = $('#job-details')[0];
   const jobSpan = $('#job-details span');
-  const newJob = jobSpan[1];
-  let jobHTML = newJob ? newJob.innerHTML : job.innerHTML;
+  const newJob = jobSpan[2];
+
+  let jobHTML = jobSpan[0].innerHTML;
   keywords.forEach(k => {
     const keyword = k.replace('+', '\\+');
     const regex = new RegExp(keyword, 'ig');
@@ -75,18 +79,20 @@ export const highlight = (keywords: string[]) => {
   });
 
   if (newJob) {
-    $('#job-details span')[0].remove();
+    $('#job-details span')[1].remove();
   }
 
-  $('#job-details span').hide(); // Hide to preserve events
-  $('#job-details').prepend(`<span>${jobHTML}</span>`);
+  $('#job-details span').hide(); // Hide instead of remove to preserve events
+  $('#job-details').append(`<span>${jobHTML}</span>`);
 }
 
 // Send in the clowns!
-export const renderFlags = (keywords: string[]) => {
-  const joinedKeywords = (keywords.map((k, i) => {
+export const renderFlags = (unescaped: string[], escaped: string[]) => {
+  highlight(unescaped);
+
+  const joinedKeywords = (escaped.map((k, i) => {
     if (k.startsWith(' ') || k.startsWith('-')) k = k.slice(1);
-    return i === keywords.length - 1 ? k : k + ' · ';
+    return i === escaped.length - 1 ? k : k + ' · ';
   })).join('');
 
   const topCard = $(`.${topCardClassName}`).first();
