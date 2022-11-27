@@ -88,13 +88,10 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
 
 // Run job scan whenever the job list or details rerender
 const startObserver = () => {
-  const config = { attributes: true, childList: true, subtree: true };
+  const config = { attributes: true, subtree: true };
   const targetNode = $('.scaffold-layout__inner')[0];
   if (targetNode) {
-    const observer = new MutationObserver(() => {
-      console.log('ASSHOLE')
-      waitForTopCard(scanJob, settings, 0);
-    });
+    const observer = new MutationObserver(() => waitForTopCard(scanJob, settings, 0));
     observer.observe(targetNode, config);
   }
 }
