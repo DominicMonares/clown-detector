@@ -63,11 +63,7 @@ export const checkPrefixes: CheckPrefixes = (job, keyword) => {
   }
 }
 
-// ISSUES:
-// doesn't update description unless keywords other than EL provided
-// clown flags don't update properly on first update when above works
-export const highlight = (keywords: string[]) => {
-  // const job = $('#job-details')[0];
+export const renderDescription = (keywords: string[]) => {
   const jobSpan = $('#job-details span');
   const newJob = jobSpan[2];
 
@@ -79,7 +75,7 @@ export const highlight = (keywords: string[]) => {
   });
 
   if (newJob) {
-    $('#job-details span')[1].remove();
+    $('#job-details span')[2].remove();
   }
 
   $('#job-details span').hide(); // Hide instead of remove to preserve events
@@ -87,12 +83,10 @@ export const highlight = (keywords: string[]) => {
 }
 
 // Send in the clowns!
-export const renderFlags = (unescaped: string[], escaped: string[]) => {
-  highlight(unescaped);
-
-  const joinedKeywords = (escaped.map((k, i) => {
+export const renderFlags = (keywords: string[]) => {
+  const joinedKeywords = (keywords.map((k, i) => {
     if (k.startsWith(' ') || k.startsWith('-')) k = k.slice(1);
-    return i === escaped.length - 1 ? k : k + ' · ';
+    return i === keywords.length - 1 ? k : k + ' · ';
   })).join('');
 
   const topCard = $(`.${topCardClassName}`).first();
