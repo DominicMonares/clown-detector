@@ -12,8 +12,8 @@ const topCardClassName = "jobs-unified-top-card__job-insight";
 
 // Wait for entry level element to load
 export const waitForTopCard: WaitForTopCard = (scanJob, settings, count) => {
-  if (count === 20) return; // Exit if not found after 10 seconds
-  window.setTimeout(() => {
+  if (count === 10) return; // Exit if not found after 5 seconds
+  setTimeout(() => {
     const topCards = $(`.${topCardClassName}`);
     if (topCards.length) {
       if (topCards[0]['children'][2]) return; // Prevent duplicate renders
