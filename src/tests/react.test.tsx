@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../components/App';
@@ -6,8 +5,6 @@ import EntryLevel from '../components/EntryLevel';
 import Clownlist from '../components/Clownlist';
 import Offsite from '../components/Offsite';
 
-
-Object.assign(global, require('jest-chrome'));
 
 describe('App Component', () => {
   it('should render initial layout', () => {
