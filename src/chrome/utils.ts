@@ -35,23 +35,21 @@ export const createELKeywords: CreateELKeywords = (years, keywords) => {
   suffixes.forEach(s => keywords.push(`${years}${s}`));
   const nextYear = years + 1 as Years;
   // Cap off at 9 years to avoid false positives with double digits
-  return years === 9 ? keywords : createELKeywords(nextYear, keywords);
+  return years === 14 ? keywords : createELKeywords(nextYear, keywords);
 }
 
 export const checkPrefixes: CheckPrefixes = (job, keyword) => {
   const index = job.indexOf(keyword);
   if (index) {
-    const prefix = job.slice(index - 4, index); // Allow room for 2 spaces, 1 dash, and number
+    const prefix = job.slice(index - 4, index); // Allow room for 2 spaces, 1 dash, and num
     const firstDigit = Number(job[index - 1]);
     // If range of years found, return entire range
     if (prefix.indexOf('-') >= 0) {
       for (let i = prefix.indexOf('-') - 1; i > 0; i--) {
         if (Number(prefix[i])) return `${prefix.slice(i)}${keyword}`;
       }
-    } else if (firstDigit) {
+    } else if (firstDigit && firstDigit > 1) {
       // If double digit, might be years since company was founded
-      // Assume this and check rest of document
-      // Better the user receive a false negative than skip over a potential opportunity
       return checkPrefixes(job.slice(index + 1), keyword);
     } else if (job.includes(keyword)) {
       return keyword;
@@ -63,6 +61,7 @@ export const checkPrefixes: CheckPrefixes = (job, keyword) => {
   }
 }
 
+// Highlight keywords and render new description
 export const renderDescription = (keywords: string[]) => {
   const jobSpan = $('#job-details span');
   const newJob = jobSpan[2];
@@ -74,10 +73,7 @@ export const renderDescription = (keywords: string[]) => {
     jobHTML = jobHTML.replace(regex, `<mark>${k}</mark>`);
   });
 
-  if (newJob) {
-    $('#job-details span')[2].remove();
-  }
-
+  if (newJob) $('#job-details span')[2].remove();
   $('#job-details span').hide(); // Hide instead of remove to preserve events
   $('#job-details').append(`<span>${jobHTML}</span>`);
 }
