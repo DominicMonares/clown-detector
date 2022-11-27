@@ -11,6 +11,7 @@ import {
 import {
   checkPrefixes,
   createELKeywords,
+  renderDescription,
   renderFlags,
   replaceApostrophes,
   waitForTopCard
@@ -68,8 +69,8 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
   const entryLevelKeywords = years && isEntryLevel ? createELKeywords(years, []) : [];
 
   // Get job html as a string and search for keywords
-  const job = $('#job-details')[0]['innerHTML'].toLowerCase();
-  console.log()
+  const job = $('#job-details span')[0]['outerHTML'].toLowerCase();
+
   const flaggedKeywords: string[] = [];
   clownlistKeywords.forEach(k => job?.includes(k.toLowerCase()) ? flaggedKeywords.push(k) : null);
   entryLevelKeywords.forEach(k => {
@@ -77,11 +78,12 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
     if (validated) flaggedKeywords.push(validated);
   });
 
+  renderDescription(flaggedKeywords);
   if (!flaggedKeywords.length) return;
 
   // Escape keywords then render
   const escapedKeywords = flaggedKeywords.map(k => escape(k));
-  renderFlags(flaggedKeywords, escapedKeywords);
+  renderFlags(escapedKeywords);
 }
 
 // Run job scan whenever the job list or details rerender
