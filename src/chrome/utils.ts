@@ -35,7 +35,7 @@ export const createELKeywords: CreateELKeywords = (years, keywords) => {
   suffixes.forEach(s => keywords.push(`${years}${s}`));
   const nextYear = years + 1 as Years;
   // Cap off at 9 years to avoid false positives with double digits
-  return years === 14 ? keywords : createELKeywords(nextYear, keywords);
+  return years === 9 ? keywords : createELKeywords(nextYear, keywords);
 }
 
 export const checkPrefixes: CheckPrefixes = (job, keyword) => {
@@ -48,8 +48,10 @@ export const checkPrefixes: CheckPrefixes = (job, keyword) => {
       for (let i = prefix.indexOf('-') - 1; i > 0; i--) {
         if (Number(prefix[i])) return `${prefix.slice(i)}${keyword}`;
       }
-    } else if (firstDigit && firstDigit > 1) {
+    } else if (firstDigit) {
       // If double digit, might be years since company was founded
+      // Assume this, skip, and check rest of document
+      // Better the user receive a false negative than positive here
       return checkPrefixes(job.slice(index + 1), keyword);
     } else if (job.includes(keyword)) {
       return keyword;
