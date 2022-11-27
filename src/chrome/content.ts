@@ -68,7 +68,8 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
   const entryLevelKeywords = years && isEntryLevel ? createELKeywords(years, []) : [];
 
   // Get job html as a string and search for keywords
-  const job = $('#job-details')[0]['outerHTML'].toLowerCase();
+  const job = $('#job-details')[0]['innerHTML'].toLowerCase();
+  console.log()
   const flaggedKeywords: string[] = [];
   clownlistKeywords.forEach(k => job?.includes(k.toLowerCase()) ? flaggedKeywords.push(k) : null);
   entryLevelKeywords.forEach(k => {
