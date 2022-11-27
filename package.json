@@ -10,6 +10,8 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@mui/material": "^5.10.13",
     "html-escaper": "^3.0.3",
     "jquery": "^3.6.1",
