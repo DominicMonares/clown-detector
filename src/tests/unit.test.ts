@@ -27,8 +27,8 @@ describe('Chrome Utils', () => {
       expect(result).toBe(true);
     });
 
-    it ('should only render up to 9 years', () => {
-      const combos = ['5 years', '6+ yrs', '7 +yrs', '9 +years', '11+ years'];
+    it ('should only render up to 14 years', () => {
+      const combos = ['5 years', '6+ yrs', '7 +yrs', '9 +years', '11+ years','15 + years'];
       const output = createELKeywords(5, []);
       const result = combos.every(c => output.includes(c) ? true : false);
       expect(result).toBe(false);
@@ -62,6 +62,13 @@ describe('Chrome Utils', () => {
       const keyword = '5 years';
       const output = checkPrefixes(job, keyword);
       expect(output).toBe('4-5 years');
+    });
+
+    it('should not return a range if it starts with 0 years', () => {
+      const job = '<li>0-3 years of experience required</li>';
+      const keyword = '3 years';
+      const output = checkPrefixes(job, keyword);
+      expect(output).toBeUndefined();
     });
 
     it('should return undefined if single double digit found in job', () => {
