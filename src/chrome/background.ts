@@ -21,7 +21,9 @@ const injectContent = () => {
   });
 }
 
-chrome.tabs && chrome.tabs.onUpdated.addListener(injectContent);
+chrome.tabs && chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (tab.status === 'complete') injectContent();
+});
 
 // Tell content script to save new settings to storage
 export const applySettings = ({ entryLevel, clownlist }: Settings) => {
