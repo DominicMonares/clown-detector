@@ -24,7 +24,6 @@ const App = () => {
         // Render settings if on LinkedIn job page
         if (tab.url?.includes(jobUrl)) {
           chrome.tabs.sendMessage(
-
             tab.id || 0,
             {},
             (res: ReactMessageRes) => {
