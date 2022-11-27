@@ -2,7 +2,7 @@ import {
   checkPrefixes,
   createELKeywords,
   replaceApostrophes
-} from "../chrome/utils";
+} from '../chrome/utils';
 
 
 describe('replaceApostrophes', () => {
