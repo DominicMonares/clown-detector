@@ -93,14 +93,7 @@ const startObserver = () => {
   const config = { attributes: true, subtree: true };
   const targetNode = $('.jobs-unified-top-card__content--two-pane')[0];
   if (targetNode) {
-    const observer = new MutationObserver(mutations => {
-      mutations.every(m => {
-
-      })
-
-      waitForTopCard(scanJob, settings, 0);
-    });
-
+    const observer = new MutationObserver(() => waitForTopCard(scanJob, settings, 0));
     observer.observe(targetNode, config);
   }
 }
