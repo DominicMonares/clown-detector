@@ -69,7 +69,9 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
   const entryLevelKeywords = years && isEntryLevel ? createELKeywords(years, []) : [];
 
   // Get job html as a string and search for keywords
-  const job = $('#job-details span')[0]['outerHTML'].toLowerCase();
+  const sourced = $('#job-details div').length; // Jobs sourced from job board
+  const jobIndex = sourced ? 1 : 0;
+  const job = $('#job-details span')[jobIndex]['outerHTML'].toLowerCase();
 
   const flaggedKeywords: string[] = [];
   clownlistKeywords.forEach(k => job?.includes(k.toLowerCase()) ? flaggedKeywords.push(k) : null);
@@ -78,7 +80,7 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
     if (validated) flaggedKeywords.push(validated);
   });
 
-  renderDescription(flaggedKeywords);
+  renderDescription(flaggedKeywords, sourced);
   if (!flaggedKeywords.length) return;
 
   // Escape keywords then render
@@ -89,9 +91,16 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
 // Run job scan whenever the job list or details rerender
 const startObserver = () => {
   const config = { attributes: true, subtree: true };
-  const targetNode = $('.scaffold-layout__inner')[0];
+  const targetNode = $('.jobs-unified-top-card__content--two-pane')[0];
   if (targetNode) {
-    const observer = new MutationObserver(() => waitForTopCard(scanJob, settings, 0));
+    const observer = new MutationObserver(mutations => {
+      mutations.every(m => {
+
+      })
+
+      waitForTopCard(scanJob, settings, 0);
+    });
+
     observer.observe(targetNode, config);
   }
 }
