@@ -64,20 +64,24 @@ export const checkPrefixes: CheckPrefixes = (job, keyword) => {
 }
 
 // Highlight keywords and render new description
-export const renderDescription = (keywords: string[]) => {
+export const renderDescription = (keywords: string[], sourced: number) => {
   const jobSpan = $('#job-details span');
   const newJob = jobSpan[2];
+  const sourcedDiv = $('#job-details div')[0];
+  if (sourcedDiv) $('#job-details div')[0].remove();
+  const firstSourced = newJob && $('#job-details span').length === 2;
 
-  let jobHTML = jobSpan[0].innerHTML;
+  let jobHTML = jobSpan[sourced].innerHTML;
   keywords.forEach(k => {
     const keyword = k.replace('+', '\\+');
     const regex = new RegExp(keyword, 'ig');
     jobHTML = jobHTML.replace(regex, `<mark>${k}</mark>`);
   });
 
-  if (newJob) $('#job-details span')[2].remove();
+  if (newJob && !firstSourced) $('#job-details span')[2].remove();
   $('#job-details span').hide(); // Hide instead of remove to preserve events
-  $('#job-details').append(`<span>${jobHTML}</span>`);
+  const sourcedHTML = sourcedDiv ? sourcedDiv.outerHTML : '';
+  $('#job-details').append(`<span>${sourcedHTML}<span>${jobHTML}</span></span>`);
 }
 
 // Send in the clowns!

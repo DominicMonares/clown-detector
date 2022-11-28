@@ -71,7 +71,10 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
   // Get job html as a string and search for keywords
   const sourced = $('#job-details div').length; // Jobs sourced from job board
   const jobIndex = sourced ? 1 : 0;
-  const job = $('#job-details span')[jobIndex]['outerHTML'].toLowerCase();
+  const job = $('#job-details span')[jobIndex]['innerHTML'].toLowerCase();
+
+
+  console.log('JOB ', $('#job-details span'));
 
   const flaggedKeywords: string[] = [];
   clownlistKeywords.forEach(k => job?.includes(k.toLowerCase()) ? flaggedKeywords.push(k) : null);
@@ -79,6 +82,9 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
     const validated = checkPrefixes(job, k);
     if (validated) flaggedKeywords.push(validated);
   });
+
+  // if flagged and sourced,
+
 
   renderDescription(flaggedKeywords, sourced);
   if (!flaggedKeywords.length) return;
@@ -88,7 +94,7 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
   renderFlags(escapedKeywords);
 }
 
-// Run job scan whenever the job list or details rerender
+// Run job scan whenever the job top card renders
 const startObserver = () => {
   const config = { attributes: true, subtree: true };
   const targetNode = $('.jobs-unified-top-card__content--two-pane')[0];
