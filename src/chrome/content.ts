@@ -89,7 +89,7 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
 
 // Run job scan whenever job container mutates
 const startObserver = () => {
-  const config = { attributes: true, subtree: true };
+  const config = { attributes: true, childList: true, subtree: true };
   const targetNode = $('.scaffold-layout__list-detail-inner')[0];
   if (targetNode) {
     const observer = new MutationObserver(() => waitForTopCard(scanJob, settings, 0));
