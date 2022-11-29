@@ -92,7 +92,15 @@ const startObserver = () => {
   const config = { attributes: true, childList: true, subtree: true };
   const targetNode = $('.scaffold-layout__list-detail-inner')[0];
   if (targetNode) {
-    const observer = new MutationObserver(() => waitForTopCard(scanJob, settings, 0));
+    const observer = new MutationObserver((mutations) => {
+      const targetLength = $(mutations[0].target).children('span').length;
+      const loopLength = mutations.length === 2 || mutations.length === 3;
+      const willLoop = loopLength && mutations[0]['type'] === 'childList' && targetLength;
+      if (!willLoop) {
+        console.log('MUTATIONS ', mutations)
+        waitForTopCard(scanJob, settings, 0);
+      }
+    });
     observer.observe(targetNode, config);
   }
 }
