@@ -73,18 +73,12 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
   const jobIndex = sourced ? 1 : 0;
   const job = $('#job-details span')[jobIndex]['innerHTML'].toLowerCase();
 
-
-  console.log('JOB ', $('#job-details span'));
-
   const flaggedKeywords: string[] = [];
   clownlistKeywords.forEach(k => job?.includes(k.toLowerCase()) ? flaggedKeywords.push(k) : null);
   entryLevelKeywords.forEach(k => {
     const validated = checkPrefixes(job, k);
     if (validated) flaggedKeywords.push(validated);
   });
-
-  // if flagged and sourced,
-
 
   renderDescription(flaggedKeywords, sourced);
   if (!flaggedKeywords.length) return;
