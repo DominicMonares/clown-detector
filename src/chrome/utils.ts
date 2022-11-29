@@ -80,8 +80,7 @@ export const renderDescription = (keywords: string[], sourced: number) => {
 
   if (newJob && !firstSourced) $('#job-details span')[2].remove();
   $('#job-details span').hide(); // Hide instead of remove to preserve events
-  const sourcedHTML = sourcedDiv ? sourcedDiv.outerHTML : '';
-  $('#job-details').append(`<span>${sourcedHTML}<span>${jobHTML}</span></span>`);
+  $('#job-details').append(`<span>${jobHTML}</span>`);
 }
 
 // Send in the clowns!
