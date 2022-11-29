@@ -91,7 +91,7 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
 // Run job scan whenever the job top card renders
 const startObserver = () => {
   const config = { attributes: true, subtree: true };
-  const targetNode = $('.jobs-search__job-details--container')[0];
+  const targetNode = $('.jobs-unified-top-card__content--two-pane')[0];
   if (targetNode) {
     const observer = new MutationObserver(() => waitForTopCard(scanJob, settings, 0));
     observer.observe(targetNode, config);
