@@ -1,21 +1,34 @@
 import { Settings } from '../types';
 
 
+const tabTracker: { [key: string]: string } = {};
+
 // Re-inject content script after every page update
 const injectContent = () => {
-  chrome.tabs.query({}, tabs => {
+  chrome.tabs.query({}, async tabs => {
     const manifest = chrome.runtime.getManifest();
     const contentScript = manifest.content_scripts ? manifest.content_scripts[0] : null;
     const contentJs = contentScript ? contentScript.js : null;
     const contentJsFile = contentJs ? contentJs[0] : null;
     if (contentJsFile) {
       for (let tab of tabs) {
-        if (tab.url?.includes('linkedin.com/jobs') && tab.status === 'complete') {
-          chrome.scripting.executeScript({
-            target: { tabId: tab.id as number, allFrames: true },
-            files: [contentJsFile]
-          });
-        };
+        if (tab.status === 'complete' && tab.id) {
+          if (!tabTracker[tab.id]) tabTracker[tab.id] = tab.url || '';
+          const currentURL = tab.url;
+          const previousURL = tabTracker[tab.id];
+          const jobsURL = 'linkedin.com/jobs';
+          if (currentURL?.includes(jobsURL)) {
+            console.log('URLS ', currentURL, previousURL)
+            if (!previousURL.includes(jobsURL) && previousURL.includes('linkedin.com')) {
+              chrome.tabs.reload();
+            } else {
+              chrome.scripting.executeScript({
+                target: { tabId: tab.id as number, allFrames: true },
+                files: [contentJsFile]
+              });
+            }
+          };
+        }
       }
     }
   });
