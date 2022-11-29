@@ -70,15 +70,22 @@ describe('checkPrefixes', () => {
     expect(output).toBeUndefined();
   });
 
-  it('should return undefined if single double digit found in job', () => {
-    const job = 'For more than 35 years, we have...';
+  it('should return undefined if founded prefix found in job', () => {
+    const job = 'For more than 9 years, we have...';
+    const keyword = '5 years';
+    const output = checkPrefixes(job, keyword);
+    expect(output).toBeUndefined();
+  });
+
+  it('should return undefined if double digit is greater than or equal to 20', () => {
+    const job = '35 years, we have...';
     const keyword = '5 years';
     const output = checkPrefixes(job, keyword);
     expect(output).toBeUndefined();
   });
 
   it('should return keyword if entry level found after double digit', () => {
-    const job = 'For more than 35 years, we have required 5 years of experience for entry level jobs';
+    const job = 'For over 35 years, we have required 5 years of experience for entry level jobs';
     const keyword = '5 years';
     const output = checkPrefixes(job, keyword);
     expect(output).toBe('5 years');
