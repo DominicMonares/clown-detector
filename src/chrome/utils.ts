@@ -91,13 +91,8 @@ export const renderFlags = (keywords: string[]) => {
     return i === keywords.length - 1 ? k : k + ' · ';
   })).join('');
 
-  const topCard = $(`.${topCardClassName}`).first();
-  const newHTML = $(`
-    <span style="display:flex; align-items:center; margin-left:10px;">
-      <span style="margin-right:10px; font-size: 17px">&#129313;</span>
-      <span>${joinedKeywords}</span>
-    </span>
-  `);
-
-  topCard.append(newHTML);
+  const topText = $(`.${topCardClassName}`)[0]['children'][1]['textContent'];
+  const newText = `${topText}\xa0\xa0🤡\xa0\xa0\xa0${joinedKeywords}`;
+  const topCard = !topText?.includes('🤡') ? newText : topText;
+  $(`.${topCardClassName}`)[0]['children'][1]['textContent'] = topCard;
 }
