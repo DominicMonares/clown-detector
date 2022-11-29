@@ -34,24 +34,26 @@ export const replaceApostrophes = (keywords: string[]) => {
 export const createELKeywords: CreateELKeywords = (years, keywords) => {
   suffixes.forEach(s => keywords.push(`${years}${s}`));
   const nextYear = years + 1 as Years;
-  // Cap off at 9 years to avoid false positives with double digits
-  return years === 9 ? keywords : createELKeywords(nextYear, keywords);
+  return years === 15 ? keywords : createELKeywords(nextYear, keywords);
 }
 
 export const checkPrefixes: CheckPrefixes = (job, keyword) => {
   const index = job.indexOf(keyword);
   if (index) {
-    const prefix = job.slice(index - 4, index); // Allow room for 2 spaces, 1 dash, and num
+    const prefix = job.slice(index - 5, index);
+    const founded = ['for', 'over', 'last', 'than'];
     const firstDigit = Number(job[index - 1]);
-    // If range of years found, return entire range
     if (prefix.indexOf('-') >= 0) {
+      // If range of years found, return entire range
       for (let i = prefix.indexOf('-') - 1; i > 0; i--) {
         if (Number(prefix[i])) return `${prefix.slice(i)}${keyword}`;
       }
-    } else if (firstDigit) {
-      // If double digit, might be years since company was founded
+    } else if (founded.some(f => prefix.includes(f) ? true : false)) {
+      // If founded prefix present, skip and check rest of document
+      return checkPrefixes(job.slice(index + 1), keyword);
+    } else if (firstDigit && firstDigit > 1) {
+      // If first digit greater than 1, likely years since company was founded
       // Assume this, skip, and check rest of document
-      // Better the user receive a false negative than positive here
       return checkPrefixes(job.slice(index + 1), keyword);
     } else if (job.includes(keyword)) {
       return keyword;
