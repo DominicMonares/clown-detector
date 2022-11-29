@@ -96,10 +96,8 @@ const startObserver = () => {
       const targetLength = $(mutations[0].target).children('span').length;
       const loopLength = mutations.length === 2 || mutations.length === 3;
       const willLoop = loopLength && mutations[0]['type'] === 'childList' && targetLength;
-      if (!willLoop) {
-        console.log('MUTATIONS ', mutations)
-        waitForTopCard(scanJob, settings, 0);
-      }
+      console.log('MUTATIONS ', mutations)
+      if (!willLoop) waitForTopCard(scanJob, settings, 0);
     });
     observer.observe(targetNode, config);
   }
