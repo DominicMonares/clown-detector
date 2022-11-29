@@ -69,7 +69,6 @@ export const renderDescription = (keywords: string[], sourced: number) => {
   const newJob = jobSpan[2];
   const sourcedDiv = $('#job-details div')[0];
   if (sourcedDiv) $('#job-details div')[0].remove();
-  const firstSourced = newJob && $('#job-details span').length === 2;
 
   let jobHTML = jobSpan[sourced].innerHTML;
   keywords.forEach(k => {
@@ -78,7 +77,7 @@ export const renderDescription = (keywords: string[], sourced: number) => {
     jobHTML = jobHTML.replace(regex, `<mark>${k}</mark>`);
   });
 
-  if (newJob && !firstSourced) $('#job-details span')[2].remove();
+  if (newJob) $('#job-details span')[2].remove();
   $('#job-details span').hide(); // Hide instead of remove to preserve events
   $('#job-details').append(`<span>${jobHTML}</span>`);
 }
