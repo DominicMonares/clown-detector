@@ -41,7 +41,7 @@ export const checkPrefixes: CheckPrefixes = (job, keyword) => {
   const index = job.indexOf(keyword);
   if (index) {
     const prefix = job.slice(index - 5, index);
-    const founded = ['for', 'over', 'last', 'than'];
+    const founded = ['for', 'over', 'last', 'than', 'with'];
     const firstDigit = Number(job[index - 1]);
     if (prefix.indexOf('-') >= 0) {
       // If range of years found, return entire range
