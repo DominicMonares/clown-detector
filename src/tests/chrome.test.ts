@@ -26,8 +26,8 @@ describe('createELKeywords', () => {
     expect(result).toBe(true);
   });
 
-  it ('should only render up to 14 years', () => {
-    const combos = ['5 years', '6+ yrs', '7 +yrs', '9 +years', '11+ years','15 + years'];
+  it ('should only render up to 15 years', () => {
+    const combos = ['5 years', '6+ yrs', '7 +yrs', '9 +years', '11+ years','15 + years', '16 yrs'];
     const output = createELKeywords(5, []);
     const result = combos.every(c => output.includes(c) ? true : false);
     expect(result).toBe(false);
