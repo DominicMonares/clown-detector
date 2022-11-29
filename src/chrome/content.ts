@@ -72,7 +72,6 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
   const sourced = $('#job-details div').length; // Jobs sourced from job board
   const jobIndex = sourced ? 1 : 0;
   const job = $('#job-details span')[jobIndex]['innerHTML'].toLowerCase();
-
   const flaggedKeywords: string[] = [];
   clownlistKeywords.forEach(k => job?.includes(k.toLowerCase()) ? flaggedKeywords.push(k) : null);
   entryLevelKeywords.forEach(k => {
@@ -88,17 +87,17 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
   renderFlags(escapedKeywords);
 }
 
-// Run job scan whenever the job top card renders
+// Run job scan whenever job container mutates
 const startObserver = () => {
   const config = { attributes: true, subtree: true };
-  const targetNode = $('.jobs-unified-top-card__content--two-pane')[0];
+  const targetNode = $('.scaffold-layout__list-detail-inner')[0];
   if (targetNode) {
     const observer = new MutationObserver(() => waitForTopCard(scanJob, settings, 0));
     observer.observe(targetNode, config);
   }
 }
 
-// Get settings and start observers once page is loaded
+// Get settings and start observer once page is loaded
 window.onload = () => {
   chrome.storage.sync.get(['entryLevel', 'clownlist'], res => {
     if (!Object.keys(res).length) {
