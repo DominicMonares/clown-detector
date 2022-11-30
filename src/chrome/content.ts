@@ -91,14 +91,23 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
 const startObserver = () => {
   const config = { attributes: true, childList: true, subtree: true };
   const targetNode = $('.scaffold-layout__list-detail-inner')[0];
+  let loop2 = 0, loop3 = 0;
   if (targetNode) {
-    const observer = new MutationObserver((mutations) => {
+    const observer = new MutationObserver(mutations => {
+      // Observer will infinitely loop and slow page speed when these conditions are met
+      // However, these conditions need to be met in order to refresh flags
+      // Use loop counter to break loops after 10 iterations
       const targetLength = $(mutations[0].target).children('span').length;
-      const loopLength = mutations.length === 2 || mutations.length === 3;
-      const willLoop = loopLength && mutations[0]['type'] === 'childList' && targetLength;
-      console.log('MUTATIONS ', mutations)
-      if (!willLoop) waitForTopCard(scanJob, settings, 0);
+      const targetLoop = mutations[0]['type'] === 'childList' && targetLength;
+      const loopLength2 = mutations.length === 2;
+      const loopLength3 = mutations.length === 3;
+      const willLoop2 = loopLength2 && targetLoop;
+      const willLoop3 = loopLength3 && targetLoop;
+      willLoop2 ? loop2++ : loop2 = 0;
+      willLoop3 ? loop3++ : loop3 = 0;
+      if ((loop2 < 10 && !loop3) || (loop3 < 10 && !loop2)) waitForTopCard(scanJob, settings, 0);
     });
+
     observer.observe(targetNode, config);
   }
 }
@@ -110,7 +119,7 @@ window.onload = () => {
       // Create default settings if user settings don't exist
       const defaultEntryLevel: EntryLevelSetting = 5;
       settings = { entryLevel: defaultEntryLevel, clownlist: {} };
-      chrome.storage.sync.set(settings, () => {});
+      chrome.storage.sync.set(settings, () => { });
       startObserver();
     } else {
       settings = { entryLevel: res.entryLevel, clownlist: res.clownlist };
