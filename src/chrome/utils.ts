@@ -92,11 +92,12 @@ export const renderFlags = (keywords: string[]) => {
 
   const spacer = '<!---->';
   const topHTML = $(`.${topCardClassName}`)[0]['children'][1]['innerHTML'];
-  const splitHTML = topHTML.split(spacer);
-  if (splitHTML[1].includes('🤡')) return; // Prevent duplicate renders
+  if (topHTML.includes('🤡')) return; // Prevent duplicate renders
 
+  const splitTop = topHTML.split(spacer);
+  const textEnd = splitTop.length - 2;
   const clown = '<span style="font-size: 17px">🤡</span>';
-  const newHTML = `${splitHTML[1]}\xa0\xa0${clown}\xa0\xa0${joinedKeywords}`;
-  splitHTML[1] = newHTML;
-  $(`.${topCardClassName}`)[0]['children'][1]['innerHTML'] = splitHTML.join(spacer);
+  const newTop = `${splitTop[textEnd]}\xa0\xa0${clown}\xa0\xa0${joinedKeywords}`;
+  splitTop[textEnd] = newTop;
+  $(`.${topCardClassName}`)[0]['children'][1]['innerHTML'] = splitTop.join(spacer);
 }
