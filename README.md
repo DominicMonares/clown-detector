@@ -8,10 +8,12 @@ Any LinkedIn job that meets the user's criteria will be flagged with a clown emo
 
 ![](https://github.com/DominicMonares/clown-detector/blob/main/demo/browse.gif)
 
+Settings can be changed through popup menu.
+
+![](https://github.com/DominicMonares/clown-detector/blob/main/demo/settings.png)
+
 ### Entry Level
 Flag jobs that are explicitly listed as "entry level", yet require mid to senior levels of experience.
-
-![](https://github.com/DominicMonares/clown-detector/blob/main/demo/entry_level_setting.gif)
 
 Jobs not explicitly listed as "entry level" will not be flagged for years of experience required.
 
@@ -19,8 +21,6 @@ By default, the entry level threshold is set to flag jobs requiring 7+ years of 
 
 ### Clownlist
 Flag jobs that contain specific keywords.
-
-![](https://github.com/DominicMonares/clown-detector/blob/main/demo/clownlist_setting.gif)
 
 This will work for all jobs, regardless of experience level.
 
