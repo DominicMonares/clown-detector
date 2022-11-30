@@ -16,7 +16,6 @@ export const waitForTopCard: WaitForTopCard = (scanJob, settings, count) => {
   setTimeout(() => {
     const topCards = $(`.${topCardClassName}`);
     if (topCards.length) {
-      if (topCards[0]['children'][2]) return; // Prevent duplicate renders
       const topCard = topCards[0]['children'][1]['innerHTML'];
       return scanJob(topCard, settings);
     } else {
@@ -91,8 +90,13 @@ export const renderFlags = (keywords: string[]) => {
     return i === keywords.length - 1 ? k : k + ' · ';
   })).join('');
 
-  const topText = $(`.${topCardClassName}`)[0]['children'][1]['textContent'];
-  const newText = `${topText}\xa0\xa0🤡\xa0\xa0\xa0${joinedKeywords}`;
-  const topCard = !topText?.includes('🤡') ? newText : topText;
-  $(`.${topCardClassName}`)[0]['children'][1]['textContent'] = topCard;
+  const spacer = '<!---->';
+  const topHTML = $(`.${topCardClassName}`)[0]['children'][1]['innerHTML'];
+  const splitHTML = topHTML.split(spacer);
+  if (splitHTML[1].includes('🤡')) return; // Prevent duplicate renders
+
+  const clown = '<span style="font-size: 17px">🤡</span>';
+  const newHTML = `${splitHTML[1]}\xa0\xa0${clown}\xa0\xa0${joinedKeywords}`;
+  splitHTML[1] = newHTML;
+  $(`.${topCardClassName}`)[0]['children'][1]['innerHTML'] = splitHTML.join(spacer);
 }
