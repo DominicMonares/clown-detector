@@ -19,6 +19,10 @@
     "storage",
     "scripting"
   ],
+  "host_permissions": [
+    "https://www.linkedin.com/jobs/*",
+    "https://www.linkedin.com/jobs/"
+  ],
   "background": {
     "service_worker": "./static/js/background.js"
   },
