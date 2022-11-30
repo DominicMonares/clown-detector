@@ -24,7 +24,7 @@ const injectContent = () => {
             // Manually reload if using back button on non-job LinkedIn page
             // Not doing so breaks the job post event listeners
             if (!previousURL.includes(jobsURL) && previousURL.includes('linkedin.com')) {
-              chrome.tabs.reload();
+              await chrome.tabs.reload();
             } else {
               tabTracker[tab.id] = currentURL;
               chrome.scripting.executeScript({
