@@ -33,37 +33,6 @@ const injectContent = () => {
               });
             }
           };
-
-          // // Store tab id and corresponding url, compare current to previous each injection
-          // if (!tabTracker[tab.id]) tabTracker[tab.id] = [tab.url];
-          // const tabHistory = tabTracker[tab.id];
-          // const baseURL = 'linkedin.com/';
-          // const jobsURL = `${baseURL}jobs`;
-          // const currentURL = tab.url;
-          // const firstURL = tabHistory[0];
-          // const secondURL = tabHistory[1];
-
-
-          // const isJob = (url: string) => url?.includes(jobsURL);
-          // const isNotJob = (url: string) => url?.includes(baseURL) && !url?.includes(jobsURL);
-          // const firstJob = firstURL ? isJob(firstURL) : false;
-          // const secondJob = secondURL ? isJob(secondURL) : false;
-          // const currentJob = currentURL ? isJob(currentURL) : false;
-          // if (currentURL?.includes('linkedin')) console.log('URLSSSS ', (isJob(firstURL) && isNotJob(secondURL) && isJob(currentURL)))
-
-          // if (secondURL) tabTracker[tab.id].shift();
-          // tabTracker[tab.id].push(currentURL);
-
-          // // Manually reload if navigating from then to a job page
-          // // Not doing so breaks the job post event listeners
-          // if (isJob(firstURL) && isNotJob(secondURL) && isJob(currentURL)) {
-          //   await chrome.tabs.reload();
-          // } else if (currentJob) {
-          //   chrome.scripting.executeScript({
-          //     target: { tabId: tab.id as number, allFrames: true },
-          //     files: [contentJsFile]
-          //   });
-          // }
         }
       }
     }
