@@ -1,7 +1,9 @@
 # Clown Detector
+![](https://github.com/DominicMonares/clown-detector/blob/main/demo/top_card.png)
+
 A Google Chrome extension that helps you spot silly LinkedIn jobs at a glance.
 
-![](https://github.com/DominicMonares/clown-detector/blob/main/demo/top_card.png)
+Available for download from the [Chrome Web Store](https://chrome.google.com/webstore/detail/clown-detector/djejlndcgacefmmiamjankkmdeoebhif).
 
 ## Features
 Any LinkedIn job that meets the user's criteria will be flagged with a clown emoji and the keyword(s) found.
