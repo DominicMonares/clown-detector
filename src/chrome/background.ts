@@ -16,17 +16,21 @@ const injectContent = () => {
         if (tab.status === 'complete' && tab.id && tab.url) {
           // Store tab id and corresponding url, compare current to previous each injection
           if (!tabTracker[tab.id]) tabTracker[tab.id] = tab.url;
+          const linkedin = 'linkedin.com';
           const currentURL = tab.url;
           const previousURL = tabTracker[tab.id];
-          const jobsURL = 'linkedin.com/jobs';
+          const searchURL = `${linkedin}/jobs/search`;
+          const viewURL = `${linkedin}/jobs/view`;
           tabTracker[tab.id] = currentURL;
-          if (currentURL?.includes(jobsURL)) {
+          const onJobPage = currentURL?.includes(searchURL) || currentURL?.includes(viewURL);
+          if (onJobPage) {
             // Manually reload if using back button on non-job LinkedIn page
             // Not doing so breaks the job post event listeners
-            if (!previousURL.includes(jobsURL) && previousURL.includes('linkedin.com')) {
+            const noPreviousJob = !previousURL.includes(searchURL) && !previousURL.includes(viewURL);
+            const returnToSearch = currentURL?.includes(searchURL) && previousURL.includes(viewURL);
+            if ((noPreviousJob && previousURL.includes(linkedin)) || returnToSearch) {
               await chrome.tabs.reload();
             } else {
-              tabTracker[tab.id] = currentURL;
               chrome.scripting.executeScript({
                 target: { tabId: tab.id as number, allFrames: true },
                 files: [contentJsFile]
