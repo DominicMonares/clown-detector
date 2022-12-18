@@ -5,6 +5,7 @@ import {
   WaitForTopCard,
   Years
 } from "../types";
+import prefixes from './prefixes.json';
 import suffixes from './suffixes.json';
 
 
@@ -40,15 +41,18 @@ export const checkPrefixes: CheckPrefixes = (job, keyword) => {
   const index = job.indexOf(keyword);
   if (index) {
     const prefix = job.slice(index - 5, index);
-    const founded = ['for', 'over', 'last', 'than', 'with'];
+    // const founded = job.slice(index - 15, index + 15).includes('require');
+
+
     const firstDigit = Number(job[index - 1]);
     if (prefix.indexOf('-') >= 0) {
       // If range of years found, return entire range
       for (let i = prefix.indexOf('-') - 1; i > 0; i--) {
         if (Number(prefix[i])) return `${prefix.slice(i)}${keyword}`;
       }
-    } else if (founded.some(f => prefix.includes(f) ? true : false)) {
+    } else if (prefixes.some(f => prefix.includes(f) ? true : false)) {
       // If founded prefix present, skip and check rest of document
+
       return checkPrefixes(job.slice(index + 1), keyword);
     } else if (firstDigit && firstDigit > 1) {
       // If first digit greater than 1, likely years since company was founded
