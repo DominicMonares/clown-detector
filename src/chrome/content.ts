@@ -90,9 +90,11 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
 // Run job scan whenever job container mutates
 const startObserver = () => {
   const config = { attributes: true, childList: true, subtree: true };
-  const targetNode = $('.scaffold-layout__list-detail-inner')[0];
+  const searchTarget = $('.scaffold-layout__list-detail-inner')[0];
+  const viewTarget = $('.job-view-layout')[0];
+
   let loop2 = 0, loop3 = 0;
-  if (targetNode) {
+  if (searchTarget || viewTarget) {
     const observer = new MutationObserver(mutations => {
       // Observer will infinitely loop and slow page speed when these conditions are met
       // However, these conditions need to be met in order to refresh flags
@@ -108,7 +110,12 @@ const startObserver = () => {
       if ((loop2 < 10 && !loop3) || (loop3 < 10 && !loop2)) waitForTopCard(scanJob, settings, 0);
     });
 
-    observer.observe(targetNode, config);
+    if (searchTarget) {
+      return observer.observe(searchTarget, config);
+    } else {
+      observer.observe(viewTarget, config);
+    }
+
   }
 }
 
