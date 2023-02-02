@@ -93,7 +93,6 @@ const startObserver = () => {
   const config = { attributes: true, childList: true, subtree: true };
   const searchTarget = $('.scaffold-layout__list-detail-inner')[0];
   const viewTarget = $('.job-view-layout')[0];
-  console.log('REAL SHIT? ', searchTarget, viewTarget)
 
   let loop2 = 0, loop3 = 0;
   if (searchTarget || viewTarget) {
