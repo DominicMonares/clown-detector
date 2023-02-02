@@ -2,6 +2,7 @@ import $ from 'jquery';
 import {
   CreateELKeywords,
   CheckPrefixes,
+  WaitForTarget,
   WaitForTopCard,
   Years
 } from "../types";
@@ -13,7 +14,7 @@ const topCardClassName = "jobs-unified-top-card__job-insight";
 
 // Wait for entry level element to load
 export const waitForTopCard: WaitForTopCard = (scanJob, settings, count) => {
-  if (count === 10) return; // Exit if not found after 5 seconds
+  if (count === 10) return; // Exit if not found after 10 seconds
   setTimeout(() => {
     const topCards = $(`.${topCardClassName}`);
     if (topCards.length) {
@@ -21,6 +22,19 @@ export const waitForTopCard: WaitForTopCard = (scanJob, settings, count) => {
       return scanJob(topCard, settings);
     } else {
       return waitForTopCard(scanJob, settings, count + 1);
+    }
+  }, 500);
+}
+
+export const waitForTarget: WaitForTarget = (startObserver, count) => {
+  if (count === 10) return; // Exit if not found after 10 seconds
+  setTimeout(() => {
+    const searchTarget = $('.scaffold-layout__list-detail-inner')[0];
+    const viewTarget = $('.job-view-layout')[0];
+    if (searchTarget || viewTarget) {
+      startObserver();
+    } else {
+      return waitForTarget(startObserver, count + 1);
     }
   }, 500);
 }

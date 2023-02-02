@@ -14,6 +14,7 @@ import {
   renderDescription,
   renderFlags,
   replaceApostrophes,
+  waitForTarget,
   waitForTopCard
 } from './utils';
 
@@ -92,6 +93,7 @@ const startObserver = () => {
   const config = { attributes: true, childList: true, subtree: true };
   const searchTarget = $('.scaffold-layout__list-detail-inner')[0];
   const viewTarget = $('.job-view-layout')[0];
+  console.log('REAL SHIT? ', searchTarget, viewTarget)
 
   let loop2 = 0, loop3 = 0;
   if (searchTarget || viewTarget) {
@@ -111,7 +113,8 @@ const startObserver = () => {
     });
 
     if (searchTarget) {
-      return observer.observe(searchTarget, config);
+      observer.observe(searchTarget, config);
+      return;
     } else {
       observer.observe(viewTarget, config);
     }
@@ -127,10 +130,10 @@ window.onload = () => {
       const defaultEntryLevel: EntryLevelSetting = 5;
       settings = { entryLevel: defaultEntryLevel, clownlist: {} };
       chrome.storage.sync.set(settings, () => { });
-      startObserver();
+      waitForTarget(startObserver, 0);
     } else {
       settings = { entryLevel: res.entryLevel, clownlist: res.clownlist };
-      startObserver();
+      waitForTarget(startObserver, 0);
     }
   });
 }

@@ -11,6 +11,11 @@ export type WaitForTopCard = (
   count: number
 ) => void;
 
+export type WaitForTarget = (
+  callback: () => void,
+  count: number
+) => void;
+
 export type CreateELKeywords = (
   entryLevel: Years,
   keywords: string[]
