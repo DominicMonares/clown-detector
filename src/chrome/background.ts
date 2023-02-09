@@ -16,21 +16,40 @@ const injectContent = () => {
         if (tab.status === 'complete' && tab.id && tab.url) {
           // Store tab id and corresponding url, compare current to previous each injection
           if (!tabTracker[tab.id]) tabTracker[tab.id] = tab.url;
-          const linkedin = 'linkedin.com';
           const currentURL = tab.url;
           const previousURL = tabTracker[tab.id];
-          const searchURL = `${linkedin}/jobs/search`;
-          const viewURL = `${linkedin}/jobs/view`;
+
+          const linkedin = 'linkedin.com';
+          const linkedInSearchURL = `${linkedin}/jobs/search`;
+          const linkedInViewURL = `${linkedin}/jobs/view`
+          const indeed = 'indeed.com';
+          const indeedSearchURL = `${indeed}/jobs`
           tabTracker[tab.id] = currentURL;
-          const onJobPage = currentURL?.includes(searchURL) || currentURL?.includes(viewURL);
+
+          const onLinkedInSearch = currentURL?.includes(linkedInSearchURL);
+          const onLinkedInView = currentURL?.includes(linkedInViewURL);
+          const onLinkedIn = onLinkedInSearch || onLinkedInView;
+          const onIndeed = currentURL?.includes(indeedSearchURL);
+          const onJobPage = onLinkedIn || onIndeed;
           if (onJobPage) {
             // Manually reload if using back button on non-job LinkedIn page
             // Not doing so breaks the job post event listeners
-            const noPreviousJob = !previousURL.includes(searchURL) && !previousURL.includes(viewURL);
-            const returnToSearch = currentURL?.includes(searchURL) && previousURL.includes(viewURL);
-            if ((noPreviousJob && previousURL.includes(linkedin)) || returnToSearch) {
-              await chrome.tabs.reload();
-            } else {
+            if (onLinkedIn) {
+              const noPreviousSearch = !previousURL.includes(linkedInSearchURL);
+              const noPreviousView = !previousURL.includes(linkedInViewURL);
+              const noPreviousJob = noPreviousSearch && noPreviousView;
+              const onSearch = currentURL?.includes(linkedInSearchURL);
+              const wasOnView = previousURL.includes(linkedInViewURL);
+              const returnedToSearch = onSearch && wasOnView;
+              if ((noPreviousJob && previousURL.includes(linkedin)) || returnedToSearch) {
+                await chrome.tabs.reload();
+              } else {
+                chrome.scripting.executeScript({
+                  target: { tabId: tab.id as number, allFrames: true },
+                  files: [contentJsFile]
+                });
+              }
+            } else if (onIndeed) {
               chrome.scripting.executeScript({
                 target: { tabId: tab.id as number, allFrames: true },
                 files: [contentJsFile]
