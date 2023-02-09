@@ -21,7 +21,8 @@
   ],
   "host_permissions": [
     "https://www.linkedin.com/jobs/*",
-    "https://www.linkedin.com/jobs/"
+    "https://www.linkedin.com/jobs/",
+    "https://www.indeed.com/jobs"
   ],
   "background": {
     "service_worker": "./static/js/background.js"
@@ -30,7 +31,8 @@
     {
       "matches": [
         "https://www.linkedin.com/jobs/*",
-        "https://www.linkedin.com/jobs/"
+        "https://www.linkedin.com/jobs/",
+        "https://www.indeed.com/jobs"
       ],
       "js": ["./static/js/content.js"],
       "run_at": "document_end"
