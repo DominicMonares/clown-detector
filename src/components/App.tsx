@@ -22,7 +22,7 @@ const App = () => {
       chrome.tabs && chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
         const tab = tabs[0];
 
-        // Render settings if on LinkedIn job page
+        // Render settings if on LinkedIn or Indeed job page
         if (tab.url?.includes(linkedInURL) || tab.url?.includes(indeedURL)) {
           chrome.tabs.sendMessage(
             tab.id || 0,
@@ -42,7 +42,7 @@ const App = () => {
             }
           );
         } else {
-          // Render offsite page if not on LinkedIn job page
+          // Render offsite page if not on LinkedIn or Indeed job page
           return setOffsite(true);
         }
       });
