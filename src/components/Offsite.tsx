@@ -5,7 +5,7 @@ const Offsite = () => {
     <div className='offsite'>
       <img src={sad_clown} alt='sad clown' />
       <p>Uh-oh! Looks like you aren't on a LinkedIn or Indeed job post.</p>
-      <p>Please visit the LinkedIn or Indeed job board to use Clown Detector.</p>
+      <p>Please visit the LinkedIn or Indeed job boards to use Clown Detector.</p>
     </div>
   );
 }

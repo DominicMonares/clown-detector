@@ -7,7 +7,8 @@ import { ReactMessageRes, EntryLevelSetting, ClownlistSetting } from '../types';
 import './App.css';
 
 
-const jobURL = 'linkedin.com/jobs/';
+const linkedInURL = 'linkedin.com/jobs/';
+const indeedURL = 'indeed.com/jobs';
 
 const App = () => {
   const [offsite, setOffsite] = useState<boolean>(false);
@@ -22,7 +23,7 @@ const App = () => {
         const tab = tabs[0];
 
         // Render settings if on LinkedIn job page
-        if (tab.url?.includes(jobURL)) {
+        if (tab.url?.includes(linkedInURL) || tab.url?.includes(indeedURL)) {
           chrome.tabs.sendMessage(
             tab.id || 0,
             {},
