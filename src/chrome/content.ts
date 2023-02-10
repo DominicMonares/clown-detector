@@ -6,13 +6,14 @@ import {
   EntryLevelSetting,
   Settings,
   ScanJob,
+  Site,
   Years
 } from '../types';
 import {
   checkPrefixes,
   createELKeywords,
-  renderDescription,
-  renderFlags,
+  renderLinkedInDescription,
+  renderLinkedInFlags,
   replaceApostrophes,
   waitForTarget,
   waitForTopCard
@@ -80,45 +81,59 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
     if (validated) flaggedKeywords.push(validated);
   });
 
-  renderDescription(flaggedKeywords, sourced);
+  renderLinkedInDescription(flaggedKeywords, sourced);
   if (!flaggedKeywords.length) return;
 
   // Escape keywords then render
   const escapedKeywords = flaggedKeywords.map(k => escape(k));
-  renderFlags(escapedKeywords);
+  renderLinkedInFlags(escapedKeywords);
 }
 
 // Run job scan whenever job container mutates
-const startObserver = () => {
+const startObserver = (site: Site) => {
   const config = { attributes: true, childList: true, subtree: true };
-  const searchTarget = $('.scaffold-layout__list-detail-inner')[0];
-  const viewTarget = $('.job-view-layout')[0];
 
-  let loop2 = 0, loop3 = 0;
-  if (searchTarget || viewTarget) {
-    const observer = new MutationObserver(mutations => {
-      // Observer will infinitely loop and slow page speed when these conditions are met
-      // However, these conditions need to be met in order to refresh flags
-      // Use loop counter to break loops after 10 iterations
-      const targetLength = $(mutations[0].target).children('span').length;
-      const targetLoop = mutations[0]['type'] === 'childList' && targetLength;
-      const loopLength2 = mutations.length === 2;
-      const loopLength3 = mutations.length === 3;
-      const willLoop2 = loopLength2 && targetLoop;
-      const willLoop3 = loopLength3 && targetLoop;
-      willLoop2 ? loop2++ : loop2 = 0;
-      willLoop3 ? loop3++ : loop3 = 0;
-      if ((loop2 < 10 && !loop3) || (loop3 < 10 && !loop2)) waitForTopCard(scanJob, settings, 0);
-    });
+  if (site === 'linkedIn') {
+    const linkedInSearchTarget = $('.scaffold-layout__list-detail-inner')[0];
+    const linkedInViewTarget = $('.job-view-layout')[0];
 
-    if (searchTarget) {
-      observer.observe(searchTarget, config);
-      return;
-    } else {
-      observer.observe(viewTarget, config);
+    let loop2 = 0, loop3 = 0;
+    if (linkedInSearchTarget || linkedInViewTarget) {
+      const observer = new MutationObserver(mutations => {
+        // Observer will infinitely loop and slow page speed when these conditions are met
+        // However, these conditions need to be met in order to refresh flags
+        // Use loop counter to break loops after 10 iterations
+        const targetLength = $(mutations[0].target).children('span').length;
+        const targetLoop = mutations[0]['type'] === 'childList' && targetLength;
+        const loopLength2 = mutations.length === 2;
+        const loopLength3 = mutations.length === 3;
+        const willLoop2 = loopLength2 && targetLoop;
+        const willLoop3 = loopLength3 && targetLoop;
+        willLoop2 ? loop2++ : loop2 = 0;
+        willLoop3 ? loop3++ : loop3 = 0;
+        if ((loop2 < 10 && !loop3) || (loop3 < 10 && !loop2)) waitForTopCard(scanJob, settings, 0);
+      });
+
+      if (linkedInSearchTarget) {
+        observer.observe(linkedInSearchTarget, config);
+        return;
+      } else {
+        observer.observe(linkedInViewTarget, config);
+      }
+
     }
+  } else if (site === 'indeed') {
+    const indeedTarget = $('.jobsearch-ViewJobLayout-jobDisplay')[0];
+    if (indeedTarget) {
+      const observer = new MutationObserver(mutations => {
 
+      });
+
+      observer.observe(indeedTarget, config);
+    }
   }
+
+
 }
 
 // Get settings and start observer once page is loaded
