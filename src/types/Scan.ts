@@ -12,11 +12,13 @@ export type WaitForTarget = (
   count: number
 ) => void;
 
-export type WaitForTopCard = (
+export type WaitForPill = (
   callback: ScanJob,
   settings: Settings,
   count: number
 ) => void;
+
+export type WaitForTopCard = WaitForPill;
 
 export type CreateELKeywords = (
   entryLevel: Years,
