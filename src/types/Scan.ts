@@ -5,14 +5,16 @@ export type ScanJob = (
   settings: Settings
 ) => void;
 
-export type WaitForTopCard = (
-  callback: ScanJob,
-  settings: Settings,
+export type Site = 'linkedIn' | 'indeed';
+
+export type WaitForTarget = (
+  callback: (site: Site) => void,
   count: number
 ) => void;
 
-export type WaitForTarget = (
-  callback: () => void,
+export type WaitForTopCard = (
+  callback: ScanJob,
+  settings: Settings,
   count: number
 ) => void;
 
