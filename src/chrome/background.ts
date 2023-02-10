@@ -19,11 +19,11 @@ const injectContent = () => {
           const currentURL = tab.url;
           const previousURL = tabTracker[tab.id];
 
-          const linkedin = 'linkedin.com';
-          const linkedInSearchURL = `${linkedin}/jobs/search`;
-          const linkedInViewURL = `${linkedin}/jobs/view`
+          const linkedIn = 'linkedin.com';
+          const linkedInSearchURL = `${linkedIn}/jobs/search`;
+          const linkedInViewURL = `${linkedIn}/jobs/view`;
           const indeed = 'indeed.com';
-          const indeedSearchURL = `${indeed}/jobs`
+          const indeedSearchURL = `${indeed}/jobs`;
           tabTracker[tab.id] = currentURL;
 
           const onLinkedInSearch = currentURL?.includes(linkedInSearchURL);
@@ -32,16 +32,16 @@ const injectContent = () => {
           const onIndeed = currentURL?.includes(indeedSearchURL);
           const onJobPage = onLinkedIn || onIndeed;
           if (onJobPage) {
-            // Manually reload if using back button on non-job LinkedIn page
-            // Not doing so breaks the job post event listeners
             if (onLinkedIn) {
+              // Manually reload if using back button on non-job LinkedIn page
+              // Not doing so breaks the job post event listeners
               const noPreviousSearch = !previousURL.includes(linkedInSearchURL);
               const noPreviousView = !previousURL.includes(linkedInViewURL);
               const noPreviousJob = noPreviousSearch && noPreviousView;
               const onSearch = currentURL?.includes(linkedInSearchURL);
               const wasOnView = previousURL.includes(linkedInViewURL);
               const returnedToSearch = onSearch && wasOnView;
-              if ((noPreviousJob && previousURL.includes(linkedin)) || returnedToSearch) {
+              if ((noPreviousJob && previousURL.includes(linkedIn)) || returnedToSearch) {
                 await chrome.tabs.reload();
               } else {
                 chrome.scripting.executeScript({
