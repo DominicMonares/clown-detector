@@ -10,7 +10,7 @@ export const waitForPill: WaitForPill = (scanJob, settings, count) => {
   setTimeout(() => {
     const pillList = $(`#${pillListClassName}`);
     if (pillList.length) {
-
+      console.log('PILLS PILLS PILLS ', pillList)
       const topCard = pillList[0]['children'][0]['innerHTML'];
       return scanJob(topCard, settings);
 

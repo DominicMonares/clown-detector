@@ -15,6 +15,7 @@ import {
   renderLinkedInDescription,
   renderLinkedInFlags,
   replaceApostrophes,
+  waitForPill,
   waitForTarget,
   waitForTopCard
 } from './utils';
@@ -120,20 +121,17 @@ const startObserver = (site: Site) => {
       } else {
         observer.observe(linkedInViewTarget, config);
       }
-
     }
   } else if (site === 'indeed') {
     const indeedTarget = $('.jobsearch-ViewJobLayout-jobDisplay')[0];
     if (indeedTarget) {
       const observer = new MutationObserver(mutations => {
-
+        waitForPill(scanJob, settings, 0);
       });
 
       observer.observe(indeedTarget, config);
     }
   }
-
-
 }
 
 // Get settings and start observer once page is loaded
