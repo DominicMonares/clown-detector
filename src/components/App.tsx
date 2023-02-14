@@ -8,7 +8,7 @@ import './App.css';
 
 
 const linkedInURL = 'linkedin.com/jobs/';
-const indeedURL = 'indeed.com/jobs';
+const indeedURL = 'indeed.com';
 
 const App = () => {
   const [offsite, setOffsite] = useState<boolean>(false);
