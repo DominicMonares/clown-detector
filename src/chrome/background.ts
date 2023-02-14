@@ -23,13 +23,12 @@ const injectContent = () => {
           const linkedInSearchURL = `${linkedIn}/jobs/search`;
           const linkedInViewURL = `${linkedIn}/jobs/view`;
           const indeed = 'indeed.com';
-          const indeedSearchURL = indeed;
           tabTracker[tab.id] = currentURL;
 
           const onLinkedInSearch = currentURL?.includes(linkedInSearchURL);
           const onLinkedInView = currentURL?.includes(linkedInViewURL);
           const onLinkedIn = onLinkedInSearch || onLinkedInView;
-          const onIndeed = currentURL?.includes(indeedSearchURL);
+          const onIndeed = currentURL?.includes(indeed);
           const onJobPage = onLinkedIn || onIndeed;
           if (onJobPage) {
             if (onLinkedIn) {
