@@ -7,12 +7,16 @@ const topCardClassName = "jobs-unified-top-card__job-insight";
 
 // Wait for entry level element to load before scanning job
 export const waitForTopCard: WaitForTopCard = (scanJob, settings, count) => {
-  if (count === 10) return; // Exit if not found after 10 seconds
+  // Exit if not found after 5 seconds
+  // Does not call scan job like the Indeed equivalent because all LinkedIn
+  // jobs contain a topcard, not every Indeed job contains a pill (topcard equivalent)
+  if (count === 10) return;;
+
   setTimeout(() => {
     const topCards = $(`.${topCardClassName}`);
     if (topCards.length) {
       const topCard = topCards[0]['children'][1]['innerHTML'];
-      return scanJob(topCard, settings);
+      return scanJob(topCard, settings, 'linkedIn');
     } else {
       return waitForTopCard(scanJob, settings, count + 1);
     }

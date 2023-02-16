@@ -6,13 +6,14 @@ const pillListClassName = 'filter-explvl';
 
 // Wait for entry level element to load before scanning job
 export const waitForPill: WaitForPill = (scanJob, settings, count) => {
-  if (count === 10) return; // Exit if not found after 10 seconds
+  // Call scanJob if not found after 2 seconds
+  if (count === 4) return scanJob('', settings, 'indeed');
+
   setTimeout(() => {
     const pillList = $(`#${pillListClassName}`);
     if (pillList.length) {
-      console.log('PILLS PILLS PILLS ', pillList)
-      const topCard = pillList[0]['children'][0]['innerHTML'];
-      return scanJob(topCard, settings);
+      const pill = pillList[0]['children'][0]['innerHTML'];
+      return scanJob(pill, settings, 'indeed');
 
     } else {
       return waitForPill(scanJob, settings, count + 1);
