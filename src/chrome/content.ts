@@ -1,9 +1,9 @@
 import $ from 'jquery';
 import { escape } from 'html-escaper';
 import {
+  EntryLevelSetting,
   ReactMessageRes,
   ReactMessageListener,
-  EntryLevelSetting,
   Settings,
   ScanJob,
   Site,
@@ -12,6 +12,7 @@ import {
 import {
   checkPrefixes,
   createELKeywords,
+  renderIndeedDescription,
   renderLinkedInDescription,
   renderLinkedInFlags,
   replaceApostrophes,
@@ -59,11 +60,11 @@ const reactMessageListener: ReactMessageListener = (msg, sender, sendResponse) =
 chrome.runtime.onMessage.addListener(reactMessageListener);
 
 // Scan job description html and flag keywords
-const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
+const scanJob: ScanJob = (entryLevelElement, { entryLevel, clownlist }, site) => {
   const clownlistKeys = Object.keys(clownlist);
 
   // Check if job is explicitly listed as entry level
-  const isEntryLevel = topCard.includes('Entry level');
+  const isEntryLevel = entryLevelElement.toLowerCase().includes('entry level');
   if ((!entryLevel || !isEntryLevel) && !clownlistKeys) return;
 
   // Combine clownlist with entry level variations
@@ -72,22 +73,33 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
   const entryLevelKeywords = years && isEntryLevel ? createELKeywords(years, []) : [];
 
   // Get job html as a string and search for keywords
-  const sourced = $('#job-details div').length; // Jobs sourced from job board
-  const jobIndex = sourced ? 1 : 0;
-  const job = $('#job-details span')[jobIndex]['innerHTML'].toLowerCase();
+  let job: string;
+  const sourced = $('#job-details div').length; // LinkedIn jobs sourced from job board;
+
+  if (site === 'linkedIn') {
+    const jobIndex = sourced ? 1 : 0;
+    job = $('#job-details span')[jobIndex]['innerHTML'].toLowerCase();
+  } else {
+    job = $('#jobDescriptionText')[0]['innerHTML'].toLowerCase();
+  }
+
   const flaggedKeywords: string[] = [];
+  const escapedKeywords = flaggedKeywords.map(k => escape(k));
   clownlistKeywords.forEach(k => job?.includes(k.toLowerCase()) ? flaggedKeywords.push(k) : null);
   entryLevelKeywords.forEach(k => {
     const validated = checkPrefixes(job, k);
     if (validated) flaggedKeywords.push(validated);
   });
 
-  renderLinkedInDescription(flaggedKeywords, sourced);
   if (!flaggedKeywords.length) return;
+  if (site === 'linkedIn') {
+    renderLinkedInDescription(flaggedKeywords, sourced);
+    renderLinkedInFlags(escapedKeywords);
+  } else {
+    renderIndeedDescription(flaggedKeywords, job)
+  }
 
   // Escape keywords then render
-  const escapedKeywords = flaggedKeywords.map(k => escape(k));
-  renderLinkedInFlags(escapedKeywords);
 }
 
 // Run job scan whenever job container mutates
@@ -123,7 +135,7 @@ const startObserver = (site: Site) => {
       }
     }
   } else if (site === 'indeed') {
-    const indeedTarget = $('.jobsearch-ViewJobLayout-jobDisplay')[0];
+    const indeedTarget = $('.jobsearch-ResultsList')[0];
     if (indeedTarget) {
       const observer = new MutationObserver(mutations => {
         waitForPill(scanJob, settings, 0);
