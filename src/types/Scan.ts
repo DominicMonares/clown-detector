@@ -2,7 +2,8 @@ import { Settings, Years } from "./Settings";
 
 export type ScanJob = (
   topCard: string,
-  settings: Settings
+  settings: Settings,
+  site: Site
 ) => void;
 
 export type Site = 'linkedIn' | 'indeed';
