@@ -90,8 +90,8 @@ export const renderDescription = (keywords: string[], sourced: number) => {
   if (jobSpan.length >= 10) {
     let count = jobSpan.length - 1;
     while (count >= 10) {
-      const twoSiblings = jobSpan[count].nextSibling && jobSpan[count - 1].nextSibling;
-      if (twoSiblings || !jobSpan[count].nextSibling) {
+      // const twoSiblings = jobSpan[count].nextSibling && jobSpan[count - 1].nextSibling;
+      if (!jobSpan[count].nextSibling) {
         $('#job-details span')[count].remove();
         count--;
       } else if (jobSpan[count].nextSibling) {
