@@ -77,13 +77,36 @@ export const checkPrefixes: CheckPrefixes = (job, keyword) => {
   }
 }
 
-// Highlight keywords and render new description
 export const renderDescription = (keywords: string[], sourced: number) => {
+  // WARNING: This function in its current state causes a MASSIVE amount of DOM pollution over time.
+  // The old DOM cleanup method had to be removed b/c nextSibling was showing as null and crashing
+  // the entire page after 2-6 jobs.
+  // The new method drastically slows pollution down, but it still needs to be refactored to hardcap
+  // at the certain number of span elements added.
+  // This causes minor performance slowdown after a while but nothing crazy, needs to be fixed ASAP.
   const jobSpan = $('#job-details span');
-  const newJob = jobSpan[2];
+
+  // Clear unused DOM elements to reduce pollution
+  if (jobSpan.length >= 10) {
+    let count = jobSpan.length - 1;
+    while (count >= 10) {
+      const twoSiblings = jobSpan[count].nextSibling && jobSpan[count - 1].nextSibling;
+      if (twoSiblings || !jobSpan[count].nextSibling) {
+        $('#job-details span')[count].remove();
+        count--;
+      } else if (jobSpan[count].nextSibling) {
+        break;
+      } else {
+        count--;
+      }
+    }
+  }
+
+  // Remove jobs sourced from external job board
   const sourcedDiv = $('#job-details div')[0];
   if (sourcedDiv) $('#job-details div')[0].remove();
 
+  // Highlight flagged words
   let jobHTML = jobSpan[sourced].innerHTML;
   keywords.forEach(k => {
     const keyword = k.replace('+', '\\+');
@@ -91,7 +114,7 @@ export const renderDescription = (keywords: string[], sourced: number) => {
     jobHTML = jobHTML.replace(regex, `<mark>${k}</mark>`);
   });
 
-  if (newJob) $('#job-details span')[2].remove();
+  // Render
   $('#job-details span').hide(); // Hide instead of remove to preserve events
   $('#job-details').append(`<span>${jobHTML}</span>`);
 }
