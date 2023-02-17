@@ -91,7 +91,7 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
 // Run job scan whenever job container mutates
 const startObserver = () => {
   const config = { attributes: true, childList: true, subtree: true };
-  const searchTarget = $('.scaffold-layout__list-detail-inner')[0];
+  const searchTarget = $('.scaffold-layout__list')[0];
   const viewTarget = $('.job-view-layout')[0];
 
   let loop2 = 0, loop3 = 0;
