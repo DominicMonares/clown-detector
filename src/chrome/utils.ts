@@ -78,24 +78,16 @@ export const checkPrefixes: CheckPrefixes = (job, keyword) => {
 }
 
 export const renderDescription = (keywords: string[], sourced: number) => {
-  // WARNING: This function in its current state causes a MASSIVE amount of DOM pollution over time.
-  // The old DOM cleanup method had to be removed b/c nextSibling was showing as null and crashing
-  // the entire page after 2-6 jobs.
-  // The new method drastically slows pollution down, but it still needs to be refactored to hardcap
-  // at the certain number of span elements added.
-  // This causes minor performance slowdown after a while but nothing crazy, needs to be fixed ASAP.
   const jobSpan = $('#job-details span');
 
   // Clear unused DOM elements to reduce pollution
   if (jobSpan.length >= 10) {
     let count = jobSpan.length - 1;
     while (count >= 10) {
-      // const twoSiblings = jobSpan[count].nextSibling && jobSpan[count - 1].nextSibling;
-      if (!jobSpan[count].nextSibling) {
+      const twoSiblings = jobSpan[count].nextSibling && jobSpan[count - 1].nextSibling;
+      if (twoSiblings || !jobSpan[count].nextSibling) {
         $('#job-details span')[count].remove();
         count--;
-      } else if (jobSpan[count].nextSibling) {
-        break;
       } else {
         count--;
       }
