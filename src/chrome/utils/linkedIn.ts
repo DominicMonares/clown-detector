@@ -26,10 +26,25 @@ export const waitForTopCard: WaitForTopCard = (scanJob, settings, count) => {
 // Highlight keywords and render new description
 export const renderLinkedInDescription = (keywords: string[], sourced: number) => {
   const jobSpan = $('#job-details span');
-  const newJob = jobSpan[2];
+
+  // Clear unused DOM elements to reduce pollution
+  if (jobSpan.length >= 10) {
+    let count = jobSpan.length - 1;
+    while (count >= 10) {
+      if (!jobSpan[count].nextSibling) {
+        $('#job-details span')[count].remove();
+        count--;
+      } else {
+        count--;
+      }
+    }
+  }
+
+  // Remove jobs sourced from external job board
   const sourcedDiv = $('#job-details div')[0];
   if (sourcedDiv) $('#job-details div')[0].remove();
 
+  // Highlight flagged words
   let jobHTML = jobSpan[sourced].innerHTML;
   keywords.forEach(k => {
     const keyword = k.replace('+', '\\+');
@@ -37,7 +52,7 @@ export const renderLinkedInDescription = (keywords: string[], sourced: number) =
     jobHTML = jobHTML.replace(regex, `<mark>${k}</mark>`);
   });
 
-  if (newJob) $('#job-details span')[2].remove();
+  // Render
   $('#job-details span').hide(); // Hide instead of remove to preserve events
   $('#job-details').append(`<span>${jobHTML}</span>`);
 }
