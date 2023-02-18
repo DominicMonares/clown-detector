@@ -13,6 +13,7 @@ import {
   checkPrefixes,
   createELKeywords,
   renderIndeedDescription,
+  renderIndeedFlags,
   renderLinkedInDescription,
   renderLinkedInFlags,
   replaceApostrophes,
@@ -99,7 +100,8 @@ const scanJob: ScanJob = (entryLevelElement, { entryLevel, clownlist }, site) =>
     renderLinkedInDescription(flaggedKeywords, sourced);
     renderLinkedInFlags(escapedKeywords);
   } else {
-    renderIndeedDescription(flaggedKeywords, job)
+    renderIndeedDescription(flaggedKeywords, job);
+    renderIndeedFlags(escapedKeywords);
   }
 }
 
