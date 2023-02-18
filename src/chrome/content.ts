@@ -107,7 +107,7 @@ const startObserver = (site: Site) => {
   const config = { attributes: true, childList: true, subtree: true };
 
   if (site === 'linkedIn') {
-    const linkedInSearchTarget = $('.scaffold-layout__list-detail-inner')[0];
+    const linkedInSearchTarget = $('.scaffold-layout__list-detail')[0];
     const linkedInViewTarget = $('.job-view-layout')[0];
 
     let loop2 = 0, loop3 = 0;
