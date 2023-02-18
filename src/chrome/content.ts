@@ -84,22 +84,23 @@ const scanJob: ScanJob = (entryLevelElement, { entryLevel, clownlist }, site) =>
   }
 
   const flaggedKeywords: string[] = [];
-  const escapedKeywords = flaggedKeywords.map(k => escape(k));
   clownlistKeywords.forEach(k => job?.includes(k.toLowerCase()) ? flaggedKeywords.push(k) : null);
   entryLevelKeywords.forEach(k => {
     const validated = checkPrefixes(job, k);
     if (validated) flaggedKeywords.push(validated);
   });
 
+  // Do not render anything if no keywords found
   if (!flaggedKeywords.length) return;
+
+  // Escape keywords then render
+  const escapedKeywords = flaggedKeywords.map(k => escape(k));
   if (site === 'linkedIn') {
     renderLinkedInDescription(flaggedKeywords, sourced);
     renderLinkedInFlags(escapedKeywords);
   } else {
     renderIndeedDescription(flaggedKeywords, job)
   }
-
-  // Escape keywords then render
 }
 
 // Run job scan whenever job container mutates
