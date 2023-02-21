@@ -40,9 +40,9 @@ export const renderIndeedDescription = (keywords: string[]) => {
 // Send in the clowns!
 export const renderIndeedFlags = (keywords: string[]) => {
   const joinedKeywords = joinKeywords(keywords);
-  const salaryInfoContainer = $('#salaryInfoAndJobType')[0];
-  const salaryInfoLength = salaryInfoContainer['children'].length;
-  const lastElement = salaryInfoContainer['children'][salaryInfoLength - 1];
+  const jobContainer = $('.jobsearch-CompanyInfoContainer')[0];
+  const salaryInfoLength = jobContainer['children'].length;
+  const lastElement = jobContainer['children'][salaryInfoLength - 1];
   if (lastElement.innerHTML.includes('🤡')) return; // Prevent duplicate renders
 
   const clown = '<span style="font-size: 17px">🤡</span>';
