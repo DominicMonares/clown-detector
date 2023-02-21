@@ -10,7 +10,7 @@ export const waitForTopCard: WaitForTopCard = (scanJob, settings, count) => {
   // Exit if not found after 5 seconds
   // Does not call scan job like the Indeed equivalent because all LinkedIn
   // jobs contain a topcard, not every Indeed job contains a pill (topcard equivalent)
-  if (count === 10) return;;
+  if (count === 10) return;
 
   setTimeout(() => {
     const topCards = $(`.${topCardClassName}`);
