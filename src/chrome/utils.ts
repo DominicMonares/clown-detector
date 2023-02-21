@@ -54,13 +54,32 @@ export const createELKeywords: CreateELKeywords = (years, keywords) => {
 export const checkPrefixes: CheckPrefixes = (job, keyword) => {
   const index = job.indexOf(keyword);
   if (index) {
-    const prefix = job.slice(index - 5, index);
+    const prefix = job.slice(index - 4, index);
     const prefixFound = prefixes.some(f => prefix.includes(f) ? true : false);
     const firstDigit = Number(job[index - 1]);
     const twentyPlus = firstDigit && firstDigit > 1;
-    if (prefix.indexOf('-') >= 0) {
+
+    // Check for ranges in different formats
+    const shortFirstNum = !Number.isNaN(prefix[prefix.length - 2]);
+    const shortDash = prefix[prefix.length - 1] === '-';
+    const shortRange = shortDash && shortFirstNum;
+    const longFirstNum = !Number.isNaN(prefix[prefix.length - 4]);
+    const longFirstSpace = prefix[prefix.length - 3] === ' ';
+    const longDash = prefix[prefix.length - 2] === '-';
+    const longSecondSpace = prefix[prefix.length - 1] === ' ';
+    const longRange = longFirstNum && longFirstSpace && longDash && longSecondSpace
+    const oddFirstNum = !Number.isNaN(prefix[prefix.length - 3]);
+    const oddFirstSpace = prefix[prefix.length - 2] === ' ';
+    const oddFirstDash = prefix[prefix.length - 2] === '-';
+    const oddSecondSpace = prefix[prefix.length - 1] === ' ';
+    const oddSecondDash = prefix[prefix.length - 1] === '-';
+    const oddRange1 = oddFirstNum && oddFirstSpace && oddSecondDash;
+    const oddRange2 = oddFirstNum && oddFirstDash && oddSecondSpace;
+    const rangeFound = shortRange || longRange || oddRange1 || oddRange2;
+
+    if (rangeFound) {
       // If range of years found, return entire range
-      for (let i = prefix.indexOf('-') - 1; i > 0; i--) {
+      for (let i = prefix.length - 1; i > 0; i--) {
         if (Number(prefix[i])) return `${prefix.slice(i)}${keyword}`;
       }
     } else if (prefixFound || twentyPlus) {
@@ -81,9 +100,9 @@ export const renderDescription = (keywords: string[], sourced: number) => {
   const jobSpan = $('#job-details span');
 
   // Clear unused DOM elements to reduce pollution
-  if (jobSpan.length >= 10) {
+  if (jobSpan.length >= 6) {
     let count = jobSpan.length - 1;
-    while (count >= 10) {
+    while (count >= 6) {
       if (!jobSpan[count].nextSibling) {
         $('#job-details span')[count].remove();
         count--;
@@ -126,5 +145,7 @@ export const renderFlags = (keywords: string[]) => {
   const clown = '<span style="font-size: 17px">🤡</span>';
   const newTop = `${splitTop[textEnd]}\xa0\xa0${clown}\xa0\xa0${joinedKeywords}`;
   splitTop[textEnd] = newTop;
-  $(`.${topCardClassName}`)[0]['children'][1]['innerHTML'] = splitTop.join(spacer);
+  if (keywords.length) {
+    $(`.${topCardClassName}`)[0]['children'][1]['innerHTML'] = splitTop.join(spacer);
+  }
 }
