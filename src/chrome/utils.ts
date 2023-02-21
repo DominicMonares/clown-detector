@@ -58,7 +58,6 @@ export const checkPrefixes: CheckPrefixes = (job, keyword) => {
     const prefixFound = prefixes.some(f => prefix.includes(f) ? true : false);
     const firstDigit = Number(job[index - 1]);
     const twentyPlus = firstDigit && firstDigit > 1;
-    console.log('FUCK YOU ', job.includes(keyword), keyword);
 
     // Check for ranges in different formats
     const shortFirstNum = !Number.isNaN(prefix[prefix.length - 2]);
