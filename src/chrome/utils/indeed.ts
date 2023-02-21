@@ -21,18 +21,20 @@ export const waitForPill: WaitForPill = (scanJob, settings, count) => {
 }
 
 // Highlight keywords and render new description
-export const renderIndeedDescription = (keywords: string[], job: string) => {
+export const renderIndeedDescription = (keywords: string[]) => {
   const jobDiv = $('#jobDescriptionText');
+  let jobHTML = jobDiv[0]['innerHTML'];
+  console.log('SUP FUCKER ', keywords)
 
   // NEED CLEANUP METHOD
   keywords.forEach(k => {
     const keyword = k.replace('+', '\\+');
     const regex = new RegExp(keyword, 'ig');
-    job = job.replace(regex, `<mark>${k}</mark>`);
+    jobHTML = jobHTML.replace(regex, `<mark>${k}</mark>`);
   });
 
   jobDiv.children().hide(); // Hide instead of remove to preserve events
-  jobDiv.append(`<span>${job}</span>`);
+  jobDiv.append(`<span>${jobHTML}</span>`);
 }
 
 // Send in the clowns!

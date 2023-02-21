@@ -97,7 +97,7 @@ const scanJob: ScanJob = (entryLevelElement, { entryLevel, clownlist }, site) =>
     renderLinkedInDescription(escapedKeywords, sourced);
     renderLinkedInFlags(escapedKeywords);
   } else {
-    renderIndeedDescription(escapedKeywords, job);
+    renderIndeedDescription(escapedKeywords);
     renderIndeedFlags(escapedKeywords);
   }
 }
