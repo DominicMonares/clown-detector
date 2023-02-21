@@ -58,7 +58,7 @@ export const checkPrefixes: CheckPrefixes = (job, keyword) => {
     const prefixFound = prefixes.some(f => prefix.includes(f) ? true : false);
     const firstDigit = Number(job[index - 1]);
     const twentyPlus = firstDigit && firstDigit > 1;
-    if (prefix.indexOf('-') >= 0) {
+    if (prefix.indexOf('-') >= 0 && prefix.indexOf('-') !== 4) {
       // If range of years found, return entire range
       for (let i = prefix.indexOf('-') - 1; i > 0; i--) {
         if (Number(prefix[i])) return `${prefix.slice(i)}${keyword}`;
@@ -81,9 +81,9 @@ export const renderDescription = (keywords: string[], sourced: number) => {
   const jobSpan = $('#job-details span');
 
   // Clear unused DOM elements to reduce pollution
-  if (jobSpan.length >= 10) {
+  if (jobSpan.length >= 6) {
     let count = jobSpan.length - 1;
-    while (count >= 10) {
+    while (count >= 6) {
       if (!jobSpan[count].nextSibling) {
         $('#job-details span')[count].remove();
         count--;
@@ -126,5 +126,7 @@ export const renderFlags = (keywords: string[]) => {
   const clown = '<span style="font-size: 17px">🤡</span>';
   const newTop = `${splitTop[textEnd]}\xa0\xa0${clown}\xa0\xa0${joinedKeywords}`;
   splitTop[textEnd] = newTop;
-  $(`.${topCardClassName}`)[0]['children'][1]['innerHTML'] = splitTop.join(spacer);
+  if (keywords.length) {
+    $(`.${topCardClassName}`)[0]['children'][1]['innerHTML'] = splitTop.join(spacer);
+  }
 }
