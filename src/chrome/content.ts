@@ -91,16 +91,13 @@ const scanJob: ScanJob = (entryLevelElement, { entryLevel, clownlist }, site) =>
     if (validated) flaggedKeywords.push(validated);
   });
 
-  // Do not render anything if no keywords found
-  if (!flaggedKeywords.length) return;
-
   // Escape keywords then render
   const escapedKeywords = flaggedKeywords.map(k => escape(k));
   if (site === 'linkedIn') {
-    renderLinkedInDescription(flaggedKeywords, sourced);
+    renderLinkedInDescription(escapedKeywords, sourced);
     renderLinkedInFlags(escapedKeywords);
   } else {
-    renderIndeedDescription(flaggedKeywords, job);
+    renderIndeedDescription(escapedKeywords, job);
     renderIndeedFlags(escapedKeywords);
   }
 }
