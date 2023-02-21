@@ -80,11 +80,9 @@ const scanJob: ScanJob = (topCard, { entryLevel, clownlist }) => {
     if (validated) flaggedKeywords.push(validated);
   });
 
-  if (!flaggedKeywords.length) return;
-  renderDescription(flaggedKeywords, sourced);
-
   // Escape keywords then render
   const escapedKeywords = flaggedKeywords.map(k => escape(k));
+  renderDescription(escapedKeywords, sourced);
   renderFlags(escapedKeywords);
 }
 
