@@ -59,11 +59,7 @@ export const renderLinkedInDescription = (keywords: string[], sourced: number) =
 
 // Send in the clowns!
 export const renderLinkedInFlags = (keywords: string[]) => {
-  const joinedKeywords = (keywords.map((k, i) => {
-    if (k.startsWith(' ') || k.startsWith('-')) k = k.slice(1);
-    return i === keywords.length - 1 ? k : k + ' · ';
-  })).join('');
-
+  const joinedKeywords = joinKeywords(keywords);
   const spacer = '<!---->';
   const topHTML = $(`.${topCardClassName}`)[0]['children'][1]['innerHTML'];
   if (topHTML.includes('🤡')) return; // Prevent duplicate renders
