@@ -28,9 +28,9 @@ export const renderLinkedInDescription = (keywords: string[], sourced: number) =
   const jobSpan = $('#job-details span');
 
   // Clear unused DOM elements to reduce pollution
-  if (jobSpan.length >= 10) {
+  if (jobSpan.length >= 6) {
     let count = jobSpan.length - 1;
-    while (count >= 10) {
+    while (count >= 6) {
       if (!jobSpan[count].nextSibling) {
         $('#job-details span')[count].remove();
         count--;
@@ -59,7 +59,11 @@ export const renderLinkedInDescription = (keywords: string[], sourced: number) =
 
 // Send in the clowns!
 export const renderLinkedInFlags = (keywords: string[]) => {
-  const joinedKeywords = joinKeywords(keywords);
+  const joinedKeywords = (keywords.map((k, i) => {
+    if (k.startsWith(' ') || k.startsWith('-')) k = k.slice(1);
+    return i === keywords.length - 1 ? k : k + ' · ';
+  })).join('');
+
   const spacer = '<!---->';
   const topHTML = $(`.${topCardClassName}`)[0]['children'][1]['innerHTML'];
   if (topHTML.includes('🤡')) return; // Prevent duplicate renders
@@ -69,5 +73,7 @@ export const renderLinkedInFlags = (keywords: string[]) => {
   const clown = '<span style="font-size: 17px">🤡</span>';
   const newTop = `${splitTop[textEnd]}\xa0\xa0${clown}\xa0\xa0${joinedKeywords}`;
   splitTop[textEnd] = newTop;
-  $(`.${topCardClassName}`)[0]['children'][1]['innerHTML'] = splitTop.join(spacer);
+  if (keywords.length) {
+    $(`.${topCardClassName}`)[0]['children'][1]['innerHTML'] = splitTop.join(spacer);
+  }
 }
