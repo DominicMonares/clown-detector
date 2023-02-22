@@ -24,7 +24,6 @@ export const waitForPill: WaitForPill = (scanJob, settings, count) => {
 export const renderIndeedDescription = (keywords: string[]) => {
   const jobDiv = $('#jobDescriptionText');
   let jobHTML = jobDiv[0]['innerHTML'];
-  console.log('SUP FUCKER ', keywords)
 
   // NEED CLEANUP METHOD
   keywords.forEach(k => {
