@@ -25,7 +25,6 @@ export const renderIndeedDescription = (keywords: string[]) => {
   const jobDiv = $('#jobDescriptionText');
   let jobHTML = jobDiv[0]['innerHTML'];
 
-  // NEED CLEANUP METHOD
   keywords.forEach(k => {
     const keyword = k.replace('+', '\\+');
     const regex = new RegExp(keyword, 'ig');
@@ -39,13 +38,21 @@ export const renderIndeedDescription = (keywords: string[]) => {
 // Send in the clowns!
 export const renderIndeedFlags = (keywords: string[]) => {
   const joinedKeywords = joinKeywords(keywords);
+  const salary = $('.jobsearch-JobMetadataHeader-item ')[0];
   const jobContainer = $('.jobsearch-CompanyInfoContainer')[0];
-  const salaryInfoLength = jobContainer['children'].length;
-  const lastElement = jobContainer['children'][salaryInfoLength - 1];
-  if (lastElement.innerHTML.includes('🤡')) return; // Prevent duplicate renders
+
+  // const salaryInfoLength = jobContainer['children'].length;
+  // const lastElement = jobContainer['children'][salaryInfoLength - 1];
+  const alreadyClowned = salary.innerHTML.includes('🤡') || jobContainer.innerHTML.includes('🤡');
+  if (alreadyClowned) return; // Prevent duplicate renders
 
   const clown = '<span style="font-size: 17px">🤡</span>';
   const flag = `${clown}\xa0\xa0${joinedKeywords}`;
-  const newLastElement = lastElement.innerHTML + flag;
-  $('#salaryInfoAndJobType')[0]['children'][salaryInfoLength - 1]['innerHTML'] = newLastElement;
+  const newHtml = $.parseHTML(`<div>${flag}</div>`);
+  if (salary) {
+    salary.append(newHtml[0]);
+  } else {
+    jobContainer.append(newHtml[0]);
+  }
+
 }
