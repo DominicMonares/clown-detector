@@ -10,7 +10,7 @@ import prefixes from './prefixes.json';
 import suffixes from './suffixes.json';
 
 
-const topCardClassName = "jobs-unified-top-card__job-insight";
+const topCardClassName = "job-details-jobs-unified-top-card__job-insight";
 
 // Wait for entry level element to load
 export const waitForTopCard: WaitForTopCard = (scanJob, settings, count) => {
@@ -19,6 +19,7 @@ export const waitForTopCard: WaitForTopCard = (scanJob, settings, count) => {
     const topCards = $(`.${topCardClassName}`);
     if (topCards.length) {
       const topCard = topCards[0]['children'][1]['innerHTML'];
+      console.log(`TOP CARDS ${topCard}`)
       return scanJob(topCard, settings);
     } else {
       return waitForTopCard(scanJob, settings, count + 1);
